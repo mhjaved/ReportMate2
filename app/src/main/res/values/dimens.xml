@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="activity_horizontal_margin">16dp</dimen>
+    <dimen name="fab_margin">16dp</dimen>
+    <dimen name="fab_margin_sfx">7dp</dimen>
+
+    <dimen name="edit_text_height">52dp</dimen>
+
+    <dimen name="space_4">4dp</dimen>
+    <dimen name="space_8">8dp</dimen>
+    <dimen name="space_12">12dp</dimen>
+    <dimen name="space_16">16dp</dimen>
+    <dimen name="space_24">24dp</dimen>
+    <dimen name="space_32">32dp</dimen>
+
+    <dimen name="back_button_size">34dp</dimen>
+    <dimen name="settings_view_width">300dp</dimen>
+    <dimen name="settings_drawer_width">350dp</dimen>
+    <dimen name="circle_progress_size">30dp</dimen>
+    <dimen name="circle_progress_thickness">5dp</dimen>
+    <dimen name="checked_icon_size">18dp</dimen>
+    <dimen name="heading_size">20sp</dimen>
+
+</resources>

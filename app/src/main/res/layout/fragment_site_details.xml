@@ -1,0 +1,518 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="16dp"
+            android:visibility="visible">
+
+
+            <ImageView
+                android:id="@+id/ivBackOne"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="16dp"
+                android:contentDescription="@string/demo_description"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+            <!-- Back Arrow and Title -->
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:text="@string/generate_new_report_"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBackOne"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/ivBackOne"
+                app:layout_constraintTop_toTopOf="@+id/ivBackOne" />
+
+            <!-- Employee ID -->
+            <TextView
+                android:id="@+id/labelEmpId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/employee_id"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/title" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/empIdCard"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelEmpId">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/demo_description"
+                        android:src="@drawable/ic_demo_icon_2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/esv0012345"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/empIdNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/auto_filled_confirm_the_information"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empIdCard" />
+
+            <!-- Date of Inspection -->
+            <TextView
+                android:id="@+id/labelDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/date_of_inspection"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/empIdNote" />
+
+            <LinearLayout
+                android:id="@+id/dateGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelDate">
+
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="@string/dd"
+                    android:inputType="number" />
+
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="@string/mm"
+                    android:inputType="number" />
+
+                <EditText
+                    android:layout_width="70dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="@string/yyyy"
+                    android:inputType="number" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/dateNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/auto_filled_confirm_the_information"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateGroup" />
+
+            <!-- Time of Inspection -->
+            <TextView
+                android:id="@+id/labelTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/time_of_inspection"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/dateNote" />
+
+            <LinearLayout
+                android:id="@+id/timeGroup"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal"
+                android:weightSum="3"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelTime">
+
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="HH"
+                    android:inputType="number" />
+
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="MM"
+                    android:inputType="number" />
+
+                <EditText
+                    android:layout_width="60dp"
+                    android:layout_height="48dp"
+                    android:layout_marginStart="8dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center"
+                    android:hint="@string/am"
+                    android:inputType="text" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/timeNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/auto_filled_confirm_the_information"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeGroup" />
+
+            <!-- Project No. -->
+            <TextView
+                android:id="@+id/labelProject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/project_no"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/timeNote" />
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/projectCard"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="2dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelProject">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp">
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:contentDescription="@string/demo_description"
+                        android:src="@drawable/ic_demo_icon_2" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="12dp"
+                        android:text="@string/nel_swgrts_0012345"
+                        android:textSize="16sp" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/projectNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/auto_filled_confirm_the_information"
+                android:textColor="#888888"
+                android:textSize="12sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/projectCard" />
+
+            <!-- Guidelines -->
+            <TextView
+                android:id="@+id/guidelineLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="@string/guidelines"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/projectNote" />
+
+            <TextView
+                android:id="@+id/guidelineText"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="@string/confirm_the_auto_filled_information_these_will_use_to_evaluate_and_verification_in_future"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineLabel" />
+
+            <!-- Start Inspection Button -->
+            <Button
+                android:id="@+id/btnStartInspection"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_button_next"
+                android:text="@string/start_inspection"
+                android:textStyle="bold"
+                app:icon="@drawable/ic_demo_icon_2"
+                app:iconGravity="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/guidelineText" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"-->
+<!--        android:fillViewport="true"-->
+<!--        android:background="@color/white"-->
+<!--        >-->
+
+<!--        <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_margin="@dimen/space_16"-->
+<!--            >-->
+
+<!--            &lt;!&ndash; Back & Title &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/tvTitle"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:text="Customer Details"-->
+<!--                android:textSize="18sp"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toTopOf="parent" />-->
+
+<!--            &lt;!&ndash; Progress Stepper &ndash;&gt;-->
+<!--            <LinearLayout-->
+<!--                android:id="@+id/stepper"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="16dp"-->
+<!--                android:gravity="center"-->
+<!--                android:orientation="horizontal"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/tvTitle">-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:background="@drawable/bg_edit_text"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="1"-->
+<!--                    android:textColor="#FFFFFF"-->
+<!--                    android:textStyle="bold" />-->
+
+<!--                <View-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="2dp"-->
+<!--                    android:layout_marginHorizontal="4dp"-->
+<!--                    android:background="#BFD5E0" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:background="@drawable/bg_edit_text"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="2" />-->
+
+<!--                <View-->
+<!--                    android:layout_width="40dp"-->
+<!--                    android:layout_height="2dp"-->
+<!--                    android:layout_marginHorizontal="4dp"-->
+<!--                    android:background="#BFD5E0" />-->
+
+<!--                <TextView-->
+<!--                    android:layout_width="32dp"-->
+<!--                    android:layout_height="32dp"-->
+<!--                    android:background="@drawable/bg_edit_text"-->
+<!--                    android:gravity="center"-->
+<!--                    android:text="1" />-->
+<!--            </LinearLayout>-->
+
+<!--            &lt;!&ndash; Customer Name &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/labelCustomerName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:text="Customer Name"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/stepper" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputCustomerName"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/bg_edit_text"-->
+<!--                android:drawableStart="@drawable/ic_demo_icon_2"-->
+<!--                android:hint="Enter here.."-->
+<!--                android:paddingStart="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/labelCustomerName" />-->
+
+<!--            &lt;!&ndash; Customer Address &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/labelCustomerAddress"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:text="Customer Address"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/inputCustomerName" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputCustomerAddress"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/bg_edit_text"-->
+<!--                android:drawableStart="@drawable/ic_demo_icon_2"-->
+<!--                android:hint="Enter here.."-->
+<!--                android:paddingStart="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/labelCustomerAddress" />-->
+
+<!--            <View-->
+<!--                android:id="@+id/line"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height=".6dp"-->
+<!--                android:background="@color/line_gray"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/inputCustomerAddress"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                android:layout_marginTop="@dimen/space_24"-->
+<!--                />-->
+
+<!--            &lt;!&ndash; User Name &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/labelUserName"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:text="User Name"-->
+<!--                android:textStyle="bold"-->
+<!--                android:layout_marginTop="@dimen/space_24"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/line" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputUserName"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/bg_edit_text"-->
+<!--                android:drawableStart="@drawable/ic_demo_icon_2"-->
+<!--                android:hint="Enter here.."-->
+<!--                android:paddingStart="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/labelUserName" />-->
+
+<!--            &lt;!&ndash; User Address &ndash;&gt;-->
+<!--            <TextView-->
+<!--                android:id="@+id/labelUserAddress"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="24dp"-->
+<!--                android:text="User Address"-->
+<!--                android:textStyle="bold"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/inputUserName" />-->
+
+<!--            <EditText-->
+<!--                android:id="@+id/inputUserAddress"-->
+<!--                android:layout_width="0dp"-->
+<!--                android:layout_height="48dp"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:background="@drawable/bg_edit_text"-->
+<!--                android:drawableStart="@drawable/ic_demo_icon_2"-->
+<!--                android:hint="Enter here.."-->
+<!--                android:paddingStart="12dp"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintStart_toStartOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/labelUserAddress" />-->
+
+<!--            &lt;!&ndash; Save & Next Button &ndash;&gt;-->
+<!--            <Button-->
+<!--                android:id="@+id/btnSaveNext"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="32dp"-->
+<!--                android:backgroundTint="#1E2B39"-->
+<!--                android:drawableEnd="@drawable/ic_demo_icon_2"-->
+<!--                android:paddingHorizontal="24dp"-->
+<!--                android:background="@drawable/bg_button_next"-->
+<!--                android:text="@string/save_and_next"-->
+<!--                android:textColor="#FFFFFF"-->
+<!--                app:iconGravity="textEnd"-->
+<!--                app:layout_constraintEnd_toEndOf="parent"-->
+<!--                app:layout_constraintTop_toBottomOf="@id/inputUserAddress" />-->
+
+<!--        </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+
+<!--    </ScrollView>-->
+
+</RelativeLayout>

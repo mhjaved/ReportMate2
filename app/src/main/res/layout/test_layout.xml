@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:padding="16dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!-- Title -->
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Panel Bus Insulation Resistance in Megaohms"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!-- Equipment No -->
+        <TextView
+            android:id="@+id/equipmentLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Equipment No:"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/title" />
+
+        <TextView
+            android:id="@+id/equipmentValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:text="01 / --"
+            android:textStyle="bold"
+            app:layout_constraintStart_toEndOf="@id/equipmentLabel"
+            app:layout_constraintTop_toTopOf="@id/equipmentLabel" />
+
+        <!-- Line to Ground Connection Label -->
+        <TextView
+            android:id="@+id/lineToGroundLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Line to Ground Connection"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/equipmentLabel" />
+
+        <!-- A-G Connection Section -->
+        <RelativeLayout
+            android:id="@+id/agLabel"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_edit_text"
+            android:gravity="center_vertical"
+            android:textAlignment="viewStart"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/lineToGroundLabel">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:text="A–G Connection"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivAG"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_12"
+                android:src="@drawable/ic_arrow_up" />
+        </RelativeLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandAG"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:el_duration="600"
+            app:el_expanded="true"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/agLabel">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="start"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="IR Test Connection Image A-G"
+                    android:layout_marginTop="@dimen/space_12"
+                    />
+                <ImageView
+                    android:id="@+id/agTestConnectionImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="IR Test Connection Image A-G"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                    />
+
+                <ImageView
+                    android:id="@+id/agTestResultImg"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginTop="8dp"
+                    android:contentDescription="IR Test Result Image A-G"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                     />
+
+                <EditText
+                    android:id="@+id/agInput"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="8dp"
+                    android:background="@drawable/bg_edit_text"
+                    android:hint="A–G"
+                    android:inputType="text"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/expandAG" />
+
+            </LinearLayout>
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+        <!-- B–G Connection -->
+        <TextView
+            android:id="@+id/bgLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="B–G Connection"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/expandAG" />
+
+        <!-- Add similar input section for B-G as needed -->
+
+        <!-- C–G Connection -->
+        <TextView
+            android:id="@+id/cgLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="C–G Connection"
+            android:textStyle="bold"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/bgLabel" />
+
+        <!-- Add similar input section for C-G as needed -->
+
+        <!-- Guidelines -->
+        <TextView
+            android:id="@+id/guidelines"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="Guidelines\n1. Test Connection img is about your set up in the DB Box\n2. IR Test Result img is the device showing the reading\nYou can take more than one img for clear input."
+            android:textSize="14sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/cgLabel" />
+
+        <!-- Save and Confirm Button -->
+        <Button
+            android:id="@+id/saveConfirmButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_button_next"
+            android:enabled="true"
+            android:text="Save &amp; Confirm"
+            android:textColor="@color/white"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/guidelines" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</ScrollView>

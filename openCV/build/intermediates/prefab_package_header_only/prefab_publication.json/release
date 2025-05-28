@@ -1,0 +1,17 @@
+{
+  "installationFolder": "E:\\AndroidProjects\\1.Pro\\ReportMate\\openCV\\build\\intermediates\\prefab_package\\release\\prefab",
+  "gradlePath": ":openCV",
+  "packageInfo": {
+    "packageName": "openCV",
+    "packageSchemaVersion": 2,
+    "packageDependencies": [],
+    "modules": [
+      {
+        "moduleName": "opencv_jni_shared",
+        "moduleHeaders": "E:\\AndroidProjects\\1.Pro\\ReportMate\\openCV\\native\\jni\\include",
+        "moduleExportLibraries": [],
+        "abis": []
+      }
+    ]
+  }
+}

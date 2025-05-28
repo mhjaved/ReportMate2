@@ -1,0 +1,362 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:fillViewport="true">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_16">
+
+            <!-- Back & Title -->
+            <ImageView
+                android:id="@+id/ivBackOne"
+                android:layout_width="@dimen/back_button_size"
+                android:layout_height="@dimen/back_button_size"
+                android:layout_marginTop="16dp"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:src="@drawable/ic_arrow_back"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Customer Details"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:layout_marginStart="@dimen/space_16"
+                app:layout_constraintStart_toEndOf="@+id/ivBackOne"
+                app:layout_constraintTop_toTopOf="@+id/ivBackOne"
+                app:layout_constraintBottom_toBottomOf="@+id/ivBackOne"
+                />
+
+            <!-- Progress Stepper -->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/stepper"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:layout_marginTop="16dp"-->
+            <!--                android:gravity="center"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@id/tvTitle">-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="32dp"-->
+            <!--                    android:layout_height="32dp"-->
+            <!--                    android:background="@drawable/bg_edit_text"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:text="1"-->
+            <!--                    android:textColor="#FFFFFF"-->
+            <!--                    android:textStyle="bold" />-->
+
+            <!--                <View-->
+            <!--                    android:layout_width="40dp"-->
+            <!--                    android:layout_height="2dp"-->
+            <!--                    android:layout_marginHorizontal="4dp"-->
+            <!--                    android:background="#BFD5E0" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="32dp"-->
+            <!--                    android:layout_height="32dp"-->
+            <!--                    android:background="@drawable/bg_edit_text"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:text="2" />-->
+
+            <!--                <View-->
+            <!--                    android:layout_width="40dp"-->
+            <!--                    android:layout_height="2dp"-->
+            <!--                    android:layout_marginHorizontal="4dp"-->
+            <!--                    android:background="#BFD5E0" />-->
+
+            <!--                <TextView-->
+            <!--                    android:layout_width="32dp"-->
+            <!--                    android:layout_height="32dp"-->
+            <!--                    android:background="@drawable/bg_edit_text"-->
+            <!--                    android:gravity="center"-->
+            <!--                    android:text="1" />-->
+            <!--            </LinearLayout>-->
+
+
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progressBarOne"
+                android:layout_width="@dimen/circle_progress_size"
+                android:layout_height="@dimen/circle_progress_size"
+                android:layout_marginTop="16dp"
+                android:progress="70"
+                app:cpb_background_progressbar_color="@color/line_gray"
+                app:cpb_progress="25"
+                app:cpb_progress_direction="to_left"
+                app:cpb_progressbar_color="@color/theme_color"
+                app:cpb_progressbar_width="@dimen/circle_progress_thickness"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+            <TextView
+                android:id="@+id/tvProgressOne"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/progressBarOne"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarOne"
+                app:layout_constraintTop_toTopOf="@+id/progressBarOne"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarOne"
+                android:text="@string/_1"
+                />     
+            
+            <ImageView
+                android:id="@+id/IvProgressOne"
+                android:layout_width="@dimen/checked_icon_size"
+                android:layout_height="@dimen/checked_icon_size"
+                app:layout_constraintStart_toStartOf="@+id/progressBarOne"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarOne"
+                app:layout_constraintTop_toTopOf="@+id/progressBarOne"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarOne"
+                android:src="@drawable/ic_checked"
+                android:visibility="gone"
+                android:contentDescription="@string/demo_description" />
+            
+            <View
+                android:id="@+id/view1"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="#BFD5E0"
+                app:layout_constraintBottom_toBottomOf="@id/progressBarOne"
+                app:layout_constraintEnd_toStartOf="@+id/progressBarTwo"
+                app:layout_constraintStart_toEndOf="@+id/progressBarOne"
+                app:layout_constraintTop_toTopOf="@+id/progressBarOne" />
+
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progressBarTwo"
+                android:layout_width="@dimen/circle_progress_size"
+                android:layout_height="@dimen/circle_progress_size"
+                android:layout_marginTop="16dp"
+                android:progress="70"
+                app:cpb_background_progressbar_color="@color/line_gray"
+                app:cpb_progressbar_color="@color/theme_color"
+                app:cpb_progressbar_width="@dimen/circle_progress_thickness"
+                app:layout_constraintEnd_toStartOf="@id/progressBarThree"
+                app:layout_constraintStart_toEndOf="@id/progressBarOne"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+
+
+            <TextView
+                android:id="@+id/tvProgressTwo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/progressBarTwo"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarTwo"
+                app:layout_constraintTop_toTopOf="@+id/progressBarTwo"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarTwo"
+                android:text="@string/_2"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/IvProgressTwo"
+                android:layout_width="@dimen/checked_icon_size"
+                android:layout_height="@dimen/checked_icon_size"
+                app:layout_constraintStart_toStartOf="@+id/progressBarTwo"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarTwo"
+                app:layout_constraintTop_toTopOf="@+id/progressBarTwo"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarTwo"
+                android:src="@drawable/ic_checked"
+                android:contentDescription="@string/demo_description" />
+            
+
+            <View
+                android:id="@+id/view2"
+                android:layout_width="0dp"
+                android:layout_height="2dp"
+                android:background="#BFD5E0"
+                app:layout_constraintBottom_toBottomOf="@id/progressBarOne"
+                app:layout_constraintEnd_toStartOf="@+id/progressBarThree"
+                app:layout_constraintStart_toEndOf="@+id/progressBarTwo"
+                app:layout_constraintTop_toTopOf="@+id/progressBarOne" />
+
+            <com.mikhaellopez.circularprogressbar.CircularProgressBar
+                android:id="@+id/progressBarThree"
+                android:layout_width="@dimen/circle_progress_size"
+                android:layout_height="@dimen/circle_progress_size"
+                android:layout_marginTop="16dp"
+                android:backgroundTint="#BFD5E0"
+                android:indeterminate="false"
+                android:max="100"
+                android:progressTint="#1E2B39"
+                app:cpb_background_progressbar_color="@color/line_gray"
+                app:cpb_progress="50"
+                app:cpb_progress_direction="to_left"
+                app:cpb_progressbar_color="@color/theme_color"
+                app:cpb_progressbar_width="@dimen/circle_progress_thickness"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvTitle" />
+
+
+            <TextView
+                android:id="@+id/tvProgressThree"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintStart_toStartOf="@+id/progressBarThree"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarThree"
+                app:layout_constraintTop_toTopOf="@+id/progressBarThree"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarThree"
+                android:text="@string/_2"
+                android:visibility="gone"
+                />
+
+            <ImageView
+                android:id="@+id/IvProgressThree"
+                android:layout_width="@dimen/checked_icon_size"
+                android:layout_height="@dimen/checked_icon_size"
+                app:layout_constraintStart_toStartOf="@+id/progressBarThree"
+                app:layout_constraintEnd_toEndOf="@+id/progressBarThree"
+                app:layout_constraintTop_toTopOf="@+id/progressBarThree"
+                app:layout_constraintBottom_toBottomOf="@+id/progressBarThree"
+                android:src="@drawable/ic_checked"
+                android:contentDescription="@string/demo_description" />
+
+
+            <!-- Customer Name -->
+            <TextView
+                android:id="@+id/labelCustomerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:text="Customer Name"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/progressBarOne" />
+
+            <EditText
+                android:id="@+id/inputCustomerName"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit_text"
+                android:drawableStart="@drawable/ic_demo_icon_2"
+                android:hint="Enter here.."
+                android:paddingStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelCustomerName" />
+
+            <!-- Customer Address -->
+            <TextView
+                android:id="@+id/labelCustomerAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Customer Address"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputCustomerName" />
+
+            <EditText
+                android:id="@+id/inputCustomerAddress"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit_text"
+                android:drawableStart="@drawable/ic_demo_icon_2"
+                android:hint="Enter here.."
+                android:paddingStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelCustomerAddress" />
+
+            <View
+                android:id="@+id/line"
+                android:layout_width="match_parent"
+                android:layout_height=".6dp"
+                android:layout_marginTop="@dimen/space_24"
+                android:background="@color/line_gray"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputCustomerAddress" />
+
+            <!-- User Name -->
+            <TextView
+                android:id="@+id/labelUserName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_24"
+                android:text="User Name"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/line" />
+
+            <EditText
+                android:id="@+id/inputUserName"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit_text"
+                android:drawableStart="@drawable/ic_demo_icon_2"
+                android:hint="Enter here.."
+                android:paddingStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelUserName" />
+
+            <!-- User Address -->
+            <TextView
+                android:id="@+id/labelUserAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="User Address"
+                android:textStyle="bold"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputUserName" />
+
+            <EditText
+                android:id="@+id/inputUserAddress"
+                android:layout_width="0dp"
+                android:layout_height="48dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_edit_text"
+                android:drawableStart="@drawable/ic_demo_icon_2"
+                android:hint="Enter here.."
+                android:paddingStart="12dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/labelUserAddress" />
+
+            <!-- Save & Next Button -->
+            <Button
+                android:id="@+id/btnSaveNext"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:background="@drawable/bg_button_next"
+                android:backgroundTint="#1E2B39"
+                android:drawableEnd="@drawable/ic_demo_icon_2"
+                android:paddingHorizontal="24dp"
+                android:text="@string/save_and_confirm"
+                android:textColor="#FFFFFF"
+                app:iconGravity="textEnd"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/inputUserAddress" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+    </ScrollView>
+
+</RelativeLayout>
