@@ -1,5 +1,6 @@
 package com.hasanjaved.reportmate.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -10,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.hasanjaved.reportmate.databinding.FragmentHomeBinding;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
+import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.utility.Utility;
 
 public class HomeFragment extends Fragment {
 
@@ -18,6 +21,7 @@ public class HomeFragment extends Fragment {
     private static final String ARG_PARAM2 = "param2";
     private HomeFragmentClickListener homeFragmentClickListener;
     private FragmentHomeBinding binding;
+    private Activity activity;
 
 
     private String mParam1;
@@ -44,6 +48,8 @@ public class HomeFragment extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+        activity = getActivity();
+
     }
 
     @Override
@@ -53,20 +59,32 @@ public class HomeFragment extends Fragment {
         View view = binding.getRoot();
 
         binding.menuIcon.setOnClickListener(view1 -> {
-            if (homeFragmentClickListener!=null)
+            if (homeFragmentClickListener != null)
                 homeFragmentClickListener.onMenuButtonClicked();
         });
 
 
         binding.llGenerateReport.setOnClickListener(view1 -> {
-            if (homeFragmentClickListener!=null)
+            if (homeFragmentClickListener != null)
                 homeFragmentClickListener.onGenerateNewReportClicked();
         });
 
 
-
+        setPageData();
 
         return view;
+
+    }
+
+    private void setPageData() {
+        Employee employee = Utility.getEmployee(activity);
+        if (employee != null){
+            if (employee.getEmployeeId() != null)
+                binding.tvEmployeeId.setText(employee.getEmployeeId());
+
+            if (employee.getEmployeeName() != null)
+                binding.tvUserName.setText(employee.getEmployeeName());
+        }
 
     }
 
@@ -75,6 +93,7 @@ public class HomeFragment extends Fragment {
         super.onDestroyView();
         binding = null;
     }
+
     public void setFragmentClickListener(HomeFragmentClickListener homeFragmentClickListener) {
 
         this.homeFragmentClickListener = homeFragmentClickListener;

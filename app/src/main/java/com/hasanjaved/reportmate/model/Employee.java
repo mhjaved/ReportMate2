@@ -46,4 +46,15 @@ public class Employee {
     public void setDeviceValidity(String deviceValidity) {
         this.deviceValidity = deviceValidity;
     }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "employeeId='" + employeeId + '\'' +
+                ", EmployeeName='" + EmployeeName + '\'' +
+                ", device='" + device + '\'' +
+                ", registrationDate='" + registrationDate + '\'' +
+                ", deviceValidity='" + deviceValidity + '\'' +
+                '}';
+    }
 }

@@ -2,11 +2,14 @@ package com.hasanjaved.reportmate.model;
 
 public class Report {
 
-    private Employee employee;
+    Employee employee;
 
     String testDate;
 
     String projectNo;
 
+    IrTest irTest;
+
+    Equipment equipment;
 
 }

@@ -2,7 +2,8 @@ package com.hasanjaved.reportmate.listeners;
 
 public interface FragmentClickListener {
 
-    void addFragment();
+//    void addFragment();
+    void addNewReportPhaseTwoFragment();
     void openCamera();
 
     void onFragmentButtonClicked(int buttonNumber, int id, String name);

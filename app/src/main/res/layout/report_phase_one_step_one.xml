@@ -38,6 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/space_12"
                     android:text="@string/generate_new_report_"
+                    android:textColor="@color/text_black"
                     android:textSize="@dimen/heading_size"
                     android:textStyle="bold"
                     app:layout_constraintBottom_toBottomOf="@+id/ivBack"
@@ -60,16 +61,18 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/employee_id"
+                    android:textColor="@color/text_black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
                 <EditText
-                    android:id="@+id/etEquipmentName"
+                    android:id="@+id/etEmployeeId"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
+                    android:textColor="@color/text_black"
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
@@ -100,6 +103,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/date_of_inspection"
+                android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ll1" />
@@ -144,6 +148,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/ivCalendar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/demo_description"
@@ -179,6 +184,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/project_no"
+                    android:textColor="@color/text_black"
                     android:textStyle="bold"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
@@ -188,6 +194,7 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
+                    android:textColor="@color/text_black"
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
@@ -8,7 +9,7 @@
     android:paddingStart="@dimen/space_24"
     android:paddingEnd="0dp"
     android:background="@color/white"
-    tools:context=".SettingsFragment">
+    tools:context=".fragment.SettingsFragment">
 
     <LinearLayout
         android:id="@+id/llHome"
@@ -18,6 +19,8 @@
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
         android:textColor="@color/theme_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         >
 
         <ImageView
@@ -47,6 +50,9 @@
         android:layout_marginTop="@dimen/space_16"
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/llHome"
+        app:layout_constraintStart_toStartOf="parent"
+
         android:textColor="@color/theme_color">
 
         <ImageView
@@ -76,6 +82,9 @@
         android:layout_marginTop="@dimen/space_16"
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llAccountSetting"
+
         android:textColor="@color/theme_color">
 
         <ImageView
@@ -105,6 +114,8 @@
         android:layout_marginTop="@dimen/space_16"
         android:gravity="start|center_vertical"
         android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/llUserGuidelines"
         android:textColor="@color/theme_color">
 
         <ImageView
@@ -127,5 +138,46 @@
 
     </LinearLayout>
 
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/line_gray"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/btnLogout"
+        />
+    <LinearLayout
+        android:id="@+id/btnLogout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:layout_marginTop="@dimen/space_16"
+        android:gravity="start|center_vertical"
+        android:orientation="horizontal"
+        android:layout_gravity="bottom"
+        android:layout_marginBottom="@dimen/space_16"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:textColor="@color/theme_color">
 
-</LinearLayout>
+        <ImageView
+            android:layout_width="22dp"
+            android:layout_height="22dp"
+            android:layout_marginStart="@dimen/space_16"
+            android:layout_marginEnd="@dimen/space_12"
+            android:contentDescription="@string/demo_description"
+            android:src="@drawable/ic_demo_icon_2"
+            app:tint="@color/theme_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/barlow_medium"
+            android:text="@string/logout"
+            android:textColor="@color/theme_color"
+            android:textSize="18sp" />
+
+
+    </LinearLayout>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

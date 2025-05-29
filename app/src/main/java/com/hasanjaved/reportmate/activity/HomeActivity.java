@@ -9,13 +9,14 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.hasanjaved.reportmate.DesignFragment;
+import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
 import com.hasanjaved.reportmate.OcrTestFragment;
 import com.hasanjaved.reportmate.R;
-import com.hasanjaved.reportmate.SettingsFragment;
-import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
+import com.hasanjaved.reportmate.fragment.SettingsFragment;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
+import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity implements OnSettingsItemClickedListener, HomeFragmentClickListener {
@@ -35,6 +36,9 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
         addHomeFragment();
 
+        Employee employee = Utility.getEmployee(this);
+        assert employee != null;
+        Utility.showLog(employee.toString());
 //        addTestFragment();
 
 //        addDesignFragment();
@@ -61,13 +65,7 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
     }
 
-    @Override
-    public void onSettingsItemClicked(String eventName) {
-        Toast.makeText(this,"clicked "+eventName, Toast.LENGTH_SHORT).show();
 
-        binding.drawerLayout.closeDrawer(GravityCompat.END);
-
-    }
 
 
     private void addHomeFragment() {
@@ -114,7 +112,6 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
     @Override
     public void onGenerateNewReportClicked() {
-
         gotoNewReport();
     }
 
@@ -123,5 +120,20 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
     @Override
     public void onPreviousReportHistoryClicked() {
 
+    }
+
+
+    @Override
+    public void onSettingsItemClicked(String eventName) {
+        Toast.makeText(this,"clicked "+eventName, Toast.LENGTH_SHORT).show();
+        binding.drawerLayout.closeDrawer(GravityCompat.END);
+    }
+
+    @Override
+    public void logOut(String eventName) {
+        Utility.saveEmployee(this,null);
+        Intent intent = new Intent(HomeActivity.this, SplashAndLoginActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

@@ -115,5 +115,9 @@
     <string name="circuit_breaker_name">Circuit Breaker Name</string>
     <string name="crm_test_connection_img">CRM Test Connection Img</string>
     <string name="trip_test">Trip Test</string>
+    <string name="logout">Logout</string>
+    <string name="user_name">User Name</string>
+    <string name="user_address">User Address</string>
+    <string name="customer_address">Customer Address</string>
 
 </resources>

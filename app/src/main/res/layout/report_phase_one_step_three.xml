@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -35,9 +34,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_12"
                 android:text="@string/site_details"
+                android:textColor="@color/text_black"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                android:textColor="@color/text_black"
                 app:layout_constraintBottom_toBottomOf="@+id/ivBack"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/ivBack"
@@ -56,22 +55,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/equipment_name"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_black" />
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etEquipmentName"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
+                    android:inputType="text"
+                    android:textColor="@color/text_black"
                     android:paddingStart="@dimen/space_12"
-                    android:paddingEnd="@dimen/space_8"
-                    android:autofillHints=""
-                    android:inputType="text" />
+                    android:paddingEnd="@dimen/space_8" />
             </LinearLayout>
 
             <LinearLayout
@@ -87,22 +87,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/equipment_location"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_black" />
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etEquipmentLocation"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
+                    android:inputType="text"
                     android:paddingStart="@dimen/space_12"
-                    android:paddingEnd="@dimen/space_8"
-                    android:autofillHints=""
-                    android:inputType="text" />
+                    android:textColor="@color/text_black"
+                    android:paddingEnd="@dimen/space_12" />
             </LinearLayout>
 
             <LinearLayout
@@ -118,22 +119,23 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
                     android:text="@string/owner_identification"
-                    android:textStyle="bold"
-                    android:textColor="@color/text_black" />
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etOwnerId"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
+                    android:autofillHints=""
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
+                    android:inputType="text"
                     android:paddingStart="@dimen/space_12"
                     android:paddingEnd="@dimen/space_8"
-                    android:autofillHints=""
-                    android:inputType="text" />
+                    android:textColor="@color/text_black" />
             </LinearLayout>
 
             <TextView
@@ -163,8 +165,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/date_of_inspection"
-                android:textStyle="bold"
                 android:textColor="@color/text_black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line" />
 
@@ -185,7 +187,8 @@
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/dd"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
 
                 <EditText
                     android:layout_width="60dp"
@@ -194,7 +197,8 @@
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/mm"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
 
                 <EditText
                     android:layout_width="70dp"
@@ -203,7 +207,8 @@
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/yyyy"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
             </LinearLayout>
 
             <ImageView
@@ -223,8 +228,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:text="@string/last_inspection_report_no"
-                android:textStyle="bold"
                 android:textColor="@color/text_black"
+                android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/dateGroup" />
 
@@ -233,14 +238,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
                 android:layout_marginTop="@dimen/space_8"
+                android:autofillHints=""
                 android:background="@drawable/bg_edit_text"
                 android:drawableStart="@drawable/ic_demo_icon_2"
                 android:drawablePadding="10dp"
                 android:hint="@string/enter_here"
+                android:inputType="text"
                 android:paddingStart="@dimen/space_12"
                 android:paddingEnd="@dimen/space_8"
-                android:autofillHints=""
-                android:inputType="text"
+                android:textColor="@color/text_black"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/labelProject" />
@@ -260,6 +266,7 @@
             android:id="@+id/btnCancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/space_16"
             android:background="@drawable/bg_button_border"
             android:backgroundTint="#1E2B39"
             android:drawableEnd="@drawable/ic_demo_icon_2"
@@ -267,10 +274,9 @@
             android:text="@string/cancel"
             android:textColor="@color/theme_color"
             app:iconGravity="textEnd"
-            android:layout_margin="@dimen/space_16"
-            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
         <Button
             android:id="@+id/btnNext"
@@ -278,12 +284,12 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/space_16"
             android:background="@drawable/bg_button_next"
+            android:drawableTint="@color/white"
             android:text="@string/save_and_next"
+            android:textColor="@color/white"
             android:textStyle="bold"
             app:icon="@drawable/ic_arrow_right"
             app:iconGravity="textEnd"
-            android:drawableTint="@color/white"
-            android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

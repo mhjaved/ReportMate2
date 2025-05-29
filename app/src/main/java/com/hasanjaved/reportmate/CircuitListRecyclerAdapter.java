@@ -1,7 +1,6 @@
 package com.hasanjaved.reportmate;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,7 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
-import com.hasanjaved.reportmate.model.CircuitListModel;
-import com.hasanjaved.reportmate.utility.Utility;
+import com.hasanjaved.reportmate.model.CircuitBreaker;
 
 import java.util.List;
 
@@ -20,7 +18,7 @@ public class CircuitListRecyclerAdapter extends RecyclerView.Adapter<CircuitList
 
 
 
-    private List<CircuitListModel> list;
+    private List<CircuitBreaker> list;
     private Context context;
     private RecyclerViewClickListener recyclerViewClickListener;
 
@@ -30,7 +28,7 @@ public class CircuitListRecyclerAdapter extends RecyclerView.Adapter<CircuitList
 
     private static int lastClickedPosition = -1;
 
-    public CircuitListRecyclerAdapter(Context context, List<CircuitListModel>  list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
+    public CircuitListRecyclerAdapter(Context context, List<CircuitBreaker>  list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
         this.context = context;
         this.list = list;
         this.selectedItem = selectedItem;

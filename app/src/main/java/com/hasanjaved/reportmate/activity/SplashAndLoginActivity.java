@@ -6,8 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.EditText;
 
 import com.hasanjaved.reportmate.R;
+import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.utility.Utility;
 
 public class SplashAndLoginActivity extends AppCompatActivity {
 
@@ -16,6 +19,7 @@ public class SplashAndLoginActivity extends AppCompatActivity {
     private Runnable runnable;
 
     private View layoutLogin;
+    private EditText etEmployeeId, etPassword;
 
 
     @Override
@@ -33,13 +37,29 @@ public class SplashAndLoginActivity extends AppCompatActivity {
 
         findViewById(R.id.btnBack).setOnClickListener(view -> finish());
 
-        findViewById(R.id.btnLogin).setOnClickListener(view -> gotoHomeActivity());
+
+        etEmployeeId = findViewById(R.id.etEmployeeId);
+        etPassword = findViewById(R.id.etPassword);
+
+        findViewById(R.id.btnLogin).setOnClickListener(view ->{
+
+            if (etEmployeeId.getText().toString().isEmpty()||etPassword.getText().toString().isEmpty())
+                Utility.showToast(this,"provide valid information");
+            else {
+                Employee employee = new Employee();
+                employee.setEmployeeId(etEmployeeId.getText().toString());
+                Utility.saveEmployee(this, employee);
+                gotoHomeActivity();
+            }
+        });
 
     }
 
     private void showLoginPage(){
 
-        layoutLogin.setVisibility(View.VISIBLE);
+        if (Utility.getEmployee(this)!=null)
+            gotoHomeActivity();
+        else layoutLogin.setVisibility(View.VISIBLE);
 
     }
 

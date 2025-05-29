@@ -43,17 +43,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
 
-    private void addNewReportPhaseTwoFragment(){
-
-        NewReportFragmentPhaseTwo fragment = NewReportFragmentPhaseTwo.newInstance("","");
-        fragment.setFragmentClickListener(this);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragmentHolder,fragment,"")
-                .commit();
-
-    }
-
 
     private void addFragmentCamera(){
 
@@ -91,8 +80,16 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
     }
 
     @Override
-    public void addFragment() {
-        addNewReportPhaseTwoFragment();
+    public void addNewReportPhaseTwoFragment() {
+
+        NewReportFragmentPhaseTwo fragment = NewReportFragmentPhaseTwo.newInstance("","");
+        fragment.setFragmentClickListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentHolder,fragment,"")
+                .addToBackStack("")
+                .commit();
+
     }
 
     @Override
