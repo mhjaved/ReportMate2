@@ -118,6 +118,18 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                         viewTwo, viewThree));
 
 
+        binding.viewFour.btnNext.setOnClickListener(view ->
+        {
+            Utility.showLog(" binding.viewFour.btnNext.setOnClickListener");
+            if (fragmentClickListener!=null){
+                if ( binding.viewFour.tvIr.getContentDescription().equals(getString(R.string.selected)))
+                    fragmentClickListener.addNewReportFragmentPhaseThreeIR();
+                else fragmentClickListener.addNewReportFragmentPhaseThreeCrmTrip();
+            }
+
+        });
+
+
         binding.viewOne.ivBack.setOnClickListener(view -> {
                     try {
                         activity.onBackPressed();
@@ -193,6 +205,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
     private void showImage(){
         SharedPreferences preferences =activity.getSharedPreferences("pref", Context.MODE_PRIVATE);
 
+        Utility.showLog(" "+preferences.getString(Utility.ImageToken,"hasan"));
         String fileLocation = "file:"+preferences.getString(Utility.ImageToken,"hasan");
         Utility.showLog(fileLocation);
 
@@ -204,8 +217,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 
     private void setViewFourNextButtonStatus(){
 
-        binding.viewFour.tvIr.setContentDescription(getString(R.string.selected));
-        binding.viewFour.tvCrmTrip.setContentDescription(getString(R.string.not_selected));
+//        Utility.showLog();
 
         if ( binding.viewFour.tvIr.getContentDescription().equals(getString(R.string.selected))||
                 binding.viewFour.tvCrmTrip.getContentDescription().equals(getString(R.string.selected)))

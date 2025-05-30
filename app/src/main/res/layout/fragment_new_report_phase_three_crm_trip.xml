@@ -18,7 +18,7 @@
 
     <include
         android:id="@+id/viewThree"
-        layout="@layout/report_phase_one_step_three"
+        layout="@layout/report_phase_three_trip_crm_trip_one"
         android:visibility="gone" />
 
     <include

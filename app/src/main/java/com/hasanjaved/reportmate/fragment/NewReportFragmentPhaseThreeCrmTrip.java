@@ -20,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hasanjaved.reportmate.CircuitListRecyclerAdapter;
+import com.hasanjaved.reportmate.CircuitListRecyclerAdapter2;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseOneBinding;
 import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseThreeCrmTripBinding;
@@ -45,7 +46,7 @@ public class NewReportFragmentPhaseThreeCrmTrip  extends Fragment implements Rec
     private String mParam2;
 
     private RecyclerView rvList;
-    private CircuitListRecyclerAdapter circuitListRecyclerAdapter;
+    private CircuitListRecyclerAdapter2 circuitListRecyclerAdapter;
 
     public NewReportFragmentPhaseThreeCrmTrip() {
     }
@@ -102,7 +103,7 @@ public class NewReportFragmentPhaseThreeCrmTrip  extends Fragment implements Rec
 
         linearLayoutManager = new LinearLayoutManager(activity);
         binding.viewOne.rvCircuit.setLayoutManager(linearLayoutManager);
-        circuitListRecyclerAdapter = new CircuitListRecyclerAdapter(activity, null, 0, this);
+        circuitListRecyclerAdapter = new CircuitListRecyclerAdapter2(activity, null, 0, this);
         binding.viewOne.rvCircuit.setAdapter(circuitListRecyclerAdapter);
     }
 
@@ -142,24 +143,24 @@ public class NewReportFragmentPhaseThreeCrmTrip  extends Fragment implements Rec
                 showPage(viewThree, viewTwo, viewOne,
                         viewFour));
 
-        binding.viewOne.tvCrmTrip.setOnClickListener(view -> {
+        binding.viewOne.tvCrm.setOnClickListener(view -> {
 
-                    binding.viewOne.tvCrmTrip.setContentDescription(getString(R.string.selected));
-                    binding.viewOne.tvIr.setContentDescription(getString(R.string.not_selected));
+                    binding.viewOne.tvCrm.setContentDescription(getString(R.string.selected));
+                    binding.viewOne.tvTrip.setContentDescription(getString(R.string.not_selected));
 
-                    binding.viewOne.tvCrmTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
-                    binding.viewOne.tvIr.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
+                    binding.viewOne.tvCrm.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
+                    binding.viewOne.tvTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
                     setViewFourNextButtonStatus();
                 }
         );
 
-        binding.viewOne.tvIr.setOnClickListener(view -> {
+        binding.viewOne.tvTrip.setOnClickListener(view -> {
 
-                    binding.viewOne.tvIr.setContentDescription(getString(R.string.selected));
-                    binding.viewOne.tvCrmTrip.setContentDescription(getString(R.string.not_selected));
+                    binding.viewOne.tvTrip.setContentDescription(getString(R.string.selected));
+                    binding.viewOne.tvCrm.setContentDescription(getString(R.string.not_selected));
 
-                    binding.viewOne.tvIr.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
-                    binding.viewOne.tvCrmTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
+                    binding.viewOne.tvTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
+                    binding.viewOne.tvCrm.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
 
                     setViewFourNextButtonStatus();
 
@@ -211,11 +212,11 @@ public class NewReportFragmentPhaseThreeCrmTrip  extends Fragment implements Rec
 
     private void setViewFourNextButtonStatus(){
 
-        binding.viewOne.tvIr.setContentDescription(getString(R.string.selected));
-        binding.viewOne.tvCrmTrip.setContentDescription(getString(R.string.not_selected));
+//        binding.viewOne.tvTrip.setContentDescription(getString(R.string.selected));
+//        binding.viewOne.tvCrm.setContentDescription(getString(R.string.not_selected));
 
-        binding.viewOne.btnNext.setEnabled(binding.viewOne.tvIr.getContentDescription().equals(getString(R.string.selected)) ||
-                binding.viewOne.tvCrmTrip.getContentDescription().equals(getString(R.string.selected)));
+        binding.viewOne.btnNext.setEnabled(binding.viewOne.tvTrip.getContentDescription().equals(getString(R.string.selected)) ||
+                binding.viewOne.tvCrm.getContentDescription().equals(getString(R.string.selected)));
 
     }
     private void setExpandView(ExpandableLayout expand, ImageView arrow) {

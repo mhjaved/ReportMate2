@@ -119,5 +119,11 @@
     <string name="user_name">User Name</string>
     <string name="user_address">User Address</string>
     <string name="customer_address">Customer Address</string>
+    <string name="rename_circuit_breaker">Rename Circuit Breaker</string>
+    <string name="edit_inputs">Edit Inputs</string>
+    <string name="retake">Retake</string>
+    <string name="perform_ocr">Perform OCR</string>
+    <string name="camera_placeholder">Camera Placeholder</string>
+    <string name="nel_swgrts">NEL-SWGRTS</string>
 
 </resources>

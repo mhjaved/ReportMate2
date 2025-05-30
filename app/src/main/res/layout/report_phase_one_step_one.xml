@@ -72,7 +72,6 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
-                    android:textColor="@color/text_black"
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
@@ -80,6 +79,7 @@
                     android:inputType="text"
                     android:paddingStart="@dimen/space_12"
                     android:paddingEnd="@dimen/space_8"
+                    android:textColor="@color/text_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/labelProject" />
@@ -120,30 +120,36 @@
                 app:layout_constraintTop_toBottomOf="@id/labelDate">
 
                 <EditText
+                    android:id="@+id/etDay"
                     android:layout_width="60dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/dd"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
 
                 <EditText
+                    android:id="@+id/etMonth"
                     android:layout_width="60dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/mm"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
 
                 <EditText
+                    android:id="@+id/etYear"
                     android:layout_width="70dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
                     android:background="@drawable/bg_edit_text"
                     android:gravity="center"
                     android:hint="@string/yyyy"
-                    android:inputType="number" />
+                    android:inputType="number"
+                    android:textColor="@color/text_black" />
 
             </LinearLayout>
 
@@ -190,18 +196,20 @@
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
                 <EditText
+                    android:id="@+id/etProjectName"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
-                    android:textColor="@color/text_black"
                     android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
                     android:inputType="text"
+                    android:text="@string/nel_swgrts"
                     android:paddingStart="@dimen/space_12"
                     android:paddingEnd="@dimen/space_8"
+                    android:textColor="@color/text_black"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/labelProject" />
