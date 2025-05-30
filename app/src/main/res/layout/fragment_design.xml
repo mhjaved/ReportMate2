@@ -244,7 +244,7 @@
                 app:layout_constraintTop_toBottomOf="@id/progressBarOne" />
 
             <EditText
-                android:id="@+id/inputCustomerName"
+                android:id="@+id/etCustomerName"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -265,10 +265,10 @@
                 android:text="Customer Address"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputCustomerName" />
+                app:layout_constraintTop_toBottomOf="@id/etCustomerName" />
 
             <EditText
-                android:id="@+id/inputCustomerAddress"
+                android:id="@+id/etCustomerAddress"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -288,7 +288,7 @@
                 android:background="@color/line_gray"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputCustomerAddress" />
+                app:layout_constraintTop_toBottomOf="@id/etCustomerAddress" />
 
             <!-- User Name -->
             <TextView
@@ -326,7 +326,7 @@
                 app:layout_constraintTop_toBottomOf="@id/inputUserName" />
 
             <EditText
-                android:id="@+id/inputUserAddress"
+                android:id="@+id/etUserAddress"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -352,7 +352,7 @@
                 android:textColor="#FFFFFF"
                 app:iconGravity="textEnd"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputUserAddress" />
+                app:layout_constraintTop_toBottomOf="@id/etUserAddress" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

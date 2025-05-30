@@ -65,7 +65,7 @@
                 app:layout_constraintTop_toBottomOf="@id/llHeading" />
 
             <EditText
-                android:id="@+id/inputCustomerName"
+                android:id="@+id/etCustomerName"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -89,10 +89,10 @@
                 android:textStyle="bold"
                 android:textColor="@color/text_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputCustomerName" />
+                app:layout_constraintTop_toBottomOf="@id/etCustomerName" />
 
             <EditText
-                android:id="@+id/inputCustomerAddress"
+                android:id="@+id/etCustomerAddress"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -111,7 +111,7 @@
                 android:layout_width="match_parent"
                 android:layout_height=".6dp"
                 android:background="@color/line_gray"
-                app:layout_constraintTop_toBottomOf="@id/inputCustomerAddress"
+                app:layout_constraintTop_toBottomOf="@id/etCustomerAddress"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 android:layout_marginTop="@dimen/space_24"
@@ -130,7 +130,7 @@
                 app:layout_constraintTop_toBottomOf="@id/line" />
 
             <EditText
-                android:id="@+id/inputUserName"
+                android:id="@+id/etUserName"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"
@@ -154,10 +154,10 @@
                 android:textStyle="bold"
                 android:textColor="@color/text_black"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/inputUserName" />
+                app:layout_constraintTop_toBottomOf="@id/etUserName" />
 
             <EditText
-                android:id="@+id/inputUserAddress"
+                android:id="@+id/etUserAddress"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginTop="8dp"

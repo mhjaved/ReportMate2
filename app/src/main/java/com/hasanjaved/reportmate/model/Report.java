@@ -5,9 +5,10 @@ public class Report {
 
     Employee employee;
     String testDate;
-
     String EmployeeId;
     String projectNo;
+
+    String folderLocation;
     IrTest irTest;
     Equipment equipment;
 
@@ -60,13 +61,23 @@ public class Report {
         EmployeeId = employeeName;
     }
 
+
+    public String getFolderLocation() {
+        return folderLocation;
+    }
+
+    public void setFolderLocation(String folderLocation) {
+        this.folderLocation = folderLocation;
+    }
+
     @Override
     public String toString() {
         return "Report{" +
                 "employee=" + employee +
                 ", testDate='" + testDate + '\'' +
-                ", EmployeeName='" + EmployeeId + '\'' +
+                ", EmployeeId='" + EmployeeId + '\'' +
                 ", projectNo='" + projectNo + '\'' +
+                ", folderLocation='" + folderLocation + '\'' +
                 ", irTest=" + irTest +
                 ", equipment=" + equipment +
                 '}';

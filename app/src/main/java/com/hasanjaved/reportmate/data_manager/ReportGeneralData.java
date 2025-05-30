@@ -10,11 +10,14 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.FolderManager;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class ReportGeneralData {
 
     public static void savePageOneData(Context context,String employeeId, String testDate, String projectNumber) {
+
+        String folderLocation = FolderManager.createReportMateFolder(context,projectNumber);
 
         Report report =  Utility.getReport(context);
 
@@ -24,6 +27,7 @@ public class ReportGeneralData {
         report.setEmployeeId(employeeId);
         report.setTestDate(testDate);
         report.setProjectNo(projectNumber);
+        report.setFolderLocation(folderLocation);
 
         Utility.saveReport(context,report);
 

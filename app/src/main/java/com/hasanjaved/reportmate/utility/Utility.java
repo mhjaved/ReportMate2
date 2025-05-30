@@ -21,9 +21,13 @@ public class Utility {
 
     public static final String SHARED_PREFERENCE_USER = "SHARED_PREFERENCE_USER";
     public static final String CURRENT_REPORT = "CURRENT_REPORT";
+    public static final String PAGE_ONE = "PAGE_ONE";
+    public static final String PAGE_THREE = "PAGE_ONE";
     public static final String EMPLOYEE = "EMPLOYEE";
 
-    public static final String REPORT_MATE_DIRECTORY = "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/ReportMate";
+
+    public static final String REPORT_MATE_DIRECTORY = "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/NEL-SWGRTS1";
+    public static final String IMAGE_SAMPLE_DIRECTORY = "/storage/emulated/0/Pictures/1748629149938.jpg";
     public static final String TAG = "ReportMate";
     public static final String ImageToken = "ImageToken";
     public static void showLog(String text){

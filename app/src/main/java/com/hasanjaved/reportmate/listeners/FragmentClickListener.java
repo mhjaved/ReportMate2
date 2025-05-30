@@ -1,5 +1,7 @@
 package com.hasanjaved.reportmate.listeners;
 
+import android.widget.ImageView;
+
 public interface FragmentClickListener {
 
 //    void addFragment();
@@ -8,7 +10,7 @@ public interface FragmentClickListener {
     void addNewReportFragmentPhaseThreeIR();
 
     void addNewReportFragmentPhaseThreeCrmTrip();
-    void openCamera();
+    void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView);
 
     void onFragmentButtonClicked(int buttonNumber, int id, String name);
 //     void onScreenTouched();

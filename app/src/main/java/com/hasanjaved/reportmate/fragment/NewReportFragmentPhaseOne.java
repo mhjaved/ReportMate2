@@ -3,6 +3,7 @@ package com.hasanjaved.reportmate.fragment;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,23 +16,28 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.LinearLayout;
 
+import com.bumptech.glide.Glide;
 import com.hasanjaved.reportmate.data_manager.ReportGeneralData;
 import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseOneBinding;
+import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.FolderManager;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
 
 
-public class NewReportFragmentPhaseOne extends Fragment {
+public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmentClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private static EditText etDay, etMonth, etYear;
+    private static EditText etDayOne, etMonthOne, etYearOne, etDayThree, etMonthThree, etYearThree;
     private View rootView, viewOne, viewTwo, viewThree, viewFour, viewFive;
     private FragmentNewReportPhaseOneBinding binding;
     private String mParam1;
@@ -82,36 +88,52 @@ public class NewReportFragmentPhaseOne extends Fragment {
         viewFour = rootView.findViewById(R.id.viewFour);
         viewFive = rootView.findViewById(R.id.viewFive);
 
-        etDay = rootView.findViewById(R.id.etDay);
-        etMonth = rootView.findViewById(R.id.etMonth);
-        etYear = rootView.findViewById(R.id.etYear);
+        etDayOne = rootView.findViewById(R.id.etDay);
+        etMonthOne = rootView.findViewById(R.id.etMonth);
+        etYearOne = rootView.findViewById(R.id.etYear);
+
+        etDayThree = rootView.findViewById(R.id.etDayThree);
+        etMonthThree = rootView.findViewById(R.id.etMonthThree);
+        etYearThree = rootView.findViewById(R.id.etYearThree);
 
         setData();
 
+        FileMover fileMover = new FileMover(activity);
+         fileMover.moveImageFile(Utility.IMAGE_SAMPLE_DIRECTORY, Utility.IMAGE_SAMPLE_DIRECTORY, "temperatureImage", true);
+
         binding.viewOne.ivCalendar.setOnClickListener(view -> {
-            DatePickerFragment4 newFragment = new DatePickerFragment4();
+            DatePickerFragment1 newFragment = new DatePickerFragment1();
+            newFragment.show(getChildFragmentManager(), "datePicker");
+        });
+
+        binding.viewThree.ivCalendar.setOnClickListener(view -> {
+            DatePickerFragment2 newFragment = new DatePickerFragment2();
             newFragment.show(getChildFragmentManager(), "datePicker");
         });
 
         binding.viewOne.btnNext.setOnClickListener(view -> {
-
-                    saveData();
-                    showPage(viewTwo, viewOne,
-                            viewThree, viewFour, viewFive);
+                    savePageOneData();
+                    showPage(viewTwo, viewOne, viewThree, viewFour, viewFive);
                 }
         );
 
-        binding.viewTwo.btnNext.setOnClickListener(view ->
-                showPage(viewThree, viewOne,
-                        viewTwo, viewFour, viewFive));
+        binding.viewTwo.btnNext.setOnClickListener(view -> {
+                    savePageTwoData();
+                    showPage(viewThree, viewOne, viewTwo, viewFour, viewFive);
+                }
+        );
 
-        binding.viewThree.btnNext.setOnClickListener(view ->
-                showPage(viewFour, viewOne,
-                        viewTwo, viewThree, viewFive));
+        binding.viewThree.btnNext.setOnClickListener(view -> {
+                    savePageThreeData();
+                    showPage(viewFour, viewOne, viewTwo, viewThree, viewFive);
+                }
+        );
 
-        binding.viewFour.btnNext.setOnClickListener(view ->
-                showPage(viewFive, viewOne,
-                        viewTwo, viewThree, viewFour));
+        binding.viewFour.btnNext.setOnClickListener(view -> {
+                    savePageFourData();
+                    showPage(viewFive, viewOne, viewTwo, viewThree, viewFour);
+                }
+        );
 
 
         binding.viewFive.btnNext.setOnClickListener(view ->
@@ -123,8 +145,9 @@ public class NewReportFragmentPhaseOne extends Fragment {
         );
 
         binding.viewFour.imgCamera.setOnClickListener(view ->
-                fragmentClickListener.openCamera()
+                fragmentClickListener.openCamera(this,binding.viewFour.ivShowImage)
         );
+
 
         binding.viewOne.ivBack.setOnClickListener(view -> {
                     try {
@@ -154,15 +177,46 @@ public class NewReportFragmentPhaseOne extends Fragment {
         Utility.showLog("doesReportMateFolderExist " + FolderManager.doesReportMateFolderExist(activity, "ReportMate"));
 
         return binding.getRoot();
+
     }
 
-    private void saveData() {
+    private void savePageOneData() {
         ReportGeneralData.savePageOneData(activity,
                 binding.viewOne.etEmployeeId.getText().toString().trim(),
-                etDay.getText() + "." + etMonth.getText() + "." + etYear.getText(),
+                etDayOne.getText() + "." + etMonthOne.getText() + "." + etYearOne.getText(),
                 binding.viewOne.etProjectName.getText().toString()
         );
-//        String test = FolderManager.createReportMateFolder(activity,binding.viewOne.etProjectName.getText().toString());
+        Utility.showLog(Utility.getReport(activity).toString());
+    }
+
+    private void savePageTwoData() {
+        ReportGeneralData.savePageTwoData(activity,
+                binding.viewTwo.etCustomerName.getText().toString().trim(),
+                binding.viewTwo.etCustomerAddress.getText().toString().trim(),
+                binding.viewTwo.etUserName.getText().toString().trim(),
+                binding.viewTwo.etUserAddress.getText().toString().trim()
+        );
+        Utility.showLog(Utility.getReport(activity).toString());
+    }
+
+    private void savePageThreeData() {
+        ReportGeneralData.savePageThreeData(activity,
+                binding.viewThree.etEquipmentName.getText().toString().trim(),
+                binding.viewThree.etEquipmentLocation.getText().toString().trim(),
+                binding.viewThree.etOwnerId.getText().toString().trim(),
+                etDayThree.getText() + "." + etMonthThree.getText() + "." + etYearThree.getText(),
+                binding.viewThree.etLastInspectionNo.getText().toString().trim()
+        );
+        Utility.showLog(Utility.getReport(activity).toString());
+    }
+
+    private void savePageFourData() {
+        ReportGeneralData.savePageTwoData(activity,
+                binding.viewTwo.etCustomerName.getText().toString().trim(),
+                binding.viewTwo.etCustomerAddress.getText().toString().trim(),
+                binding.viewTwo.etUserName.getText().toString().trim(),
+                binding.viewTwo.etUserAddress.getText().toString().trim()
+        );
         Utility.showLog(Utility.getReport(activity).toString());
     }
 
@@ -182,10 +236,25 @@ public class NewReportFragmentPhaseOne extends Fragment {
         hide4.setVisibility(View.GONE);
     }
 
+    @Override
+    public void onCancelPressed() {
 
-    public static class DatePickerFragment4 extends DialogFragment
+    }
+
+    @Override
+    public void onSaveButtonPressed(ImageView imageView,String imageLocation) {
+
+        imageView.setVisibility(View.VISIBLE);
+        Glide.with(activity)
+                .load(Uri.parse("file:"+imageLocation))
+                .into(imageView);
+
+    }
+
+
+    public static class DatePickerFragment1 extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
-        //        R.style.DatePickerDialogStyle,
+
         @NonNull
         @Override
         public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
@@ -202,13 +271,44 @@ public class NewReportFragmentPhaseOne extends Fragment {
             return datePicker;
         }
 
-        //calendar.get(Calendar.YEAR)
         @Override
         public void onDateSet(DatePicker view, int year, int month, int day) {
             Utility.showLog("year " + year + " month " + month + " day " + day);
-            etDay.setText(String.valueOf(day));
-            etMonth.setText(String.valueOf(month + 1));
-            etYear.setText(String.valueOf(year));
+
+                etDayOne.setText(String.valueOf(day));
+                etMonthOne.setText(String.valueOf(month + 1));
+                etYearOne.setText(String.valueOf(year));
+
+
+        }
+    }
+
+
+    public static class DatePickerFragment2 extends DialogFragment
+            implements DatePickerDialog.OnDateSetListener {
+
+        @NonNull
+        @Override
+        public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+            Calendar calendar = Calendar.getInstance();
+            DatePickerDialog datePicker = new DatePickerDialog(getContext(),
+
+                    this,
+                    calendar.get(Calendar.YEAR),
+                    calendar.get(Calendar.MONTH),
+                    calendar.get(Calendar.DAY_OF_MONTH));
+
+            datePicker.getDatePicker().setMaxDate(System.currentTimeMillis());
+
+            return datePicker;
+        }
+
+        @Override
+        public void onDateSet(DatePicker view, int year, int month, int day) {
+            Utility.showLog("year " + year + " month " + month + " day " + day);
+                etDayThree.setText(String.valueOf(day));
+                etMonthThree.setText(String.valueOf(month + 1));
+                etYearThree.setText(String.valueOf(year));
         }
     }
 

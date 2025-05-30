@@ -2,6 +2,7 @@ package com.hasanjaved.reportmate.activity;
 
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseOne;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseThreeCrmTrip;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseThreeIR;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseTwo;
+import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.utility.DocumentGenerator;
 import com.hasanjaved.reportmate.utility.FolderManager;
@@ -95,13 +97,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     private void addFragmentCamera(){
 
-        FragmentCamera fragment = FragmentCamera.newInstance("","");
-//        fragment.setFragmentClickListener(this);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .add(R.id.fragmentHolder,fragment,"")
-                .addToBackStack("")
-                .commit();
+
 
     }
 
@@ -149,8 +145,14 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
     @Override
-    public void openCamera() {
-        addFragmentCamera();
+    public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView) {
+        FragmentCamera fragment = FragmentCamera.newInstance("","");
+        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentHolder,fragment,"")
+                .addToBackStack("")
+                .commit();
     }
 
     @Override

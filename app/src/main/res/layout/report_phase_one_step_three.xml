@@ -182,6 +182,7 @@
                 app:layout_constraintTop_toBottomOf="@id/labelDate">
 
                 <EditText
+                    android:id="@+id/etDayThree"
                     android:layout_width="60dp"
                     android:layout_height="48dp"
                     android:background="@drawable/bg_edit_text"
@@ -191,6 +192,7 @@
                     android:textColor="@color/text_black" />
 
                 <EditText
+                    android:id="@+id/etMonthThree"
                     android:layout_width="60dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
@@ -201,6 +203,7 @@
                     android:textColor="@color/text_black" />
 
                 <EditText
+                    android:id="@+id/etYearThree"
                     android:layout_width="70dp"
                     android:layout_height="48dp"
                     android:layout_marginStart="8dp"
@@ -212,6 +215,7 @@
             </LinearLayout>
 
             <ImageView
+                android:id="@+id/ivCalendar"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:contentDescription="@string/demo_description"
@@ -244,6 +248,7 @@
                 android:drawablePadding="10dp"
                 android:hint="@string/enter_here"
                 android:inputType="text"
+                android:text="@string/nel_swgrts"
                 android:paddingStart="@dimen/space_12"
                 android:paddingEnd="@dimen/space_8"
                 android:textColor="@color/text_black"

@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -32,6 +33,8 @@ import com.google.common.util.concurrent.ListenableFuture;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.FragmentCameraBinding;
 import com.hasanjaved.reportmate.databinding.FragmentHomeBinding;
+import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
+import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.io.File;
@@ -46,6 +49,14 @@ public class FragmentCamera extends Fragment {
 
     private FragmentCameraBinding binding;
     private ImageCapture imageCapture;
+
+    private CameraFragmentClickListener fragmentClickListener;
+    private ImageView imageViewForSettingImage;
+
+    public void setFragmentClickListener(CameraFragmentClickListener fragmentClickListener,ImageView imageViewForSettingImage) {
+        this.fragmentClickListener = fragmentClickListener;
+        this.imageViewForSettingImage = imageViewForSettingImage;
+    }
 
     private final ActivityResultLauncher<String> permissionLauncher =
             registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
@@ -89,11 +100,7 @@ public class FragmentCamera extends Fragment {
             startCamera(cameraFacing);
         }
 
-        binding.btnBack.setOnClickListener(view1 ->{
-
-            Utility.showLog("binding.btnBack");
-            getParentFragmentManager().popBackStack();
-        } );
+        binding.btnBack.setOnClickListener(view1 -> closeFragment());
 //        flipCamera.setOnClickListener(v -> {
 //            cameraFacing = (cameraFacing == CameraSelector.LENS_FACING_BACK)
 //                    ? CameraSelector.LENS_FACING_FRONT
@@ -104,6 +111,9 @@ public class FragmentCamera extends Fragment {
         return view;
     }
 
+    private void closeFragment(){
+        getParentFragmentManager().popBackStack();
+    }
     private void startCamera(int cameraFacing) {
         int aspectRatio = aspectRatio(binding.imagePreview.getWidth(), binding.imagePreview.getHeight());
         ListenableFuture<ProcessCameraProvider> cameraProviderFuture =
@@ -158,6 +168,9 @@ public class FragmentCamera extends Fragment {
                             Toast.makeText(requireContext(), "Saved to: " + file.getPath(), Toast.LENGTH_SHORT).show();
                             SharedPreferences prefs = requireContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
                             prefs.edit().putString(Utility.ImageToken, file.getPath()).apply();
+                            fragmentClickListener.onSaveButtonPressed(imageViewForSettingImage,file.getPath());
+//                            Utility.showLog("imageViewForSettingImage "+imageViewForSettingImage+ " file path "+file.getPath());
+                            closeFragment();
                         });
                         startCamera(cameraFacing);
                     }
