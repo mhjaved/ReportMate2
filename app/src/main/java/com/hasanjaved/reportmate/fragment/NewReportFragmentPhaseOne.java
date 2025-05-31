@@ -27,6 +27,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.FileMover2;
 import com.hasanjaved.reportmate.utility.FolderManager;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -98,8 +99,8 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
         setData();
 
-        FileMover fileMover = new FileMover(activity);
-         fileMover.moveImageFile(Utility.IMAGE_SAMPLE_DIRECTORY, Utility.IMAGE_SAMPLE_DIRECTORY, "temperatureImage", true);
+//        FileMover fileMover = new FileMover(activity);
+//         fileMover.moveImageFile(Utility.IMAGE_SAMPLE_DIRECTORY, Utility.IMAGE_SAMPLE_DIRECTORY, "temperatureImage", true);
 
         binding.viewOne.ivCalendar.setOnClickListener(view -> {
             DatePickerFragment1 newFragment = new DatePickerFragment1();
@@ -145,7 +146,8 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         );
 
         binding.viewFour.imgCamera.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this,binding.viewFour.ivShowImage)
+                fragmentClickListener.openCamera(this, binding.viewFour.ivShowImage,
+                        Utility.generalImageTemperature,Utility.getReportDirectory(activity))
         );
 
 
@@ -174,7 +176,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 showPage(viewFour, viewTwo, viewOne,
                         viewThree, viewFive));
 
-        Utility.showLog("doesReportMateFolderExist " + FolderManager.doesReportMateFolderExist(activity, "ReportMate"));
+        Utility.showLog("doesReportMateFolderExist " + FolderManager.doesFolderExist(activity, "ReportMate"));
 
         return binding.getRoot();
 
@@ -242,15 +244,23 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     }
 
     @Override
-    public void onSaveButtonPressed(ImageView imageView,String imageLocation) {
+    public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName,String subFolder) {
 
-        imageView.setVisibility(View.VISIBLE);
-        Glide.with(activity)
-                .load(Uri.parse("file:"+imageLocation))
-                .into(imageView);
+        if (!imageLocation.equals("")){
+            imageView.setVisibility(View.VISIBLE);
+            Glide.with(activity)
+                    .load(Uri.parse("file:" + imageLocation))
+                    .into(imageView);
+
+            FileMover2.moveImageToDocumentsSubfolder(
+                    activity,
+                    imageLocation,
+                    imageName,
+                    subFolder
+            );
+        }
 
     }
-
 
     public static class DatePickerFragment1 extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -275,14 +285,13 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         public void onDateSet(DatePicker view, int year, int month, int day) {
             Utility.showLog("year " + year + " month " + month + " day " + day);
 
-                etDayOne.setText(String.valueOf(day));
-                etMonthOne.setText(String.valueOf(month + 1));
-                etYearOne.setText(String.valueOf(year));
+            etDayOne.setText(String.valueOf(day));
+            etMonthOne.setText(String.valueOf(month + 1));
+            etYearOne.setText(String.valueOf(year));
 
 
         }
     }
-
 
     public static class DatePickerFragment2 extends DialogFragment
             implements DatePickerDialog.OnDateSetListener {
@@ -306,9 +315,9 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         @Override
         public void onDateSet(DatePicker view, int year, int month, int day) {
             Utility.showLog("year " + year + " month " + month + " day " + day);
-                etDayThree.setText(String.valueOf(day));
-                etMonthThree.setText(String.valueOf(month + 1));
-                etYearThree.setText(String.valueOf(year));
+            etDayThree.setText(String.valueOf(day));
+            etMonthThree.setText(String.valueOf(month + 1));
+            etYearThree.setText(String.valueOf(year));
         }
     }
 

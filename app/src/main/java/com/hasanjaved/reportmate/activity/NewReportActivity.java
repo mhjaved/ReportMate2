@@ -145,9 +145,9 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
     @Override
-    public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView) {
+    public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder) {
         FragmentCamera fragment = FragmentCamera.newInstance("","");
-        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView);
+        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentHolder,fragment,"")

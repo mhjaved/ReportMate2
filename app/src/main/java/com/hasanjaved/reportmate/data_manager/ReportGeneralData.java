@@ -17,7 +17,24 @@ public class ReportGeneralData {
 
     public static void savePageOneData(Context context,String employeeId, String testDate, String projectNumber) {
 
-        String folderLocation = FolderManager.createReportMateFolder(context,projectNumber);
+//        if ()
+//        String folderLocation = FolderManager.createFolder(context,projectNumber);
+
+        String baseFolderLink = FolderManager.getLinkIfFolderExist(context,Utility.BASE_FOLDER_NAME);
+        String projectLink = null;
+
+        if (baseFolderLink==null)
+            baseFolderLink = FolderManager.createBaseFolder(context);
+
+        if (baseFolderLink!=null){
+            projectLink = FolderManager.checkFolderInDirectory(context,baseFolderLink,projectNumber);
+
+            if (projectLink!=null){
+                Utility.showLog(projectLink);
+            }else {
+                projectLink =  FolderManager.createFolderInDirectory(context,baseFolderLink,projectNumber);
+            }
+        }
 
         Report report =  Utility.getReport(context);
 
@@ -27,7 +44,7 @@ public class ReportGeneralData {
         report.setEmployeeId(employeeId);
         report.setTestDate(testDate);
         report.setProjectNo(projectNumber);
-        report.setFolderLocation(folderLocation);
+        report.setFolderLocation(projectLink);
 
         Utility.saveReport(context,report);
 

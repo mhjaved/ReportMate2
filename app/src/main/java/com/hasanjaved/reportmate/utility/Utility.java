@@ -16,6 +16,7 @@ import com.hasanjaved.reportmate.model.Report;
 
 import java.lang.reflect.Type;
 import java.util.List;
+import java.util.Objects;
 
 public class Utility {
 
@@ -27,8 +28,10 @@ public class Utility {
 
 
     public static final String REPORT_MATE_DIRECTORY = "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/NEL-SWGRTS1";
-    public static final String IMAGE_SAMPLE_DIRECTORY = "/storage/emulated/0/Pictures/1748629149938.jpg";
+    public static final String IMAGE_SAMPLE_DIRECTORY = "/storage/emulated/0/Pictures/1748710167004.jpg";
     public static final String TAG = "ReportMate";
+    public static final String BASE_FOLDER_NAME = "ReportMate";
+    public static final String generalImageTemperature = "generalImageTemperature";
     public static final String ImageToken = "ImageToken";
     public static void showLog(String text){
         Log.d(TAG,text);
@@ -38,6 +41,9 @@ public class Utility {
         Toast.makeText(context,text, Toast.LENGTH_SHORT).show();
     }
 
+    public static String getReportDirectory(Context context){
+        return Utility.BASE_FOLDER_NAME+"/"+ Objects.requireNonNull(Utility.getReport(context)).getProjectNo();
+    }
 
     public static void getCompletedReportList(){
 
@@ -47,6 +53,9 @@ public class Utility {
 
     }
 
+    public static void createProjectFolder(){
+
+    }
     public static Employee getEmployee(Context context) {
         try {
             String connectionsJSONString = context.getSharedPreferences

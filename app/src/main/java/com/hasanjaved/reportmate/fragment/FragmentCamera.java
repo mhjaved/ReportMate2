@@ -1,9 +1,11 @@
 package com.hasanjaved.reportmate.fragment;
 
 import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
@@ -29,6 +31,7 @@ import androidx.camera.view.PreviewView;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 
+import com.bumptech.glide.Glide;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.FragmentCameraBinding;
@@ -49,13 +52,21 @@ public class FragmentCamera extends Fragment {
 
     private FragmentCameraBinding binding;
     private ImageCapture imageCapture;
+    private Activity activity;
 
     private CameraFragmentClickListener fragmentClickListener;
+    private String imageLink = "";
     private ImageView imageViewForSettingImage;
+    private  String imageName, subFolder;
 
-    public void setFragmentClickListener(CameraFragmentClickListener fragmentClickListener,ImageView imageViewForSettingImage) {
+    public void setFragmentClickListener(CameraFragmentClickListener fragmentClickListener,ImageView imageViewForSettingImage,
+                                         String imageName,String subFolder) {
         this.fragmentClickListener = fragmentClickListener;
         this.imageViewForSettingImage = imageViewForSettingImage;
+        this.imageName = imageName;
+        this.subFolder = subFolder;
+
+        Utility.showLog("imageName  "+imageName);
     }
 
     private final ActivityResultLauncher<String> permissionLauncher =
@@ -77,7 +88,11 @@ public class FragmentCamera extends Fragment {
         fragment.setArguments(args);
         return fragment;
     }
-
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        activity = getActivity();
+    }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater,
@@ -99,6 +114,14 @@ public class FragmentCamera extends Fragment {
         } else {
             startCamera(cameraFacing);
         }
+
+
+        binding.btnRetake.setOnClickListener(view1 ->binding.ivShowImage.setVisibility(View.GONE));
+        binding.btnPerformOCR.setOnClickListener(view1 -> {
+            fragmentClickListener.onSaveButtonPressed(imageViewForSettingImage,imageLink,imageName, subFolder);
+            closeFragment();
+        });
+
 
         binding.btnBack.setOnClickListener(view1 -> closeFragment());
 //        flipCamera.setOnClickListener(v -> {
@@ -153,6 +176,19 @@ public class FragmentCamera extends Fragment {
         }, ContextCompat.getMainExecutor(requireContext()));
     }
 
+    private void showImage(String imageLink){
+        binding.ivShowImage.setVisibility(View.VISIBLE);
+        String fileLocation = "file:"+imageLink;
+        Utility.showLog(fileLocation);
+
+        binding.btnRetake.setEnabled(true);
+        binding.btnPerformOCR.setEnabled(true);
+
+        Glide.with(activity)
+                .load(Uri.parse(fileLocation))
+                .into(binding.ivShowImage);
+
+    }
     private void takePicture(ImageCapture imageCapture) {
         File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
                 System.currentTimeMillis() + ".jpg");
@@ -168,9 +204,11 @@ public class FragmentCamera extends Fragment {
                             Toast.makeText(requireContext(), "Saved to: " + file.getPath(), Toast.LENGTH_SHORT).show();
                             SharedPreferences prefs = requireContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
                             prefs.edit().putString(Utility.ImageToken, file.getPath()).apply();
-                            fragmentClickListener.onSaveButtonPressed(imageViewForSettingImage,file.getPath());
-//                            Utility.showLog("imageViewForSettingImage "+imageViewForSettingImage+ " file path "+file.getPath());
-                            closeFragment();
+//                            fragmentClickListener.onSaveButtonPressed(imageViewForSettingImage,file.getPath());
+                            imageLink = file.getPath();
+                            Utility.showLog(" file path "+file.getPath());
+//                            closeFragment();
+                            showImage(file.getPath());
                         });
                         startCamera(cameraFacing);
                     }

@@ -10,7 +10,7 @@ public interface FragmentClickListener {
     void addNewReportFragmentPhaseThreeIR();
 
     void addNewReportFragmentPhaseThreeCrmTrip();
-    void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView);
+    void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder);
 
     void onFragmentButtonClicked(int buttonNumber, int id, String name);
 //     void onScreenTouched();

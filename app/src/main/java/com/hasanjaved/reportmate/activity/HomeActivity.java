@@ -17,6 +17,11 @@ import com.hasanjaved.reportmate.fragment.SettingsFragment;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
 import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.FileMover2;
+import com.hasanjaved.reportmate.utility.FolderManager;
+import com.hasanjaved.reportmate.utility.FolderManager2;
+import com.hasanjaved.reportmate.utility.MediaStoreUtils;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity implements OnSettingsItemClickedListener, HomeFragmentClickListener {
@@ -32,16 +37,34 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
         binding = ActivityHomeBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
-//        binding.buttonOpen.setOnClickListener(view -> );
+//        if (!FolderManager.isBaseFolderAvailable(this)){
+//            Utility.showLog(" base folder link "+ FolderManager.createBaseFolder(this));
+//        }else {
+//            Utility.showLog(" base folder available "+ FolderManager.getFolderPathIfExists(this,Utility.BASE_FOLDER_NAME));
+//        }
 
+//        String link = FolderManager.createFolder(this,Utility.BASE_FOLDER_NAME);
+//        String link2 = FolderManager.createFolderInDirectory(this,link,"projectOne");
+//        Utility.showLog("link2 "+link2);
+//        String projectPath = FolderManager2.createProjectFolder(this,
+//                "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/ReportMate",
+//                "projectOne");
+
+//        MediaStoreUtils.createFolderInDocuments(this,"MediaStoreUtils");
+        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());
         addHomeFragment();
+
+//        FileMover2.moveImageToDocumentsSubfolder(
+//                this,
+//                Utility.IMAGE_SAMPLE_DIRECTORY,
+//                "ir_test.jpg",
+//                "ReportMate"
+//        );
 
         Employee employee = Utility.getEmployee(this);
         assert employee != null;
         Utility.showLog(employee.toString());
-//        addTestFragment();
 
-//        addDesignFragment();
     }
 
     @Override

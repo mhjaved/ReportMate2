@@ -2,13 +2,13 @@ package com.hasanjaved.reportmate.model;
 
 public class Report {
 
-
     Employee employee;
     String testDate;
     String EmployeeId;
     String projectNo;
-
     String folderLocation;
+
+    String generalImageTemperature;
     IrTest irTest;
     Equipment equipment;
 
@@ -70,16 +70,11 @@ public class Report {
         this.folderLocation = folderLocation;
     }
 
-    @Override
-    public String toString() {
-        return "Report{" +
-                "employee=" + employee +
-                ", testDate='" + testDate + '\'' +
-                ", EmployeeId='" + EmployeeId + '\'' +
-                ", projectNo='" + projectNo + '\'' +
-                ", folderLocation='" + folderLocation + '\'' +
-                ", irTest=" + irTest +
-                ", equipment=" + equipment +
-                '}';
+    public String getGeneralImageTemperature() {
+        return generalImageTemperature;
+    }
+
+    public void setGeneralImageTemperature(String generalImageTemperature) {
+        this.generalImageTemperature = generalImageTemperature;
     }
 }
