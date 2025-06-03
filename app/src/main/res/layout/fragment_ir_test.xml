@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true">
+
+    <include
+        android:id="@+id/viewOne"
+        layout="@layout/layout_ir_test_step_one"
+        android:visibility="visible" />
+
+    <include
+        android:id="@+id/viewTwo"
+        layout="@layout/layout_ir_test_step_two"
+        android:visibility="gone" />
+
+<!--    <include-->
+<!--        android:id="@+id/viewThree"-->
+<!--        layout="@layout/report_phase_two_step_three"-->
+<!--        android:visibility="gone" />-->
+
+<!--    <include-->
+<!--        android:id="@+id/viewFour"-->
+<!--        layout="@layout/report_phase_two_step_four"-->
+<!--        android:visibility="gone" />-->
+
+
+
+</RelativeLayout>

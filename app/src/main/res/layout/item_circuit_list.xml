@@ -24,7 +24,7 @@
         android:id="@+id/tvNameTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Name:"
+        android:text="@string/name"
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -71,20 +71,20 @@
 
     <!-- Edit Icon -->
     <ImageView
-        android:id="@+id/editButton"
+        android:id="@+id/btnEdit"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
         android:contentDescription="@string/demo_description"
         android:src="@drawable/ic_edit_"
-        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:layout_constraintEnd_toStartOf="@id/btnDelete"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        />
+        app:tint="@color/text_black" />
 
     <!-- Delete Icon -->
     <ImageView
-        android:id="@+id/deleteButton"
+        android:id="@+id/btnDelete"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="@string/demo_description"
@@ -92,6 +92,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:tint="@color/text_black"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

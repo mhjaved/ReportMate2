@@ -1,13 +1,20 @@
 package com.hasanjaved.reportmate.fragment;
 
+import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.pm.PackageManager;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
 
@@ -17,7 +24,7 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.hasanjaved.reportmate.data_manager.ReportGeneralData;
@@ -26,9 +33,10 @@ import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.model.Employee;
-import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.FileMover2;
-import com.hasanjaved.reportmate.utility.FolderManager;
+import com.hasanjaved.reportmate.utility.ImageLoader;
+import com.hasanjaved.reportmate.utility.not.FolderManager;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
@@ -49,6 +57,15 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     }
 
     private FragmentClickListener fragmentClickListener;
+
+    private final ActivityResultLauncher<String> permissionLauncher =
+            registerForActivityResult(new ActivityResultContracts.RequestPermission(), result -> {
+                if (result) {
+//                    startCamera(cameraFacing);
+                } else {
+                    Toast.makeText(requireContext(), "Camera permission denied", Toast.LENGTH_SHORT).show();
+                }
+            });
 
     public void setFragmentClickListener(FragmentClickListener fragmentClickListener) {
         this.fragmentClickListener = fragmentClickListener;
@@ -82,6 +99,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
         rootView = binding.getRoot();
 
+        checkAndRequestReadMediaImagesPermission();
 
         viewOne = rootView.findViewById(R.id.viewOne);
         viewTwo = rootView.findViewById(R.id.viewTwo);
@@ -96,6 +114,10 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         etDayThree = rootView.findViewById(R.id.etDayThree);
         etMonthThree = rootView.findViewById(R.id.etMonthThree);
         etYearThree = rootView.findViewById(R.id.etYearThree);
+
+        // Basic usage - load img.jpg from Documents/ReportMate/
+//        ImageLoader.loadImageFromReportMate(activity, binding.viewFour.imgCamera, "img.jpg");
+
 
         setData();
 
@@ -119,19 +141,39 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         );
 
         binding.viewTwo.btnNext.setOnClickListener(view -> {
-                    savePageTwoData();
-                    showPage(viewThree, viewOne, viewTwo, viewFour, viewFive);
+
+            if (binding.viewTwo.etCustomerName.getText().toString().isEmpty()) {
+                Utility.showToast(activity, "Provide Customer Name");
+            }else if (binding.viewTwo.etCustomerAddress.getText().toString().isEmpty()){
+                Utility.showToast(activity, "Provide Customer Address");
+            }else if (binding.viewTwo.etUserName.getText().toString().isEmpty()){
+                Utility.showToast(activity, "Provide User Name");
+            }else if (binding.viewTwo.etUserAddress.getText().toString().isEmpty()){
+                Utility.showToast(activity, "Provide User Address");
+            }else {
+                savePageTwoData();
+                showPage(viewThree, viewOne, viewTwo, viewFour, viewFive);
+            }
                 }
         );
 
         binding.viewThree.btnNext.setOnClickListener(view -> {
-                    savePageThreeData();
-                    showPage(viewFour, viewOne, viewTwo, viewThree, viewFive);
+            if (binding.viewThree.etEquipmentName.getText().toString().isEmpty()) {
+                Utility.showToast(activity, "Provide Equipment Name");
+            }else if (binding.viewThree.etEquipmentLocation.getText().toString().isEmpty()){
+                Utility.showToast(activity, "Provide Equipment Location");
+            }else {
+                savePageThreeData();
+                showPage(viewFour, viewOne, viewTwo, viewThree, viewFive);
+            }
+
+
                 }
         );
 
         binding.viewFour.btnNext.setOnClickListener(view -> {
                     savePageFourData();
+                    showPageFiveDate();
                     showPage(viewFive, viewOne, viewTwo, viewThree, viewFour);
                 }
         );
@@ -145,9 +187,30 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 }
         );
 
-        binding.viewFour.imgCamera.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.viewFour.ivShowImage,
-                        Utility.generalImageTemperature,Utility.getReportDirectory(activity))
+        binding.viewFour.imgCamera.setOnClickListener(view ->{
+
+//            getImagePermission();
+                    fragmentClickListener.openCamera(this, binding.viewFour.ivShowImage,
+                            Utility.generalImageTemperature, Utility.getReportDirectory(activity));
+                }
+
+        );
+
+        binding.viewFive.imgCamera1.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage1,
+                        Utility.dbBoxPanelFront, Utility.getReportDirectory(activity))
+        );
+        binding.viewFive.imgCamera2.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage2,
+                        Utility.dbBoxPanelInside, Utility.getReportDirectory(activity))
+        );
+        binding.viewFive.imgCamera3.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage3,
+                        Utility.dbBoxPanelNameplate, Utility.getReportDirectory(activity))
+        );
+        binding.viewFive.imgCamera4.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage4,
+                        Utility.dbBoxPanelGrounging, Utility.getReportDirectory(activity))
         );
 
 
@@ -182,6 +245,51 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
     }
 
+//    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
+//    private void getImagePermission(){
+//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
+//                != PackageManager.PERMISSION_GRANTED) {
+//            permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
+//        } else {
+////            startCamera(cameraFacing);
+//        }
+//    }
+
+
+    private static final int REQUEST_READ_MEDIA_IMAGES = 101;
+
+    private void checkAndRequestReadMediaImagesPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) { // API 33+
+            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
+                    != PackageManager.PERMISSION_GRANTED) {
+
+                if (shouldShowRequestPermissionRationale(Manifest.permission.READ_MEDIA_IMAGES)) {
+                    // Optional: Show a custom explanation dialog here before requesting
+                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                            REQUEST_READ_MEDIA_IMAGES);
+                } else {
+                    // Request permission directly
+                    requestPermissions(new String[]{Manifest.permission.READ_MEDIA_IMAGES},
+                            REQUEST_READ_MEDIA_IMAGES);
+                }
+            } else {
+                // Permission already granted, proceed with your logic
+            }
+        } else {
+            // For older versions, use READ_EXTERNAL_STORAGE if needed
+        }
+    }
+
+    private void showPageFiveDate(){
+        try {
+            Report report = Utility.getReport(activity);
+            binding.viewFive.etEquipmentName.setText(report.getEquipment().getEquipmentName());
+            binding.viewFive.etEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
+        }catch (Exception e){
+            Utility.showLog(e.toString());
+        }
+    }
+
     private void savePageOneData() {
         ReportGeneralData.savePageOneData(activity,
                 binding.viewOne.etEmployeeId.getText().toString().trim(),
@@ -190,6 +298,8 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         );
         Utility.showLog(Utility.getReport(activity).toString());
     }
+
+
 
     private void savePageTwoData() {
         ReportGeneralData.savePageTwoData(activity,
@@ -213,12 +323,9 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     }
 
     private void savePageFourData() {
-        ReportGeneralData.savePageTwoData(activity,
-                binding.viewTwo.etCustomerName.getText().toString().trim(),
-                binding.viewTwo.etCustomerAddress.getText().toString().trim(),
-                binding.viewTwo.etUserName.getText().toString().trim(),
-                binding.viewTwo.etUserAddress.getText().toString().trim()
-        );
+        ReportGeneralData.savePageFourData(activity,
+                binding.viewFour.airTempInput.getText().toString().trim(),
+                binding.viewFour.relHumidityInput.getText().toString().trim());
         Utility.showLog(Utility.getReport(activity).toString());
     }
 
@@ -244,9 +351,9 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     }
 
     @Override
-    public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName,String subFolder) {
+    public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
 
-        if (!imageLocation.equals("")){
+        if (!imageLocation.equals("")) {
             imageView.setVisibility(View.VISIBLE);
             Glide.with(activity)
                     .load(Uri.parse("file:" + imageLocation))

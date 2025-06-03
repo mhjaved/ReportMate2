@@ -8,8 +8,13 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.hasanjaved.reportmate.model.CrmTest;
 import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.model.IrTest;
+import com.hasanjaved.reportmate.model.ManufacturerCurveDetails;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.model.TripTest;
+import com.hasanjaved.reportmate.utility.Utility;
 
 public class TestData {
 
@@ -20,20 +25,21 @@ public class TestData {
     public static final String REPORT_MATE_DIRECTORY = "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/ReportMate";
     public static final String TAG = "ReportMate";
     public static final String ImageToken = "ImageToken";
-    public static void showLog(String text){
-        Log.d(TAG,text);
+
+    public static void showLog(String text) {
+        Log.d(TAG, text);
     }
 
-    public static void showToast(Context context,String text){
-        Toast.makeText(context,text, Toast.LENGTH_SHORT).show();
+    public static void showToast(Context context, String text) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
 
-    public static void getCompletedReportList(){
+    public static void getCompletedReportList() {
 
     }
 
-    public static void getRunningReportList(){
+    public static void getRunningReportList() {
 
     }
 
@@ -92,23 +98,118 @@ public class TestData {
 
     }
 
+    public static void saveIrTestGroundConnectionData(Context context,
+                                                      String agValue, String bgValue, String cgValue
+
+    ) {
+
+        Report report = Utility.getReport(context);
+
+        if (report != null) {
+            IrTest irTest = report.getIrTest();
+
+            if (irTest == null)
+                irTest = new IrTest();
+
+            irTest.setAgValue(agValue);
+            irTest.setBgValue(bgValue);
+            irTest.setCgValue(cgValue);
 
 
-//    public static void saveChildList(Context context, List<ChildInfo> childInfoList) {
-//
-//        SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
-//        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-//        String connectionsJSONString = new Gson().toJson(childInfoList);
-//        prefsEditor.putString(Utility.CHILD_LIST, connectionsJSONString);
-//        prefsEditor.apply();
-//
-//    }
-//
-//    public static List<ChildInfo> getChildList(Context context) {
-//        String connectionsJSONString = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE).getString(Utility.CHILD_LIST, null);
-//        Type type = new TypeToken<List<ChildInfo>>() {
-//        }.getType();
-//        return new Gson().fromJson(connectionsJSONString, type);
-//    }
+            report.setIrTest(irTest);
+
+            Utility.saveReport(context, report);
+            Utility.showLog(report.toString());
+        }
+
+    }
+
+    public static void saveCrmTestData(Context context,
+                                       String rResValue, String rResUnit,
+                                       String yResValue, String yResUnit,
+                                       String bResValue, String bResUnit
+
+    ) {
+
+        Report report = Utility.getReport(context);
+
+        if (report != null) {
+            CrmTest crmTest = report.getCrmTest();
+
+            if (crmTest == null)
+                crmTest = new CrmTest();
+
+            crmTest.setrResValue(rResValue);
+            crmTest.setrResUnit(rResUnit);
+
+            crmTest.setyResValue(yResValue);
+            crmTest.setyResUnit(yResUnit);
+
+            crmTest.setbResValue(bResValue);
+            crmTest.setbResUnit(bResUnit);
+
+
+            report.setCrmTest(crmTest);
+
+            Utility.saveReport(context, report);
+            Utility.showLog(report.toString());
+        }
+
+    }
+
+    public static void saveTripTestData(Context context,
+                                        String testAmplitude,
+                                        String tripTime,
+                                        String instantTrip
+
+    ) {
+
+        Report report = Utility.getReport(context);
+
+        if (report != null) {
+            TripTest tripTest = report.getTripTest();
+
+            if (tripTest == null)
+                tripTest = new TripTest();
+
+            tripTest.setTestAmplitude(testAmplitude);
+            tripTest.setTripTime(tripTime);
+            tripTest.setInstantTrip(instantTrip);
+
+
+            report.setTripTest(tripTest);
+
+            Utility.saveReport(context, report);
+            Utility.showLog(report.toString());
+        }
+
+    }
+
+    public static void saveIrTestLineConnectionData(Context context,
+                                                    String abValue, String bcValue, String caValue
+
+    ) {
+
+        Report report = Utility.getReport(context);
+
+        if (report != null) {
+            IrTest irTest = report.getIrTest();
+
+            if (irTest == null)
+                irTest = new IrTest();
+
+            irTest.setAbValue(abValue);
+            irTest.setBcValue(bcValue);
+            irTest.setCaValue(caValue);
+
+
+            report.setIrTest(irTest);
+
+            Utility.saveReport(context, report);
+            Utility.showLog(report.toString());
+        }
+
+    }
+
 
 }

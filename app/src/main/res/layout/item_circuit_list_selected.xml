@@ -71,24 +71,26 @@
 
     <!-- Edit Icon -->
     <ImageView
-        android:id="@+id/editButton"
+        android:id="@+id/btnEdit"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:layout_marginEnd="12dp"
         android:contentDescription="@string/demo_description"
         android:src="@drawable/ic_edit_"
-        app:layout_constraintEnd_toStartOf="@id/deleteButton"
+        app:tint="@color/text_black"
+        app:layout_constraintEnd_toStartOf="@id/btnDelete"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         />
 
     <!-- Delete Icon -->
     <ImageView
-        android:id="@+id/deleteButton"
+        android:id="@+id/btnDelete"
         android:layout_width="24dp"
         android:layout_height="24dp"
         android:contentDescription="@string/demo_description"
         android:src="@drawable/ic_delete"
+        app:tint="@color/text_black"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"

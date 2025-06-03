@@ -60,8 +60,8 @@
     <string name="total_number_of_circuit_breaker">Total Number of Circuit Breaker</string>
     <string name="list_of_circuit_breaker_size">List of Circuit Breaker Size</string>
     <string name="blank">__</string>
-    <string name="breaker_size">Breaker Size:</string>
-    <string name="name">Name:</string>
+    <string name="breaker_size">Breaker Size : </string>
+    <string name="name">Name : </string>
     <string name="skip">Skip</string>
     <string name="panel_board_rating">Panel Board Rating</string>
     <string name="test_voltage">Test Voltage</string>
@@ -125,5 +125,24 @@
     <string name="perform_ocr">Perform OCR</string>
     <string name="camera_placeholder">Camera Placeholder</string>
     <string name="nel_swgrts">NEL-SWGRTS</string>
+    <string name="image_of_the_db_box_panel_front">Img of the DB Box Panel Front</string>
+    <string name="img_of_the_db_box_panel_inside">Img of the DB Box Panel Inside</string>
+    <string name="img_of_the_db_box_panel_nameplate">Img of the DB Box Panel Nameplate</string>
+    <string name="save_the_changes">Save the Changes</string>
+    <string name="confirm_the_information_as_you_cannot_change_the_inputs_nthe_process_will_continue_to_perform_as_your_inputs">Confirm the information as you cannot change the inputs.\nThe process will continue to perform as your inputs.</string>
+    <string name="delete_circuit">Delete Circuit</string>
+    <string name="delete">Delete</string>
+    <string name="do_you_want_do_add_circuit_breaker_size">Do you want do add Circuit Breaker size:</string>
+    <string name="add_circuit_list">Add Circuit List</string>
+    <string name="current_injector_connecting_img">Current Injector Connecting Img</string>
+    <string name="injected_current_img">Injected Current Img</string>
+    <string name="trip_time_connection_image">Trip Time Connection Image</string>
+    <string name="trip_time_img">Trip Time Img</string>
+    <string name="after_trip_time">After Trip Time</string>
+    <string name="curve_range">Curve Range</string>
+    <string name="mfg">MFG</string>
+    <string name="test_amplitude">Test Amplitude</string>
+    <string name="after_trip">After Trip</string>
+    <string name="instant_trip">Instant Trip</string>
 
 </resources>

@@ -17,10 +17,6 @@ import com.hasanjaved.reportmate.fragment.SettingsFragment;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
 import com.hasanjaved.reportmate.model.Employee;
-import com.hasanjaved.reportmate.utility.FileMover;
-import com.hasanjaved.reportmate.utility.FileMover2;
-import com.hasanjaved.reportmate.utility.FolderManager;
-import com.hasanjaved.reportmate.utility.FolderManager2;
 import com.hasanjaved.reportmate.utility.MediaStoreUtils;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -50,9 +46,15 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 //                "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/ReportMate",
 //                "projectOne");
 
-//        MediaStoreUtils.createFolderInDocuments(this,"MediaStoreUtils");
-        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());
+        Utility.createBaseFolder(this,Utility.BASE_FOLDER_NAME);
+//        MediaStoreUtils.createFolderInDocuments(this,Utility.BASE_FOLDER_NAME);
+
+//        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());
         addHomeFragment();
+
+//        ReportGenerator2.generateElectricalInspectionReport(this, Utility.getReportDirectory(this),"J report",Utility.IMAGE_SAMPLE_DIRECTORY2);
+//        ReportGenerator3.generateElectricalInspectionReportToPublicDocuments(this,"jreport",Utility.IMAGE_SAMPLE_DIRECTORY2);
+//                generateElectricalInspectionReport(this, Utility.getReportDirectory(this),"J report",Utility.IMAGE_SAMPLE_DIRECTORY2);
 
 //        FileMover2.moveImageToDocumentsSubfolder(
 //                this,

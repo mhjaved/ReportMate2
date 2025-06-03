@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -103,12 +104,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="24dp"
-                    android:text="@string/equipment_name"
+                    android:text="@string/equipment_location"
                     android:textStyle="bold"
+                    android:textColor="@color/text_black"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/title" />
 
                 <EditText
+                    android:id="@+id/etEquipmentLocation"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
@@ -151,34 +154,68 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/air_temp_and_humidity_img"
+                android:text="@string/image_of_the_db_box_panel_front"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/line" />
 
-            <ImageView
-                android:id="@+id/img_camera1"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/ic_camera_short"
-                android:contentDescription="@string/demo_description"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/t1"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/t1" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/img_camera1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_camera_short"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="6dp"
+                    android:visibility="visible"
+                    android:contentDescription="@string/demo_description"
+                    android:foregroundGravity="center"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivShowImage1"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/demo_description"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
 
             <TextView
                 android:id="@+id/imageNote1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/auto_filled_confirm_the_information"
+                android:text="@string/click_the_icon_to_open_your_camera"
                 android:textColor="#888888"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_camera1" />
+                app:layout_constraintTop_toBottomOf="@id/cl1" />
 
 
             <TextView
@@ -186,102 +223,197 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/air_temp_and_humidity_img"
+                android:text="@string/img_of_the_db_box_panel_inside"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageNote1" />
 
-            <ImageView
-                android:id="@+id/img_camera2"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/ic_camera_short"
-                android:contentDescription="@string/demo_description"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/t2"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/t2" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/img_camera2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_camera_short"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="6dp"
+                    android:visibility="visible"
+                    android:contentDescription="@string/demo_description"
+                    android:foregroundGravity="center"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivShowImage2"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/demo_description"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/imageNote2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/auto_filled_confirm_the_information"
+                android:text="@string/click_the_icon_to_open_your_camera"
                 android:textColor="#888888"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_camera2" />
+                app:layout_constraintTop_toBottomOf="@id/cl2" />
 
             <TextView
                 android:id="@+id/t3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/air_temp_and_humidity_img"
+                android:text="@string/img_of_the_db_box_panel_nameplate"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageNote2" />
 
-            <ImageView
-                android:id="@+id/img_camera3"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/ic_camera_short"
-                android:contentDescription="@string/demo_description"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/t3"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/t3" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/img_camera3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_camera_short"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="6dp"
+                    android:visibility="visible"
+                    android:contentDescription="@string/demo_description"
+                    android:foregroundGravity="center"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivShowImage3"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:background="@color/white"
+                    android:contentDescription="@string/demo_description"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                    android:visibility="gone"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/imageNote3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/auto_filled_confirm_the_information"
+                android:text="@string/click_the_icon_to_open_your_camera"
                 android:textColor="#888888"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_camera3" />
+                app:layout_constraintTop_toBottomOf="@id/cl3" />
 
             <TextView
                 android:id="@+id/t4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/air_temp_and_humidity_img"
+                android:text="Img of the Panel Grouging"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/imageNote3" />
 
-            <ImageView
-                android:id="@+id/img_camera4"
-                android:layout_width="0dp"
-                android:layout_height="90dp"
-                android:layout_marginTop="6dp"
-                android:background="@drawable/ic_camera_short"
-                android:contentDescription="@string/demo_description"
-                android:scaleType="centerInside"
-                app:layout_constraintEnd_toEndOf="parent"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/cl4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/t4"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/t4" />
+                app:layout_constraintEnd_toEndOf="parent"
+                android:layout_marginTop="@dimen/space_8"
+                android:gravity="center"
+                >
+                <ImageView
+                    android:id="@+id/img_camera4"
+                    android:layout_width="wrap_content"
+                    android:layout_height="90dp"
+                    android:scaleType="centerInside"
+                    android:background="@drawable/ic_camera_short"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:layout_marginTop="6dp"
+                    android:visibility="visible"
+                    android:contentDescription="@string/demo_description"
+                    android:foregroundGravity="center"
+                    />
+
+                <ImageView
+                    android:id="@+id/ivShowImage4"
+                    android:layout_width="400dp"
+                    android:layout_height="300dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_camera_short"
+                    android:layout_marginTop="@dimen/space_8"
+                    android:visibility="gone"
+                    android:background="@color/white"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    android:contentDescription="@string/demo_description"
+                    />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <TextView
                 android:id="@+id/imageNote4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="@string/auto_filled_confirm_the_information"
+                android:text="@string/click_the_icon_to_open_your_camera"
                 android:textColor="#888888"
                 android:textSize="12sp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/img_camera4" />
+                app:layout_constraintTop_toBottomOf="@id/cl4" />
 
             <View
                 android:layout_width="match_parent"

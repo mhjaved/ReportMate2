@@ -2,15 +2,19 @@ package com.hasanjaved.reportmate.utility;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.Activity;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.util.Log;
+import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.hasanjaved.reportmate.activity.HomeActivity;
+import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
 
@@ -28,11 +32,50 @@ public class Utility {
 
 
     public static final String REPORT_MATE_DIRECTORY = "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/NEL-SWGRTS1";
-    public static final String IMAGE_SAMPLE_DIRECTORY = "/storage/emulated/0/Pictures/1748710167004.jpg";
+    public static final String IMAGE_SAMPLE_DIRECTORY = "/storage/emulated/0/Pictures/Capture.jpg";
+    public static final String IMAGE_SAMPLE_DIRECTORY2 = "/storage/emulated/0/Documents/ReportMate/NEL-SWGRTS/dbBoxPanelFront.jpg";
+    public static final String IMAGE_SAMPLE_DIRECTORY3 = "/storage/emulated/0/Documents/ReportMate/img.jpg";
     public static final String TAG = "ReportMate";
     public static final String BASE_FOLDER_NAME = "ReportMate";
+    public static final String TRIP_TEST = "TripTest";
+    public static final String CRM_TEST = "CRM_Test";
+    public static final String IrTest = "IrTest";
     public static final String generalImageTemperature = "generalImageTemperature";
+    public static final String imgAgConnection = "imgAgConnection";
+    public static final String imgBgConnection = "imgBgConnection";
+    public static final String imgCgConnection = "imgCgConnection";
+
+    public static final String imgAgResult = "imgAgResult";
+    public static final String imgBgResult = "imgBgResult";
+    public static final String imgCgResult = "imgCgResult";
+
+
+    public static final String imgAbConnection = "imgAbConnection";
+    public static final String imgBcConnection = "imgBcConnection";
+    public static final String imgCcConnection = "imgCaConnection";
+    public static final String imgCrmConnection = "imgCrmConnection";
+    public static final String imgInjectorCurrent = "imgInjectorCurrent";
+    public static final String imgInjectedCurrent = "imgInjectedCurrent";
+    public static final String imgCrmResult = "imgCrmResult";
+
+    public static final String imgAbResult = "imgAbResult";
+    public static final String imgBcResult = "imgBcResult";
+    public static final String imgCaResult = "imgCaResult";
+//    public static final String imgCrmConnection = "imgCrmConnection";
+//    public static final String imgCrmResult = "imgCrmResult";
+
+
+
+
+    public static final String dbBoxPanelFront = "dbBoxPanelFront";
+    public static final String dbBoxPanelInside = "dbBoxPanelInside";
+    public static final String dbBoxPanelNameplate = "dbBoxPanelNameplate";
+    public static final String dbBoxPanelGrounging = "dbBoxPanelGrounging";
     public static final String ImageToken = "ImageToken";
+    public static  final String  imgTripTimeConnection ="imgTripTimeConnection";
+    public static  final String  imgTripTime="imgTripTime";
+    public static  final String  imgAfterTripTime="imgAfterTripTime";
+
     public static void showLog(String text){
         Log.d(TAG,text);
     }
@@ -50,12 +93,8 @@ public class Utility {
     }
 
     public static void getRunningReportList(){
-
     }
 
-    public static void createProjectFolder(){
-
-    }
     public static Employee getEmployee(Context context) {
         try {
             String connectionsJSONString = context.getSharedPreferences
@@ -111,6 +150,37 @@ public class Utility {
 
     }
 
+    public static void createBaseFolder(Context context, String baseFolderName) {
+        MediaStoreUtils.createFolderInDocuments(context,BASE_FOLDER_NAME);
+    }
+
+    public static void createProjectFolders(Context context, String projectNumber) {
+        MediaStoreUtils.createSubFolderInDocuments(context,BASE_FOLDER_NAME,projectNumber);
+        createIrFolder(context,projectNumber);
+    }
+
+    public static void createIrFolder(Context context, String projectNumber){
+        MediaStoreUtils.createSubFolderInDocuments(context,BASE_FOLDER_NAME+"/"+projectNumber,Utility.IrTest);
+    }
+
+    public static boolean isEmpty(EditText et) {
+        if (et.getText().toString().isEmpty())
+            return true;
+        else return false;
+    }
+
+    public static String getIrFolderLink(Activity activity, Report report) {
+        return BASE_FOLDER_NAME+"/"+report.getProjectNo()+"/"+Utility.IrTest;
+    }
+
+    public static String getCrmFolderLink( Report report, CircuitBreaker circuitBreaker) {
+        return BASE_FOLDER_NAME+"/"+report.getProjectNo()+"/"+report.getEquipment().getEquipmentName()+"/"+circuitBreaker.getName()+"/"+Utility.CRM_TEST;
+    }
+
+
+    public static String getTripFolderLink( Report report, CircuitBreaker circuitBreaker) {
+        return BASE_FOLDER_NAME+"/"+report.getProjectNo()+"/"+report.getEquipment().getEquipmentName()+"/"+circuitBreaker.getName()+"/"+Utility.TRIP_TEST;
+    }
 
 
 //    public static void saveChildList(Context context, List<ChildInfo> childInfoList) {

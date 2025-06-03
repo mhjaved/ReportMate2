@@ -7,8 +7,13 @@ import androidx.core.content.ContextCompat;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
+
+import com.hasanjaved.reportmate.doc_generator.PanelOnlyGenerator;
+import com.hasanjaved.reportmate.doc_generator.PanelPicturesGenerator;
+import com.hasanjaved.reportmate.utility.Utility;
 
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
 import org.apache.poi.xwpf.usermodel.XWPFDocument;
@@ -41,14 +46,31 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+//        PanelPicturesGenerator.generatePanelGeneralPicturesReport(this,Utility.IMAGE_SAMPLE_DIRECTORY);
+
         Button generateButton = findViewById(R.id.btnGenerate);
         generateButton.setOnClickListener(v -> {
             if (checkPermissions()) {
+//                generatePanelPicturesOnly();
                 generateDocxReport();
             } else {
                 requestPermissions();
             }
         });
+    }
+
+    private void generatePanelPicturesOnly() {
+        String imageUrl = "/storage/emulated/0/Pictures/Capture.jpg";
+
+        boolean success = PanelOnlyGenerator.generatePanelGeneralPicturesOnly(this, imageUrl);
+
+        if (success) {
+            Log.d("MainActivity", "Panel General Pictures report generated successfully");
+            // File saved to: /storage/emulated/0/Documents/ReportMate/DB31_Panel_General_Pictures_[timestamp].docx
+        } else {
+            Log.e("MainActivity", "Failed to generate Panel Pictures report");
+        }
     }
 
     private boolean checkPermissions() {
@@ -99,7 +121,7 @@ public class MainActivity extends AppCompatActivity {
         XWPFParagraph titlePara = document.createParagraph();
         titlePara.setAlignment(ParagraphAlignment.CENTER);
         XWPFRun titleRun = titlePara.createRun();
-        titleRun.setText("6.1    DB-3.1 MCCB & MCB: Test and Inspection Report");
+        titleRun.setText(Utility.getReport(this).getEquipment().getEquipmentName()+" MCCB & MCB: Test and Inspection Report");
         titleRun.setBold(true);
         titleRun.setFontSize(12);
         titleRun.setColor("008000"); // Green color
@@ -116,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
         // Row 1: Panel Board Circuit Breaker Test Report
         XWPFTableRow row1 = headerTable.getRow(0);
         mergeHorizontally(headerTable, 0, 0, 3);
-        setCellText(row1.getCell(0), "PANEL BOARD CIRCUIT BREAKER TEST REPORT", true, true);
+        setCellText(row1.getCell(0), "PpppANEL BOARD CIRCUIT BREAKER TEST REPORT", true, true);
 
         // Row 2: Sheet info and page info
         XWPFTableRow row2 = headerTable.getRow(1);
@@ -389,7 +411,7 @@ public class MainActivity extends AppCompatActivity {
     private void saveDocument(XWPFDocument document) {
         try {
             File downloadsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS);
-            File docFile = new File(downloadsDir, "Panel_Board_Test_Report.docx");
+            File docFile = new File(downloadsDir, "jPanel_Board_Test_Report.docx");
 
             FileOutputStream out = new FileOutputStream(docFile);
             document.write(out);
@@ -400,6 +422,7 @@ public class MainActivity extends AppCompatActivity {
 
         } catch (IOException e) {
             e.printStackTrace();
+            Utility.showLog(e.getMessage());
             Toast.makeText(this, "Error saving document: " + e.getMessage(), Toast.LENGTH_LONG).show();
         }
     }
@@ -423,4 +446,6 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }

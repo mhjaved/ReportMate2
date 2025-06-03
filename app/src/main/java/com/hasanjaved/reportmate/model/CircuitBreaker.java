@@ -48,4 +48,15 @@ public class CircuitBreaker {
     public void setCrmTest(CrmTest crmTest) {
         this.crmTest = crmTest;
     }
+
+    @Override
+    public String toString() {
+        return "CircuitBreaker{" +
+                "circuitId='" + circuitId + '\'' +
+                ", name='" + name + '\'' +
+                ", size='" + size + '\'' +
+                ", tripTest=" + tripTest +
+                ", crmTest=" + crmTest +
+                '}';
+    }
 }

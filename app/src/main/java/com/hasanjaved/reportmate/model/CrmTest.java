@@ -4,13 +4,10 @@ public class CrmTest {
 
     String connectionImage;
     String resultImage;
-
     String rResValue;
     String rResUnit;
-
     String yResValue;
     String yResUnit;
-
     String bResValue;
     String bResUnit;
 

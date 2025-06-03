@@ -4,7 +4,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.util.Log;
 
-import com.googlecode.tesseract.android.TessBaseAPI;
+//import com.googlecode.tesseract.android.TessBaseAPI;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.io.File;
@@ -15,31 +15,31 @@ import java.io.OutputStream;
 
 public class OCRProcessor {
 
-    private TessBaseAPI tessBaseAPI;
-
-    public OCRProcessor(Context context) {
-        Log.d(Utility.TAG, "Context context OCRProcessor ");
-        tessBaseAPI = new TessBaseAPI();
-        String dataPath = context.getFilesDir() + "/";
-        checkAndCopyTessData(context, dataPath);
-        tessBaseAPI.init(dataPath, "eng"); // Use 'eng' for English
-        tessBaseAPI.setVariable("tessedit_char_whitelist", "0123456789:.°C");
-//        tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
-
-    }
-
-    public String extractText(Bitmap bitmap) {
-        tessBaseAPI.setImage(bitmap);
-        return tessBaseAPI.getUTF8Text();
-    }
-
-    public void release() {
-        if (tessBaseAPI != null) {
-//            tessBaseAPI.end();
-            tessBaseAPI.recycle();
-            tessBaseAPI = null;
-        }
-    }
+//    private TessBaseAPI tessBaseAPI;
+//
+//    public OCRProcessor(Context context) {
+//        Log.d(Utility.TAG, "Context context OCRProcessor ");
+//        tessBaseAPI = new TessBaseAPI();
+//        String dataPath = context.getFilesDir() + "/";
+//        checkAndCopyTessData(context, dataPath);
+//        tessBaseAPI.init(dataPath, "eng"); // Use 'eng' for English
+//        tessBaseAPI.setVariable("tessedit_char_whitelist", "0123456789:.°C");
+////        tessBaseAPI.setPageSegMode(TessBaseAPI.PageSegMode.PSM_SINGLE_BLOCK);
+//
+//    }
+//
+//    public String extractText(Bitmap bitmap) {
+//        tessBaseAPI.setImage(bitmap);
+//        return tessBaseAPI.getUTF8Text();
+//    }
+//
+//    public void release() {
+//        if (tessBaseAPI != null) {
+////            tessBaseAPI.end();
+//            tessBaseAPI.recycle();
+//            tessBaseAPI = null;
+//        }
+//    }
 
     private void checkAndCopyTessData(Context context, String dataPath) {
         File dir = new File(dataPath );

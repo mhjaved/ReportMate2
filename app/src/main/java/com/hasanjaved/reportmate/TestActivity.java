@@ -47,8 +47,8 @@ public class TestActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_test);
 
-        if(OpenCVLoader.initDebug()) Log.d(Utility.TAG, "open cv loaded");
-        else Log.d(Utility.TAG, "open cv not loaded");
+//        if(OpenCVLoader.initDebug()) Log.d(Utility.TAG, "open cv loaded");
+//        else Log.d(Utility.TAG, "open cv not loaded");
 
         recognizer = TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS);
         imageView = findViewById(R.id.img_camera);
@@ -57,66 +57,66 @@ public class TestActivity extends AppCompatActivity {
         imageView.setOnClickListener(view -> dispatchSelectPictureIntent());
 //      air_temp_label.setOnClickListener(view -> dispatchTakePictureIntent());
 
-        setupActivityResultLaunchers();
+//        setupActivityResultLaunchers();
 
     }
 
 
-    private void setupActivityResultLaunchers() {
-        takePictureLauncher = registerForActivityResult(
-                new ActivityResultContracts.TakePicture(),
-                success -> {
-                    if (success) {
-                        try (InputStream stream = getContentResolver().openInputStream(photoUri)) {
-                            Bitmap bitmap = BitmapFactory.decodeStream(stream);
-
-//                            Mat mat = new Mat();
-//                            Utils.bitmapToMat(bitmap, mat);
+//    private void setupActivityResultLaunchers() {
+//        takePictureLauncher = registerForActivityResult(
+//                new ActivityResultContracts.TakePicture(),
+//                success -> {
+//                    if (success) {
+//                        try (InputStream stream = getContentResolver().openInputStream(photoUri)) {
+//                            Bitmap bitmap = BitmapFactory.decodeStream(stream);
 //
-//// Convert to grayscale
-//                            Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
+////                            Mat mat = new Mat();
+////                            Utils.bitmapToMat(bitmap, mat);
+////
+////// Convert to grayscale
+////                            Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
+////
+////// Invert
+////                            Core.bitwise_not(mat, mat);
+////
+////// Optional: Threshold for cleaner output
+////                            Imgproc.threshold(mat, mat, 128, 255, Imgproc.THRESH_BINARY);
+////
+////// Convert back to Bitmap
+////                            Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
+////                            Utils.matToBitmap(mat, resultBitmap);
+////
 //
-//// Invert
-//                            Core.bitwise_not(mat, mat);
-//
-//// Optional: Threshold for cleaner output
-//                            Imgproc.threshold(mat, mat, 128, 255, Imgproc.THRESH_BINARY);
-//
-//// Convert back to Bitmap
-//                            Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-//                            Utils.matToBitmap(mat, resultBitmap);
-//
-
-                            Log.d(Utility.TAG,"bitmap");
-                            imageView.setImageBitmap(bitmap);
-                            processImage(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-
-        selectPictureLauncher = registerForActivityResult(
-                new ActivityResultContracts.GetContent(),
-                uri -> {
-                    if (uri != null) {
-                        try (InputStream stream = getContentResolver().openInputStream(uri)) {
-                            Bitmap bitmap = preprocessImage(BitmapFactory.decodeStream(stream));;
-
-                            OCRProcessor ocr = new OCRProcessor(this);
-                            String result = ocr.extractText(bitmap);
-                            textView.setText(result);
-
-                            ocr.release();
-                            Log.d(Utility.TAG, result);
-                            imageView.setImageBitmap(bitmap);
+//                            Log.d(Utility.TAG,"bitmap");
+//                            imageView.setImageBitmap(bitmap);
 //                            processImage(bitmap);
-                        } catch (IOException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
-    }
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//
+//        selectPictureLauncher = registerForActivityResult(
+//                new ActivityResultContracts.GetContent(),
+//                uri -> {
+//                    if (uri != null) {
+//                        try (InputStream stream = getContentResolver().openInputStream(uri)) {
+//                            Bitmap bitmap = preprocessImage(BitmapFactory.decodeStream(stream));;
+//
+//                            OCRProcessor ocr = new OCRProcessor(this);
+//                            String result = ocr.extractText(bitmap);
+//                            textView.setText(result);
+//
+//                            ocr.release();
+//                            Log.d(Utility.TAG, result);
+//                            imageView.setImageBitmap(bitmap);
+////                            processImage(bitmap);
+//                        } catch (IOException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//                });
+//    }
 
     private void dispatchTakePictureIntent() {
         try {

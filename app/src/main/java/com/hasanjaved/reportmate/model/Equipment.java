@@ -6,9 +6,6 @@ public class Equipment {
 
     String equipmentName;
     String equipmentLocation;
-    String ownerIdentification;
-    String dateOfLastInspection;
-    String lastInspectionReportNo;
     String generalImage;
     String airTemperature;
     String airHumidity;
@@ -36,29 +33,6 @@ public class Equipment {
         this.equipmentLocation = equipmentLocation;
     }
 
-    public String getOwnerIdentification() {
-        return ownerIdentification;
-    }
-
-    public void setOwnerIdentification(String ownerIdentification) {
-        this.ownerIdentification = ownerIdentification;
-    }
-
-    public String getDateOfLastInspection() {
-        return dateOfLastInspection;
-    }
-
-    public void setDateOfLastInspection(String dateOfLastInspection) {
-        this.dateOfLastInspection = dateOfLastInspection;
-    }
-
-    public String getLastInspectionReportNo() {
-        return lastInspectionReportNo;
-    }
-
-    public void setLastInspectionReportNo(String lastInspectionReportNo) {
-        this.lastInspectionReportNo = lastInspectionReportNo;
-    }
 
     public String getGeneralImage() {
         return generalImage;
@@ -122,5 +96,21 @@ public class Equipment {
 
     public void setCircuitBreakerList(List<CircuitBreaker> circuitBreakerList) {
         this.circuitBreakerList = circuitBreakerList;
+    }
+
+    @Override
+    public String toString() {
+        return "\nEquipment{" +
+                "equipmentName='" + equipmentName + '\'' +
+                ", equipmentLocation='" + equipmentLocation + '\'' +
+                ", generalImage='" + generalImage + '\'' +
+                ", airTemperature='" + airTemperature + '\'' +
+                ", airHumidity='" + airHumidity + '\'' +
+                ", imageDbBoxFront='" + imageDbBoxFront + '\'' +
+                ", imageDbBoxInside='" + imageDbBoxInside + '\'' +
+                ", imageDbBoxNamePlate='" + imageDbBoxNamePlate + '\'' +
+                ", panelGrounding='" + panelGrounding + '\'' +
+                ", circuitBreakerList=" + circuitBreakerList +
+                '}';
     }
 }

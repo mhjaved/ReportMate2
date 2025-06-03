@@ -60,12 +60,14 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etMfgOne"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Enter here.."
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
@@ -78,12 +80,82 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etCurveNumberOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/enter_here"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
+                    android:layout_marginTop="8dp"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/curve_range"
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"
+                    android:textColor="#1E2B39" />
+
+                <EditText
+                    android:id="@+id/etCurveRangeOne"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="@string/enter_here"
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
+                    android:layout_marginTop="8dp"
+                    android:inputType="text" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/line_gray"
+                    android:layout_marginTop="@dimen/space_16"
+                    android:layout_marginBottom="@dimen/space_16"
+                    />
+
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mfg"
+                    android:textStyle="bold"
+                    android:textColor="#1E2B39" />
+
+                <EditText
+                    android:id="@+id/etMfgTwo"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Enter here.."
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
+                    android:layout_marginTop="8dp"
+                    android:inputType="text" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Curve No."
+                    android:layout_marginTop="12dp"
+                    android:textStyle="bold"
+                    android:textColor="#1E2B39" />
+
+                <EditText
+                    android:id="@+id/etCurveNumberTwo"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:hint="Enter here.."
+                    android:background="@drawable/bg_edit_text"
+                    android:paddingStart="12dp"
+                    android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
@@ -96,12 +168,14 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etCurveRangeTwo"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Enter here.."
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
@@ -122,12 +196,14 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etMfgThree"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Enter here.."
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
@@ -140,12 +216,14 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etCurveNumberThree"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
                     android:hint="Enter here.."
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
@@ -158,80 +236,21 @@
                     android:textColor="#1E2B39" />
 
                 <EditText
+                    android:id="@+id/etCurveRangeThree"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:hint="Enter here.."
+                    android:hint="@string/enter_here"
                     android:background="@drawable/bg_edit_text"
                     android:paddingStart="12dp"
                     android:paddingEnd="12dp"
+                    android:textColor="@color/text_black"
                     android:layout_marginTop="8dp"
                     android:inputType="text" />
 
                 <View
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:background="@color/line_gray"
-                    android:layout_marginTop="@dimen/space_16"
-                    android:layout_marginBottom="@dimen/space_16"
+                    android:layout_height="200dp"
                     />
-
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="MFG"
-                    android:textStyle="bold"
-                    android:textColor="#1E2B39" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="Enter here.."
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:layout_marginTop="8dp"
-                    android:inputType="text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Curve No."
-                    android:layout_marginTop="12dp"
-                    android:textStyle="bold"
-                    android:textColor="#1E2B39" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="Enter here.."
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:layout_marginTop="8dp"
-                    android:inputType="text" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Curve Range"
-                    android:layout_marginTop="12dp"
-                    android:textStyle="bold"
-                    android:textColor="#1E2B39" />
-
-                <EditText
-                    android:layout_width="match_parent"
-                    android:layout_height="48dp"
-                    android:hint="Enter here.."
-                    android:background="@drawable/bg_edit_text"
-                    android:paddingStart="12dp"
-                    android:paddingEnd="12dp"
-                    android:layout_marginTop="8dp"
-                    android:inputType="text" />
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="100dp"/>
 
             </LinearLayout>
 

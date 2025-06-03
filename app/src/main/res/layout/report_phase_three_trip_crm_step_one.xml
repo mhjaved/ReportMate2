@@ -79,6 +79,7 @@
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
                     android:inputType="text"
+                    android:textColor="@color/text_black"
                     android:paddingStart="@dimen/space_12"
                     android:paddingEnd="@dimen/space_8"
                     app:layout_constraintEnd_toEndOf="parent"
@@ -196,6 +197,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/llHeading">
 
@@ -283,6 +285,7 @@
             android:background="@drawable/bg_button_next"
             android:text="@string/save_and_next"
             android:textStyle="bold"
+            android:enabled="false"
             app:icon="@drawable/ic_arrow_right"
             app:iconGravity="textEnd"
             android:drawableTint="@color/text_white"
