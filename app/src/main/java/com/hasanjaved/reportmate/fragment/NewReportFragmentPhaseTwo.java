@@ -22,6 +22,7 @@ import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseTwoBinding;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -106,6 +107,10 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         Report report = Utility.getReport(activity);
         if (report != null) {
             try {
+
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionSiteDetails.ivSiteDetails, Utility.getTemperatureImage(activity));
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivPanelImage, Utility.getPanelImage(activity));
+
                 binding.viewOne.etEquipmentName.setText(report.getEquipment().getEquipmentName());
                 binding.viewOne.viewCustomerDetails.tvCustomerName.setText(report.getCustomerName());
                 binding.viewOne.viewCustomerDetails.tvCustomerAddress.setText(report.getCustomerAddress());

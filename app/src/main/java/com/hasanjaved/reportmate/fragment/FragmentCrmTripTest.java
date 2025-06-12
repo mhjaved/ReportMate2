@@ -34,7 +34,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-
 public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickListener, CameraFragmentClickListener {
 
     private static final String ARG_PARAM1 = "param1";
@@ -100,7 +99,6 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
 
         return binding.getRoot();
     }
-
 
     private void setPageOneData() {
         Report report = Utility.getReport(activity);

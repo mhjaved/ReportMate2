@@ -30,10 +30,10 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
 
-        addNewReportFragment();
+//        addNewReportFragment();
 //        generateSampleDocument();
 //        addNewReportFragmentPhaseThreeIR();
-//        addNewReportFragmentPhaseTwo();
+        addNewReportFragmentPhaseTwo();
 //        addNewReportPhaseTwoFragment();
 //        addNewReportPhaseThreeFragment();
 //        addNewReportFragmentPhaseThreeCrmTrip();

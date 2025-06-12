@@ -3,7 +3,18 @@
     <style name="Base.Theme.ReportMate" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
          <item name="colorPrimary">@color/theme_color</item>
+        <item name="android:editTextStyle">@style/editTextStyle</item>
     </style>
 
     <style name="Theme.ReportMate" parent="Base.Theme.ReportMate" />
+
+
+    <style name="editTextStyle">
+        <item name="android:textColor">@color/text_black</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:hint">"@string/enter_here"</item>
+        <item name="android:paddingStart">@dimen/space_12</item>
+        <item name="android:paddingEnd">@dimen/space_12</item>
+        <item name="android:background">@drawable/bg_edit_text</item>
+    </style>
 </resources>

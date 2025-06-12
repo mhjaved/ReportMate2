@@ -93,7 +93,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:el_duration="600"
-                    app:el_expanded="false"
+                    app:el_expanded="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/agLabel">
@@ -242,7 +242,9 @@
                                 app:layout_constraintStart_toStartOf="parent"
                                 app:layout_constraintTop_toBottomOf="@id/agLabel">
 
-                                <include layout="@layout/section_equipment_details" />
+                                <include
+                                    android:id="@+id/section_equipment_details"
+                                    layout="@layout/section_equipment_details" />
 
                             </net.cachapa.expandablelayout.ExpandableLayout>
 

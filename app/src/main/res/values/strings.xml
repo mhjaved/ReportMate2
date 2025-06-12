@@ -144,5 +144,7 @@
     <string name="test_amplitude">Test Amplitude</string>
     <string name="after_trip">After Trip</string>
     <string name="instant_trip">Instant Trip</string>
+    <string name="date_of_last_inspection">Date of Last Inspection</string>
+    <string name="address_">Address:</string>
 
 </resources>

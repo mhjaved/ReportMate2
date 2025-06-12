@@ -67,6 +67,7 @@
             android:textColor="#000000" />
 
         <ImageView
+            android:id="@+id/ivPanelImage"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:adjustViewBounds="true"
@@ -83,6 +84,7 @@
             android:textColor="#000000" />
 
         <ImageView
+            android:id="@+id/ivDbBoxCircuitImage"
             android:layout_width="300dp"
             android:layout_height="300dp"
             android:adjustViewBounds="true"

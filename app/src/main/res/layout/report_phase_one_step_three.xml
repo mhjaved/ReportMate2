@@ -61,17 +61,14 @@
                 <EditText
                     android:id="@+id/etEquipmentName"
                     android:layout_width="match_parent"
-                    android:layout_height="48dp"
+                    android:layout_height="@dimen/edit_text_height"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
-                    android:drawablePadding="10dp"
-                    android:hint="@string/enter_here"
                     android:inputType="text"
-                    android:textColor="@color/text_black"
-                    android:paddingStart="@dimen/space_12"
-                    android:paddingEnd="@dimen/space_8" />
+                    style="@style/editTextStyle"
+                     />
+
             </LinearLayout>
 
             <LinearLayout
@@ -96,14 +93,10 @@
                     android:layout_height="48dp"
                     android:layout_marginTop="@dimen/space_8"
                     android:autofillHints=""
-                    android:background="@drawable/bg_edit_text"
                     android:drawableStart="@drawable/ic_demo_icon_2"
-                    android:drawablePadding="10dp"
-                    android:hint="@string/enter_here"
                     android:inputType="text"
-                    android:paddingStart="@dimen/space_12"
-                    android:textColor="@color/text_black"
-                    android:paddingEnd="@dimen/space_12" />
+                    style="@style/editTextStyle"
+                    />
             </LinearLayout>
 
             <LinearLayout
@@ -164,7 +157,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="@string/date_of_inspection"
+                android:text="@string/date_of_last_inspection"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"

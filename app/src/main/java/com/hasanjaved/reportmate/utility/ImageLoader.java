@@ -50,6 +50,31 @@ public class ImageLoader {
             Toast.makeText(context, "Error loading image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
         }
     }
+    public static void showImageFromStorage(Context context, ImageView imageView, String localImagePath) {
+        try {
+            // Get the image file path
+//            String imagePath = getImagePath(imageName);
+            File imageFile = new File(localImagePath);
+
+            Utility.showLog( "Looking for image at: " + localImagePath);
+
+            if (imageFile.exists()) {
+                // Image exists - load with Glide
+                loadImageWithGlide(context, imageView, imageFile);
+                Utility.showLog( "Image found and loaded: " + localImagePath);
+            } else {
+                // Image not found - show placeholder
+                loadPlaceholder(context, imageView);
+                Utility.showLog(  "Image not found: " + localImagePath);
+                Toast.makeText(context, "Image not found: " + localImagePath, Toast.LENGTH_SHORT).show();
+            }
+
+        } catch (Exception e) {
+            Utility.showLog(  "Error loading image: " + localImagePath + e);
+            loadErrorPlaceholder(context, imageView);
+            Toast.makeText(context, "Error loading image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+    }
 
     /**
      * Get the full path to image in public Documents/ReportMate folder

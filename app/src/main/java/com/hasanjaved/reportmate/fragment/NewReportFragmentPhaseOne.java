@@ -41,13 +41,12 @@ import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
 
-
 public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmentClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private static EditText etDayOne, etMonthOne, etYearOne, etDayThree, etMonthThree, etYearThree;
-    private View rootView, viewOne, viewTwo, viewThree, viewFour, viewFive;
+    private View rootView, viewGenerateNewReport, viewCustomerDetails, viewSiteDetails, viewGeneralImage, viewGeneralImage2;
     private FragmentNewReportPhaseOneBinding binding;
     private String mParam1;
     private String mParam2;
@@ -101,11 +100,11 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
         checkAndRequestReadMediaImagesPermission();
 
-        viewOne = rootView.findViewById(R.id.viewOne);
-        viewTwo = rootView.findViewById(R.id.viewTwo);
-        viewThree = rootView.findViewById(R.id.viewThree);
-        viewFour = rootView.findViewById(R.id.viewFour);
-        viewFive = rootView.findViewById(R.id.viewFive);
+        viewGenerateNewReport = rootView.findViewById(R.id.viewGenerateNewReport);
+        viewCustomerDetails = rootView.findViewById(R.id.viewCustomerDetails);
+        viewSiteDetails = rootView.findViewById(R.id.viewSiteDetails);
+        viewGeneralImage = rootView.findViewById(R.id.viewGeneralImage);
+        viewGeneralImage2 = rootView.findViewById(R.id.viewGeneralImage2);
 
         etDayOne = rootView.findViewById(R.id.etDay);
         etMonthOne = rootView.findViewById(R.id.etMonth);
@@ -116,7 +115,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         etYearThree = rootView.findViewById(R.id.etYearThree);
 
         // Basic usage - load img.jpg from Documents/ReportMate/
-//        ImageLoader.loadImageFromReportMate(activity, binding.viewFour.imgCamera, "img.jpg");
+//        ImageLoader.loadImageFromReportMate(activity, binding.viewGeneralImage.imgCamera, "img.jpg");
 
 
         setData();
@@ -124,62 +123,56 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 //        FileMover fileMover = new FileMover(activity);
 //         fileMover.moveImageFile(Utility.IMAGE_SAMPLE_DIRECTORY, Utility.IMAGE_SAMPLE_DIRECTORY, "temperatureImage", true);
 
-        binding.viewOne.ivCalendar.setOnClickListener(view -> {
+        binding.viewGenerateNewReport.ivCalendar.setOnClickListener(view -> {
             DatePickerFragment1 newFragment = new DatePickerFragment1();
             newFragment.show(getChildFragmentManager(), "datePicker");
         });
 
-        binding.viewThree.ivCalendar.setOnClickListener(view -> {
+        binding.viewSiteDetails.ivCalendar.setOnClickListener(view -> {
             DatePickerFragment2 newFragment = new DatePickerFragment2();
             newFragment.show(getChildFragmentManager(), "datePicker");
         });
 
-        binding.viewOne.btnNext.setOnClickListener(view -> {
+        binding.viewGenerateNewReport.btnNext.setOnClickListener(view -> {
                     savePageOneData();
-                    showPage(viewTwo, viewOne, viewThree, viewFour, viewFive);
+                    showPage(viewCustomerDetails, viewGenerateNewReport, viewSiteDetails, viewGeneralImage, viewGeneralImage2);
                 }
         );
 
-        binding.viewTwo.btnNext.setOnClickListener(view -> {
+        binding.viewCustomerDetails.btnNext.setOnClickListener(view -> {
 
-            if (binding.viewTwo.etCustomerName.getText().toString().isEmpty()) {
-                Utility.showToast(activity, "Provide Customer Name");
-            }else if (binding.viewTwo.etCustomerAddress.getText().toString().isEmpty()){
-                Utility.showToast(activity, "Provide Customer Address");
-            }else if (binding.viewTwo.etUserName.getText().toString().isEmpty()){
-                Utility.showToast(activity, "Provide User Name");
-            }else if (binding.viewTwo.etUserAddress.getText().toString().isEmpty()){
-                Utility.showToast(activity, "Provide User Address");
-            }else {
+            if(checkCustomerDetailsData()){
                 savePageTwoData();
-                showPage(viewThree, viewOne, viewTwo, viewFour, viewFive);
+                showPage(viewSiteDetails, viewGenerateNewReport, viewCustomerDetails, viewGeneralImage, viewGeneralImage2);
             }
                 }
         );
 
-        binding.viewThree.btnNext.setOnClickListener(view -> {
-            if (binding.viewThree.etEquipmentName.getText().toString().isEmpty()) {
+
+
+        binding.viewSiteDetails.btnNext.setOnClickListener(view -> {
+            if (binding.viewSiteDetails.etEquipmentName.getText().toString().isEmpty()) {
                 Utility.showToast(activity, "Provide Equipment Name");
-            }else if (binding.viewThree.etEquipmentLocation.getText().toString().isEmpty()){
+            }else if (binding.viewSiteDetails.etEquipmentLocation.getText().toString().isEmpty()){
                 Utility.showToast(activity, "Provide Equipment Location");
             }else {
                 savePageThreeData();
-                showPage(viewFour, viewOne, viewTwo, viewThree, viewFive);
+                showPage(viewGeneralImage, viewGenerateNewReport, viewCustomerDetails, viewSiteDetails, viewGeneralImage2);
             }
 
 
                 }
         );
 
-        binding.viewFour.btnNext.setOnClickListener(view -> {
+        binding.viewGeneralImage.btnNext.setOnClickListener(view -> {
                     savePageFourData();
                     showPageFiveDate();
-                    showPage(viewFive, viewOne, viewTwo, viewThree, viewFour);
+                    showPage(viewGeneralImage2, viewGenerateNewReport, viewCustomerDetails, viewSiteDetails, viewGeneralImage);
                 }
         );
 
 
-        binding.viewFive.btnNext.setOnClickListener(view ->
+        binding.viewGeneralImage2.btnNext.setOnClickListener(view ->
                 {
                     if (fragmentClickListener != null) {
                         fragmentClickListener.addNewReportPhaseTwoFragment();
@@ -187,34 +180,34 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 }
         );
 
-        binding.viewFour.imgCamera.setOnClickListener(view ->{
+        binding.viewGeneralImage.imgCamera.setOnClickListener(view ->{
 
 //            getImagePermission();
-                    fragmentClickListener.openCamera(this, binding.viewFour.ivShowImage,
+                    fragmentClickListener.openCamera(this, binding.viewGeneralImage.ivShowImage,
                             Utility.generalImageTemperature, Utility.getReportDirectory(activity));
                 }
 
         );
 
-        binding.viewFive.imgCamera1.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage1,
+        binding.viewGeneralImage2.imgCamera1.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage1,
                         Utility.dbBoxPanelFront, Utility.getReportDirectory(activity))
         );
-        binding.viewFive.imgCamera2.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage2,
+        binding.viewGeneralImage2.imgCamera2.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage2,
                         Utility.dbBoxPanelInside, Utility.getReportDirectory(activity))
         );
-        binding.viewFive.imgCamera3.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage3,
+        binding.viewGeneralImage2.imgCamera3.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage3,
                         Utility.dbBoxPanelNameplate, Utility.getReportDirectory(activity))
         );
-        binding.viewFive.imgCamera4.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.viewFive.ivShowImage4,
+        binding.viewGeneralImage2.imgCamera4.setOnClickListener(view ->
+                fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage4,
                         Utility.dbBoxPanelGrounging, Utility.getReportDirectory(activity))
         );
 
 
-        binding.viewOne.ivBack.setOnClickListener(view -> {
+        binding.viewGenerateNewReport.ivBack.setOnClickListener(view -> {
                     try {
                         activity.finish();
                     } catch (Exception e) {
@@ -223,26 +216,72 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 }
         );
 
-        binding.viewTwo.ivBack.setOnClickListener(view ->
-                showPage(viewOne, viewTwo,
-                        viewThree, viewFour, viewFive));
+        binding.viewCustomerDetails.ivBack.setOnClickListener(view ->
+                showPage(viewGenerateNewReport, viewCustomerDetails,
+                        viewSiteDetails, viewGeneralImage, viewGeneralImage2));
 
-        binding.viewThree.ivBack.setOnClickListener(view ->
-                showPage(viewTwo, viewOne,
-                        viewThree, viewFour, viewFive));
+        binding.viewSiteDetails.ivBack.setOnClickListener(view ->
+                showPage(viewCustomerDetails, viewGenerateNewReport,
+                        viewSiteDetails, viewGeneralImage, viewGeneralImage2));
 
-        binding.viewFour.ivBack.setOnClickListener(view ->
-                showPage(viewThree, viewTwo, viewOne,
-                        viewFour, viewFive));
+        binding.viewGeneralImage.ivBack.setOnClickListener(view ->
+                showPage(viewSiteDetails, viewCustomerDetails, viewGenerateNewReport,
+                        viewGeneralImage, viewGeneralImage2));
 
-        binding.viewFive.ivBack.setOnClickListener(view ->
-                showPage(viewFour, viewTwo, viewOne,
-                        viewThree, viewFive));
+        binding.viewGeneralImage2.ivBack.setOnClickListener(view ->
+                showPage(viewGeneralImage, viewCustomerDetails, viewGenerateNewReport,
+                        viewSiteDetails, viewGeneralImage2));
 
         Utility.showLog("doesReportMateFolderExist " + FolderManager.doesFolderExist(activity, "ReportMate"));
 
         return binding.getRoot();
 
+    }
+
+    public boolean validateEditText(EditText editText) {
+        boolean allFilled = true;
+
+//        for (EditText editText : editTexts) {
+            String text = editText.getText().toString().trim();
+            if (text.isEmpty()) {
+                editText.setError("This field cannot be empty");
+                allFilled = false;
+            } else {
+                editText.setError(null); // Clear previous error
+            }
+//        }
+
+        return allFilled;
+    }
+
+
+    private boolean checkCustomerDetailsData() {
+        boolean allFilled = true;
+
+        if (!validateEditText(binding.viewCustomerDetails.etCustomerName)) {
+            return false;
+//            Utility.showToast(activity, "Provide Customer Name");
+        }else if (!validateEditText(binding.viewCustomerDetails.etCustomerAddress)){
+           return false;
+//            Utility.showToast(activity, "Provide Customer Address");
+        }else if (!validateEditText(binding.viewCustomerDetails.etUserName)){
+            return false;
+//            Utility.showToast(activity, "Provide User Name");
+        }else if (!validateEditText(binding.viewCustomerDetails.etUserAddress)){
+            return false;
+//            Utility.showToast(activity, "Provide User Address");
+        }
+
+        return allFilled;
+    }
+
+    private boolean checkEditTextData(EditText et,String toastMessage){
+        if (et.getText().toString().isEmpty()) {
+            et.setError("This field can not be blank");
+//            Utility.showToast(activity, "Provide Customer Name");
+        }
+
+        return false;
     }
 
 //    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
@@ -283,8 +322,8 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     private void showPageFiveDate(){
         try {
             Report report = Utility.getReport(activity);
-            binding.viewFive.etEquipmentName.setText(report.getEquipment().getEquipmentName());
-            binding.viewFive.etEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
+            binding.viewGeneralImage2.etEquipmentName.setText(report.getEquipment().getEquipmentName());
+            binding.viewGeneralImage2.etEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
         }catch (Exception e){
             Utility.showLog(e.toString());
         }
@@ -292,9 +331,9 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
     private void savePageOneData() {
         ReportGeneralData.savePageOneData(activity,
-                binding.viewOne.etEmployeeId.getText().toString().trim(),
+                binding.viewGenerateNewReport.etEmployeeId.getText().toString().trim(),
                 etDayOne.getText() + "." + etMonthOne.getText() + "." + etYearOne.getText(),
-                binding.viewOne.etProjectName.getText().toString()
+                binding.viewGenerateNewReport.etProjectName.getText().toString()
         );
         Utility.showLog(Utility.getReport(activity).toString());
     }
@@ -303,29 +342,29 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
     private void savePageTwoData() {
         ReportGeneralData.savePageTwoData(activity,
-                binding.viewTwo.etCustomerName.getText().toString().trim(),
-                binding.viewTwo.etCustomerAddress.getText().toString().trim(),
-                binding.viewTwo.etUserName.getText().toString().trim(),
-                binding.viewTwo.etUserAddress.getText().toString().trim()
+                binding.viewCustomerDetails.etCustomerName.getText().toString().trim(),
+                binding.viewCustomerDetails.etCustomerAddress.getText().toString().trim(),
+                binding.viewCustomerDetails.etUserName.getText().toString().trim(),
+                binding.viewCustomerDetails.etUserAddress.getText().toString().trim()
         );
         Utility.showLog(Utility.getReport(activity).toString());
     }
 
     private void savePageThreeData() {
         ReportGeneralData.savePageThreeData(activity,
-                binding.viewThree.etEquipmentName.getText().toString().trim(),
-                binding.viewThree.etEquipmentLocation.getText().toString().trim(),
-                binding.viewThree.etOwnerId.getText().toString().trim(),
+                binding.viewSiteDetails.etEquipmentName.getText().toString().trim(),
+                binding.viewSiteDetails.etEquipmentLocation.getText().toString().trim(),
+                binding.viewSiteDetails.etOwnerId.getText().toString().trim(),
                 etDayThree.getText() + "." + etMonthThree.getText() + "." + etYearThree.getText(),
-                binding.viewThree.etLastInspectionNo.getText().toString().trim()
+                binding.viewSiteDetails.etLastInspectionNo.getText().toString().trim()
         );
         Utility.showLog(Utility.getReport(activity).toString());
     }
 
     private void savePageFourData() {
         ReportGeneralData.savePageFourData(activity,
-                binding.viewFour.airTempInput.getText().toString().trim(),
-                binding.viewFour.relHumidityInput.getText().toString().trim());
+                binding.viewGeneralImage.airTempInput.getText().toString().trim(),
+                binding.viewGeneralImage.relHumidityInput.getText().toString().trim());
         Utility.showLog(Utility.getReport(activity).toString());
     }
 
@@ -333,7 +372,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         Employee employee = Utility.getEmployee(activity);
         if (employee != null) {
             if (employee.getEmployeeId() != null)
-                binding.viewOne.etEmployeeId.setText(employee.getEmployeeId());
+                binding.viewGenerateNewReport.etEmployeeId.setText(employee.getEmployeeId());
         }
     }
 
