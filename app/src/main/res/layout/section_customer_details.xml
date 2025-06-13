@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="New Era Fashions Mfrs.(BD) Ltd"
+            android:textAlignment="viewEnd"
             android:textColor="#000000" />
     </LinearLayout>
 
@@ -46,7 +46,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Plot No 10 – 12(Part), Sector -8, CEPZ, Chattogram."
+            android:textAlignment="viewEnd"
             android:textColor="#000000" />
     </LinearLayout>
 
@@ -59,17 +59,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Owner/User:"
+            android:text="User:"
             android:textStyle="bold"
             android:layout_weight="1"
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/tvOwner"
+            android:id="@+id/tvUser"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="New Era Fashions Mfrs.(BD) Ltd"
+            android:textAlignment="viewEnd"
             android:textColor="#000000" />
     </LinearLayout>
 
@@ -87,11 +87,11 @@
             android:textColor="#000000" />
 
         <TextView
-            android:id="@+id/tvOwnerAddress"
+            android:id="@+id/tvUserAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="2"
-            android:text="Plot No 10 – 12(Part), Sector -8, CEPZ, Chattogram."
+            android:textAlignment="viewEnd"
             android:textColor="#000000" />
     </LinearLayout>
 

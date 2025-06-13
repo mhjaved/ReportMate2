@@ -50,11 +50,16 @@ public class ReportGeneralData {
 
     public static void savePageTwoData(Context context,String customerName, String customerAddress, String userName,String userAddress) {
         Report report = Utility.getReport(context);
-        assert report != null;
-        report.setCustomerName(customerName);
-        report.setCustomerAddress(customerAddress);
-        report.setUserName(userName);
-        report.setUserAddress(userAddress);
+
+        if (report!=null){
+            report.setCustomerName(customerName);
+            report.setCustomerAddress(customerAddress);
+            report.setUserName(userName);
+            report.setUserAddress(userAddress);
+
+            Utility.saveReport(context,report);
+        }
+
     }
 
 

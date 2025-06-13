@@ -292,18 +292,6 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
     }
 
 
-    private void setViewFourNextButtonStatus(){
-//        binding.viewFour.tvIr.setContentDescription(getString(R.string.selected));
-//        binding.viewFour.tvCrmTrip.setContentDescription(getString(R.string.not_selected));
-//
-//        if ( binding.viewFour.tvIr.getContentDescription().equals(getString(R.string.selected))||
-//                binding.viewFour.tvCrmTrip.getContentDescription().equals(getString(R.string.selected)))
-//            binding.viewFour.btnNext.setEnabled(true);
-//        else
-//            binding.viewFour.btnNext.setEnabled(false);
-
-    }
-
     private void setExpandView(ExpandableLayout expand, ImageView arrow) {
 
         if (expand.isExpanded()) {

@@ -47,7 +47,7 @@ public class Equipment {
     }
 
     public void setAirTemperature(String airTemperature) {
-        this.airTemperature = airTemperature;
+        this.airTemperature = airTemperature+".c";
     }
 
     public String getAirHumidity() {
@@ -55,7 +55,7 @@ public class Equipment {
     }
 
     public void setAirHumidity(String airHumidity) {
-        this.airHumidity = airHumidity;
+        this.airHumidity = airHumidity+"%";
     }
 
     public String getImageDbBoxFront() {

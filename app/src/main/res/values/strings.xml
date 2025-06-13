@@ -146,5 +146,17 @@
     <string name="instant_trip">Instant Trip</string>
     <string name="date_of_last_inspection">Date of Last Inspection</string>
     <string name="address_">Address:</string>
+    <string name="owner_">Owner:</string>
+    <string name="date_of_last_inspection_">Date of Last Inspection:</string>
+    <string name="last_report_no">Last Report No:</string>
+    <string name="air_temp_">Air Temp:</string>
+    <string name="rel_humidity">Rel Humidity:</string>
+    <string name="equipment_location_">Equipment Location:</string>
+    <string name="equipment_name_">Equipment Name:</string>
+    <string name="circuit_breaker_size">Circuit Breaker Size</string>
+    <string name="y_res">Y-RES</string>
+    <string name="b_res">B-RES</string>
+    <string name="r_res">R-RES</string>
+    <string name="trip_time">Trip Time</string>
 
 </resources>

@@ -20,39 +20,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Owner:"
+                android:text="@string/owner_"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tvOwner"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:textAlignment="viewEnd"
-                android:text="New Era Fashions Mfrs.(BD) Ltd"
-                android:textColor="#000000" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingBottom="4dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Date of Last Inspection:"
-                android:textStyle="bold"
-                android:layout_weight="1"
-                android:textColor="#000000" />
-
-            <TextView
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="2"
-                android:text="17-2-2025"
                 android:textAlignment="viewEnd"
                 android:textColor="#000000" />
         </LinearLayout>
@@ -66,16 +43,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Last Report No:"
+                android:text="@string/date_of_last_inspection_"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tvDateOfLastInspection"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="NELSWGR280275"
                 android:textAlignment="viewEnd"
                 android:textColor="#000000" />
         </LinearLayout>
@@ -89,16 +66,16 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Air Temp:"
+                android:text="@string/last_report_no"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tvLastInspectionNo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="27°C"
                 android:textAlignment="viewEnd"
                 android:textColor="#000000" />
         </LinearLayout>
@@ -112,16 +89,39 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Rel Humidity:"
+                android:text="@string/air_temp_"
                 android:textStyle="bold"
                 android:layout_weight="1"
                 android:textColor="#000000" />
 
             <TextView
+                android:id="@+id/tvAirTemperature"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="2"
-                android:text="49%"
+                android:textAlignment="viewEnd"
+                android:textColor="#000000" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingBottom="4dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rel_humidity"
+                android:textStyle="bold"
+                android:layout_weight="1"
+                android:textColor="#000000" />
+
+            <TextView
+                android:id="@+id/tvRelativeHumidity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
                 android:textAlignment="viewEnd"
                 android:textColor="#000000" />
         </LinearLayout>

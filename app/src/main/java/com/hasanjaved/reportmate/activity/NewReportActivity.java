@@ -182,7 +182,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
     }
 
 
-
     @Override
     public void addFragmentCrmTest(CircuitBreaker circuitBreaker) {
 

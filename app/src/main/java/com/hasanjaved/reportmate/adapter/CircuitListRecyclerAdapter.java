@@ -52,10 +52,11 @@ public class CircuitListRecyclerAdapter extends RecyclerView.Adapter<CircuitList
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
 
-        if (viewType== 1)
-        itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_circuit_list_selected, parent, false);
-        else itemView = LayoutInflater.from(parent.getContext())
+//        if (viewType== 1)
+//        itemView = LayoutInflater.from(parent.getContext())
+//                .inflate(R.layout.item_circuit_list_selected, parent, false);
+//        else
+            itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.item_circuit_list, parent, false);
         return new MyViewHolder(itemView);
     }

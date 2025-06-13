@@ -52,6 +52,9 @@ public class ImageLoader {
     }
     public static void showImageFromStorage(Context context, ImageView imageView, String localImagePath) {
         try {
+
+            Glide.with(context).clear(imageView);
+            imageView.setImageDrawable(null);
             // Get the image file path
 //            String imagePath = getImagePath(imageName);
             File imageFile = new File(localImagePath);
@@ -101,8 +104,11 @@ public class ImageLoader {
                 .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
                 .error(android.R.drawable.ic_menu_close_clear_cancel); // Error placeholder
 
+
         Glide.with(context)
                 .load(imageFile)
+                .skipMemoryCache(true)       // skip memory cache
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .apply(options)
                 .into(imageView);
     }

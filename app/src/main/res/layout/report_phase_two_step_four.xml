@@ -54,14 +54,14 @@
                 android:textColor="#1E2B39" />
 
             <EditText
+                android:id="@+id/etEquipmentName"
                 android:layout_width="match_parent"
-                android:layout_height="48dp"
+                android:layout_height="@dimen/edit_text_height"
                 android:hint="@string/enter_here"
-                android:background="@drawable/bg_edit_text"
-                android:paddingStart="12dp"
-                android:paddingEnd="12dp"
+                style="@style/editTextStyle"
                 android:layout_marginTop="8dp"
-                android:inputType="text" />
+                android:focusable="false"
+                />
 
             <TextView
                 android:layout_width="wrap_content"

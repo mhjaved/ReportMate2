@@ -16,16 +16,5 @@
         layout="@layout/layout_ir_test_step_two"
         android:visibility="gone" />
 
-<!--    <include-->
-<!--        android:id="@+id/viewThree"-->
-<!--        layout="@layout/report_phase_two_step_three"-->
-<!--        android:visibility="gone" />-->
-
-<!--    <include-->
-<!--        android:id="@+id/viewFour"-->
-<!--        layout="@layout/report_phase_two_step_four"-->
-<!--        android:visibility="gone" />-->
-
-
 
 </RelativeLayout>

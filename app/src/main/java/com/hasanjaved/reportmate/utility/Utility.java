@@ -200,4 +200,10 @@ public class Utility {
         return imageFile.getAbsolutePath();
     }
 
+    public static String getDbBoxCircuitImage(Context context) {
+        File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY+"/"+Utility.getReport(context).getProjectNo());
+        File imageFile = new File(reportMateDir, dbBoxPanelInside+".jpg");
+        return imageFile.getAbsolutePath();
+    }
 }

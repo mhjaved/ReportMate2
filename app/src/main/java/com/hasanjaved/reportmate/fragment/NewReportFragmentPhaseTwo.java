@@ -110,12 +110,26 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 
                 ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionSiteDetails.ivSiteDetails, Utility.getTemperatureImage(activity));
                 ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivPanelImage, Utility.getPanelImage(activity));
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivDbBoxCircuitImage, Utility.getDbBoxCircuitImage(activity));
+
 
                 binding.viewOne.etEquipmentName.setText(report.getEquipment().getEquipmentName());
+                binding.viewFour.etEquipmentName.setText(report.getEquipment().getEquipmentName());
+
                 binding.viewOne.viewCustomerDetails.tvCustomerName.setText(report.getCustomerName());
                 binding.viewOne.viewCustomerDetails.tvCustomerAddress.setText(report.getCustomerAddress());
-                binding.viewOne.viewCustomerDetails.tvOwner.setText(report.getOwnerIdentification());
-//                binding.viewOne.viewCustomerDetails.tvOwnerAddress.setText(report.getOwner);
+                binding.viewOne.viewCustomerDetails.tvUser.setText(report.getUserName());
+                binding.viewOne.viewCustomerDetails.tvUserAddress.setText(report.getUserAddress());
+
+                binding.viewOne.sectionSiteDetails.tvOwner.setText(report.getOwnerIdentification());
+                binding.viewOne.sectionSiteDetails.tvDateOfLastInspection.setText(report.getDateOfLastInspection());
+                binding.viewOne.sectionSiteDetails.tvLastInspectionNo.setText(report.getLastInspectionReportNo());
+                binding.viewOne.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature());
+                binding.viewOne.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity());
+
+                binding.viewOne.sectionEquipmentDetails.tvEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
+                binding.viewOne.sectionEquipmentDetails.tvEquipmentName.setText(report.getEquipment().getEquipmentName());
+
             } catch (Exception e) {
                 Utility.showLog("Exception e  " + e);
             }
@@ -158,7 +172,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                     showPage(viewFour, viewOne,
                             viewTwo, viewThree);
                 }
-            );
+        );
 
 
         binding.viewFour.btnNext.setOnClickListener(view ->
@@ -269,9 +283,9 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                                       int before, int count) {
                 if (s.length() != 0) {
                     Utility.showLog(" onTextChanged " + s.toString());
-                    showCircuitNumberConfirmation(s.toString());
+                    setCircuitList(s.toString());
+//                    showCircuitNumberConfirmation(s.toString());
                 }
-
             }
         });
 
@@ -285,7 +299,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                 binding.viewTwo.etCatalog.getText().toString().trim(),
                 binding.viewTwo.etAmps.getText().toString().trim(),
                 binding.viewTwo.etVoltage.getText().toString().trim()
-                );
+        );
     }
 
     private void savePageThreeManufacturerCurveDetailsData() {
@@ -303,7 +317,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                 binding.viewThree.etCurveNumberThree.getText().toString().trim(),
                 binding.viewThree.etCurveRangeThree.getText().toString().trim()
 
-                );
+        );
     }
 
     private void showCircuitNumberConfirmation(String numberOfCircuitString) {
@@ -344,8 +358,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
     }
 
     private void setViewFourNextButtonStatus() {
-
-//        Utility.showLog();
 
         if (binding.viewFour.tvIr.getContentDescription().equals(getString(R.string.selected)) ||
                 binding.viewFour.tvCrmTrip.getContentDescription().equals(getString(R.string.selected)))
@@ -421,6 +433,11 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                 circuitBreakerList.remove(index);
                 circuitListRecyclerAdapter.notifyDataSetChanged();
                 viewDeleteCircuit.setVisibility(View.GONE);
+
+                if (!circuitBreakerList.isEmpty())
+                    binding.viewOne.etNumberOfCircuit.setText(String.valueOf(circuitBreakerList.size()));
+                else binding.viewOne.etNumberOfCircuit.setText("");
+
             } else {
                 Utility.showLog("Delete Index out of bounds: " + index);
             }

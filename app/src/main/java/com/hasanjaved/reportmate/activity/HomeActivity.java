@@ -10,6 +10,7 @@ import android.widget.Toast;
 
 import com.hasanjaved.reportmate.DesignFragment;
 import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
+import com.hasanjaved.reportmate.doc_generator.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
 import com.hasanjaved.reportmate.OcrTestFragment;
 import com.hasanjaved.reportmate.R;
@@ -17,6 +18,7 @@ import com.hasanjaved.reportmate.fragment.SettingsFragment;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
 import com.hasanjaved.reportmate.model.Employee;
+import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.MediaStoreUtils;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -51,6 +53,8 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
 //        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());
         addHomeFragment();
+
+        generateReportFile(Utility.getReport(this));
 
 //        ReportGenerator2.generateElectricalInspectionReport(this, Utility.getReportDirectory(this),"J report",Utility.IMAGE_SAMPLE_DIRECTORY2);
 //        ReportGenerator3.generateElectricalInspectionReportToPublicDocuments(this,"jreport",Utility.IMAGE_SAMPLE_DIRECTORY2);
@@ -141,6 +145,18 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
     }
 
 
+    public void generateReportFile(Report report) {
+        String reportName = report.getProjectNo();
+
+        boolean success = ReportGenerator.generateReport(this, reportName,report);
+
+        if (success) {
+            Utility.showLog( " report generated successfully");
+            // File saved to: /storage/emulated/0/Documents/ReportMateReports/
+        } else {
+            Utility.showLog(  "Failed to generate  report");
+        }
+    }
 
     @Override
     public void onPreviousReportHistoryClicked() {

@@ -17,6 +17,7 @@ public class Report {
     TripTest tripTest;
 
     String ownerIdentification;
+    String ownerAddress;
 
     String dateOfLastInspection;
     String lastInspectionReportNo;
@@ -177,5 +178,39 @@ public class Report {
 
     public void setTripTest(TripTest tripTest) {
         this.tripTest = tripTest;
+    }
+
+    public String getOwnerAddress() {
+        return ownerAddress;
+    }
+
+    public void setOwnerAddress(String ownerAddress) {
+        this.ownerAddress = ownerAddress;
+    }
+
+    @Override
+    public String toString() {
+        return "Report{" +
+                "employee=" + employee +
+                ", testDate='" + testDate + '\'' +
+                ", EmployeeId='" + EmployeeId + '\'' +
+                ", projectNo='" + projectNo + '\'' +
+                ", folderLocation='" + folderLocation + '\'' +
+                ", customerName='" + customerName + '\'' +
+                ", customerAddress='" + customerAddress + '\'' +
+                ", userName='" + userName + '\'' +
+                ", userAddress='" + userAddress + '\'' +
+                ", generalImageTemperature='" + generalImageTemperature + '\'' +
+                ", irTest=" + irTest +
+                ", crmTest=" + crmTest +
+                ", tripTest=" + tripTest +
+                ", ownerIdentification='" + ownerIdentification + '\'' +
+                ", ownerAddress='" + ownerAddress + '\'' +
+                ", dateOfLastInspection='" + dateOfLastInspection + '\'' +
+                ", lastInspectionReportNo='" + lastInspectionReportNo + '\'' +
+                ", equipment=" + equipment +
+                ", panelBoard=" + panelBoard +
+                ", manufacturerCurveDetails=" + manufacturerCurveDetails +
+                '}';
     }
 }

@@ -337,7 +337,7 @@
                     android:background="@drawable/bg_edit_text"
                     android:drawablePadding="10dp"
                     android:hint="@string/enter_here"
-                    android:inputType="numberDecimal"
+                    android:inputType="number"
                     android:paddingStart="@dimen/space_12"
                     android:textColor="@color/text_black"
                     android:paddingEnd="@dimen/space_8"
