@@ -3,6 +3,7 @@ package com.hasanjaved.reportmate.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,6 +12,7 @@ import android.widget.Toast;
 import com.hasanjaved.reportmate.DesignFragment;
 import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
 import com.hasanjaved.reportmate.doc_generator.ReportGenerator;
+import com.hasanjaved.reportmate.doc_generator.ReportGenerator2;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
 import com.hasanjaved.reportmate.OcrTestFragment;
 import com.hasanjaved.reportmate.R;
@@ -54,7 +56,7 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 //        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());
         addHomeFragment();
 
-        generateReportFile(Utility.getReport(this));
+//        generateReportFile(Utility.getReport(this));
 
 //        ReportGenerator2.generateElectricalInspectionReport(this, Utility.getReportDirectory(this),"J report",Utility.IMAGE_SAMPLE_DIRECTORY2);
 //        ReportGenerator3.generateElectricalInspectionReportToPublicDocuments(this,"jreport",Utility.IMAGE_SAMPLE_DIRECTORY2);
@@ -145,17 +147,74 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
     }
 
 
+//    public void generateReportFile(Report report) {
+//        String reportName = report.getProjectNo();
+//
+//        boolean success = ReportGenerator2.generateReport(this, reportName,report);
+//
+//        if (success) {
+//            Utility.showLog( " report generated successfully");
+//            // File saved to: /storage/emulated/0/Documents/ReportMateReports/
+//        } else {
+//            Utility.showLog(  "Failed to generate  report");
+//        }
+//    }
+
+
     public void generateReportFile(Report report) {
         String reportName = report.getProjectNo();
 
-        boolean success = ReportGenerator.generateReport(this, reportName,report);
+        // Show loading dialog
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Generating Report");
+        progressDialog.setMessage("Initializing...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
-        if (success) {
-            Utility.showLog( " report generated successfully");
-            // File saved to: /storage/emulated/0/Documents/ReportMateReports/
-        } else {
-            Utility.showLog(  "Failed to generate  report");
-        }
+        // Generate report asynchronously
+        ReportGenerator2.generateReport(this, reportName, report,
+                new ReportGenerator2.ReportGenerationCallback() {
+                    @Override
+                    public void onStarted() {
+                        Utility.showLog("Report generation started");
+                        progressDialog.setMessage("Starting report generation...");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String message) {
+                        progressDialog.setProgress(progress);
+                        progressDialog.setMessage(message);
+                        Utility.showLog("Progress: " + progress + "% - " + message);
+                    }
+
+                    @Override
+                    public void onSuccess(String filePath) {
+                        progressDialog.dismiss();
+                        Utility.showLog("Report generated successfully: " + filePath);
+
+                        // Show success message
+                        Toast.makeText(HomeActivity.this,
+                                "Report saved successfully!",
+                                Toast.LENGTH_LONG).show();
+
+                        // Optional: Open the file or show notification
+                        // showReportCompletedNotification(filePath);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        progressDialog.dismiss();
+                        Utility.showLog("Failed to generate report: " + errorMessage);
+
+                        // Show error message
+                        Toast.makeText(HomeActivity.this,
+                                "Failed to generate report: " + errorMessage,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
     }
 
     @Override

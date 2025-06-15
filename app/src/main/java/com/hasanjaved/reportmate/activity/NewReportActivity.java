@@ -1,5 +1,6 @@
 package com.hasanjaved.reportmate.activity;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.doc_generator.ReportGenerator;
+import com.hasanjaved.reportmate.doc_generator.ReportGenerator2;
 import com.hasanjaved.reportmate.fragment.FragmentCamera;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTest;
 import com.hasanjaved.reportmate.fragment.FragmentTripTest;
@@ -30,10 +32,10 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
 
-//        addNewReportFragment();
+        addNewReportFragment();
 //        generateSampleDocument();
 //        addNewReportFragmentPhaseThreeIR();
-        addNewReportFragmentPhaseTwo();
+//        addNewReportFragmentPhaseTwo();
 //        addNewReportPhaseTwoFragment();
 //        addNewReportPhaseThreeFragment();
 //        addNewReportFragmentPhaseThreeCrmTrip();
@@ -101,17 +103,73 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
 
+//    public void generateReportFile(Report report) {
+//        String reportName = report.getProjectNo();
+//
+//        boolean success = ReportGenerator2.generateReport(this, reportName,report);
+//
+//        if (success) {
+//          Utility.showLog( " report generated successfully");
+//            // File saved to: /storage/emulated/0/Documents/ReportMateReports/
+//        } else {
+//            Utility.showLog(  "Failed to generate  report");
+//        }
+//    }
+
     public void generateReportFile(Report report) {
         String reportName = report.getProjectNo();
 
-        boolean success = ReportGenerator.generateReport(this, reportName,report);
+        // Show loading dialog
+        ProgressDialog progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Generating Report");
+        progressDialog.setMessage("Initializing...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
 
-        if (success) {
-          Utility.showLog( " report generated successfully");
-            // File saved to: /storage/emulated/0/Documents/ReportMateReports/
-        } else {
-            Utility.showLog(  "Failed to generate  report");
-        }
+        // Generate report asynchronously
+        ReportGenerator2.generateReport(this, reportName, report,
+                new ReportGenerator2.ReportGenerationCallback() {
+                    @Override
+                    public void onStarted() {
+                        Utility.showLog("Report generation started");
+                        progressDialog.setMessage("Starting report generation...");
+                    }
+
+                    @Override
+                    public void onProgress(int progress, String message) {
+                        progressDialog.setProgress(progress);
+                        progressDialog.setMessage(message);
+                        Utility.showLog("Progress: " + progress + "% - " + message);
+                    }
+
+                    @Override
+                    public void onSuccess(String filePath) {
+                        progressDialog.dismiss();
+                        Utility.showLog("Report generated successfully: " + filePath);
+
+                        // Show success message
+                        Toast.makeText(NewReportActivity.this,
+                                "Report saved successfully!",
+                                Toast.LENGTH_LONG).show();
+
+                        // Optional: Open the file or show notification
+                        // showReportCompletedNotification(filePath);
+                    }
+
+                    @Override
+                    public void onError(String errorMessage) {
+                        progressDialog.dismiss();
+                        Utility.showLog("Failed to generate report: " + errorMessage);
+
+                        // Show error message
+                        Toast.makeText(NewReportActivity.this,
+                                "Failed to generate report: " + errorMessage,
+                                Toast.LENGTH_LONG).show();
+                    }
+                }
+        );
     }
     private void addNewReportFragmentPhaseTwo(){
 

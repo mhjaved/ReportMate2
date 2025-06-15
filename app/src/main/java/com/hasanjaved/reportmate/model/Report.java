@@ -13,8 +13,8 @@ public class Report {
     String userAddress;
     String generalImageTemperature;
     IrTest irTest;
-    CrmTest crmTest;
-    TripTest tripTest;
+//    CrmTest crmTest;
+//    TripTest tripTest;
 
     String ownerIdentification;
     String ownerAddress;
@@ -164,22 +164,6 @@ public class Report {
         this.manufacturerCurveDetails = manufacturerCurveDetails;
     }
 
-    public CrmTest getCrmTest() {
-        return crmTest;
-    }
-
-    public void setCrmTest(CrmTest crmTest) {
-        this.crmTest = crmTest;
-    }
-
-    public TripTest getTripTest() {
-        return tripTest;
-    }
-
-    public void setTripTest(TripTest tripTest) {
-        this.tripTest = tripTest;
-    }
-
     public String getOwnerAddress() {
         return ownerAddress;
     }
@@ -202,8 +186,6 @@ public class Report {
                 ", userAddress='" + userAddress + '\'' +
                 ", generalImageTemperature='" + generalImageTemperature + '\'' +
                 ", irTest=" + irTest +
-                ", crmTest=" + crmTest +
-                ", tripTest=" + tripTest +
                 ", ownerIdentification='" + ownerIdentification + '\'' +
                 ", ownerAddress='" + ownerAddress + '\'' +
                 ", dateOfLastInspection='" + dateOfLastInspection + '\'' +

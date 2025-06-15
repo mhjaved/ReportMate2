@@ -22,12 +22,7 @@ import com.google.mlkit.vision.text.TextRecognizer;
 import com.google.mlkit.vision.text.latin.TextRecognizerOptions;
 import com.hasanjaved.reportmate.utility.Utility;
 
-import org.opencv.android.OpenCVLoader;
-import org.opencv.android.Utils;
-import org.opencv.core.Core;
-import org.opencv.core.CvType;
-import org.opencv.core.Mat;
-import org.opencv.imgproc.Imgproc;
+
 
 import java.io.File;
 import java.io.IOException;
@@ -62,62 +57,6 @@ public class TestActivity extends AppCompatActivity {
     }
 
 
-//    private void setupActivityResultLaunchers() {
-//        takePictureLauncher = registerForActivityResult(
-//                new ActivityResultContracts.TakePicture(),
-//                success -> {
-//                    if (success) {
-//                        try (InputStream stream = getContentResolver().openInputStream(photoUri)) {
-//                            Bitmap bitmap = BitmapFactory.decodeStream(stream);
-//
-////                            Mat mat = new Mat();
-////                            Utils.bitmapToMat(bitmap, mat);
-////
-////// Convert to grayscale
-////                            Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
-////
-////// Invert
-////                            Core.bitwise_not(mat, mat);
-////
-////// Optional: Threshold for cleaner output
-////                            Imgproc.threshold(mat, mat, 128, 255, Imgproc.THRESH_BINARY);
-////
-////// Convert back to Bitmap
-////                            Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-////                            Utils.matToBitmap(mat, resultBitmap);
-////
-//
-//                            Log.d(Utility.TAG,"bitmap");
-//                            imageView.setImageBitmap(bitmap);
-//                            processImage(bitmap);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//
-//        selectPictureLauncher = registerForActivityResult(
-//                new ActivityResultContracts.GetContent(),
-//                uri -> {
-//                    if (uri != null) {
-//                        try (InputStream stream = getContentResolver().openInputStream(uri)) {
-//                            Bitmap bitmap = preprocessImage(BitmapFactory.decodeStream(stream));;
-//
-//                            OCRProcessor ocr = new OCRProcessor(this);
-//                            String result = ocr.extractText(bitmap);
-//                            textView.setText(result);
-//
-//                            ocr.release();
-//                            Log.d(Utility.TAG, result);
-//                            imageView.setImageBitmap(bitmap);
-////                            processImage(bitmap);
-//                        } catch (IOException e) {
-//                            e.printStackTrace();
-//                        }
-//                    }
-//                });
-//    }
-
     private void dispatchTakePictureIntent() {
         try {
             File imageFile = File.createTempFile("IMG_", ".jpg", getCacheDir());
@@ -132,33 +71,33 @@ public class TestActivity extends AppCompatActivity {
         selectPictureLauncher.launch("image/*");
     }
 
-    public Bitmap preprocessImage(Bitmap inputBitmap) {
-
-        // Convert Bitmap to Mat
-        Mat mat = new Mat();
-        Utils.bitmapToMat(inputBitmap, mat);
-
-        // Step 1: Convert to Grayscale
-        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
-
-        // Step 2: Apply Thresholding
-        //Imgproc.threshold(mat, mat, 150, 255, Imgproc.THRESH_BINARY);
-
-        // Step 3: Sharpen the image
-        Mat kernel = new Mat(3, 3, CvType.CV_32F);
-        float[] kernelData = {
-                0, -1, 0,
-                -1, 5, -1,
-                0, -1, 0
-        };
-        kernel.put(0, 0, kernelData);
-        Imgproc.filter2D(mat, mat, -1, kernel);
- 
-        // Convert Mat back to Bitmap
-        Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
-        Utils.matToBitmap(mat, resultBitmap);
-        return resultBitmap;
-    }
+//    public Bitmap preprocessImage(Bitmap inputBitmap) {
+//
+//        // Convert Bitmap to Mat
+//        Mat mat = new Mat();
+//        Utils.bitmapToMat(inputBitmap, mat);
+//
+//        // Step 1: Convert to Grayscale
+//        Imgproc.cvtColor(mat, mat, Imgproc.COLOR_BGR2GRAY);
+//
+//        // Step 2: Apply Thresholding
+//        //Imgproc.threshold(mat, mat, 150, 255, Imgproc.THRESH_BINARY);
+//
+//        // Step 3: Sharpen the image
+//        Mat kernel = new Mat(3, 3, CvType.CV_32F);
+//        float[] kernelData = {
+//                0, -1, 0,
+//                -1, 5, -1,
+//                0, -1, 0
+//        };
+//        kernel.put(0, 0, kernelData);
+//        Imgproc.filter2D(mat, mat, -1, kernel);
+//
+//        // Convert Mat back to Bitmap
+//        Bitmap resultBitmap = Bitmap.createBitmap(mat.cols(), mat.rows(), Bitmap.Config.ARGB_8888);
+//        Utils.matToBitmap(mat, resultBitmap);
+//        return resultBitmap;
+//    }
 
     private void processImage(Bitmap bitmap) {
         InputImage image = InputImage.fromBitmap(bitmap, 0);

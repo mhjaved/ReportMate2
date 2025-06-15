@@ -74,4 +74,18 @@ public class CrmTest {
     public void setbResUnit(String bResUnit) {
         this.bResUnit = bResUnit;
     }
+
+    @Override
+    public String toString() {
+        return "CrmTest{" +
+                "connectionImage='" + connectionImage + '\'' +
+                ", resultImage='" + resultImage + '\'' +
+                ", rResValue='" + rResValue + '\'' +
+                ", rResUnit='" + rResUnit + '\'' +
+                ", yResValue='" + yResValue + '\'' +
+                ", yResUnit='" + yResUnit + '\'' +
+                ", bResValue='" + bResValue + '\'' +
+                ", bResUnit='" + bResUnit + '\'' +
+                '}';
+    }
 }

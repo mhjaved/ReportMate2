@@ -56,7 +56,7 @@ public class Utility {
 
     public static final String imgAbConnection = "imgAbConnection";
     public static final String imgBcConnection = "imgBcConnection";
-    public static final String imgCcConnection = "imgCaConnection";
+    public static final String imgCaConnection = "imgCaConnection";
     public static final String imgCrmConnection = "imgCrmConnection";
     public static final String imgInjectorCurrent = "imgInjectorCurrent";
     public static final String imgInjectedCurrent = "imgInjectedCurrent";

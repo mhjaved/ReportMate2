@@ -336,6 +336,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 //        List<CircuitBreaker> list = new ArrayList<>();
         for (int i = 0; i < numberOfCircuit; i++) {
             CircuitBreaker circuitBreaker = new CircuitBreaker();
+            circuitBreaker.setCircuitId(String.valueOf(i));
             circuitBreaker.setName("0" + i);
             circuitBreaker.setSize("0");
             circuitBreakerList.add(circuitBreaker);

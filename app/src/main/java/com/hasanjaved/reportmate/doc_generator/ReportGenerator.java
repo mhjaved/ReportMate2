@@ -27,11 +27,11 @@ import java.util.Locale;
 // all others are test
 public class ReportGenerator {
 
-    private static final String TAG = "YKKReportGenerator";
+    private static final String TAG = "ReportGenerator";
     private static final String REPORTS_DIRECTORY = "ReportMateReports";
 
     /**
-     * Generate YKK Bangladesh MCCB MSB-DV-22 BEPZA Report
+     * Generate MCCB  Report
      * @param context Application context
      * @param reportName Name of the report file (without extension)
      * @return Success status
@@ -274,22 +274,25 @@ public class ReportGenerator {
         setCellText(row20.getCell(14), "INST TRIP", false, ParagraphAlignment.CENTER);
         setCellText(row20.getCell(15), "CONTACT RESIS", false, ParagraphAlignment.CENTER);
 
+
+        addCircuitBreakerData(table, report);
+
         // Add circuit breaker data with proper rowspan
-        addCircuitBreakerDataWithRowspan(table, "", "", "", "", "OK",
-                new String[]{"", "", ""});
+//        addCircuitBreakerDataWithRowspan(table, "ckt1", "", "", "", "OK",
+//                new String[]{"", "", ""});
+//
+//        addCircuitBreakerDataWithRowspan(table, "ckt2", "", "", "", "OK",
+//                new String[]{"", "", ""});
 
-        addCircuitBreakerDataWithRowspan(table, "", "", "", "", "OK",
-                new String[]{"", "", ""});
-
-        addCircuitBreakerDataWithRowspan(table, "", "", "", "", "OK",
-                new String[]{"4.78 mΩ", "5.30 mΩ", "4.48 mΩ"});
-
-        addCircuitBreakerDataWithRowspan(table, "", "", "", "", "OK",
-                new String[]{"4.92 mΩ", "5.36 mΩ", "4.48 mΩ"});
+//        addCircuitBreakerDataWithRowspan(table, "ckt3", "", "", "", "OK",
+//                new String[]{"4.78 mΩ", "5.30 mΩ", "4.48 mΩ"});
+//
+//        addCircuitBreakerDataWithRowspan(table, "", "", "", "", "OK",
+//                new String[]{"4.92 mΩ", "5.36 mΩ", "4.48 mΩ"});
 
         // Add empty circuit rows
-        addEmptyCircuitRowsWithRowspan(table);
-        addEmptyCircuitRowsWithRowspan(table);
+//        addEmptyCircuitRowsWithRowspan(table);
+//        addEmptyCircuitRowsWithRowspan(table);
 
         // Add remarks section
         addRemarksToTable(table);
@@ -537,6 +540,102 @@ public class ReportGenerator {
             Log.e(TAG, "Legacy save failed", e);
             Toast.makeText(context, "Save failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
+        }
+    }
+
+    //====================================================================
+    /**
+     * Add circuit breaker data with proper structure matching the image
+     */
+    private static void addCircuitBreakerData(XWPFTable table, Report report) {
+        // Circuit data - each circuit has multiple resistance measurements
+        addCircuitRow(table, "CKT-0", "200 A", "600 A", "22s", "OK",
+                new String[]{"3.40 mΩ", "3.08 mΩ", "2.95 mΩ"});
+
+        addCircuitRow(table, "CKT-1", "80 A", "243 A", "48s", "OK",
+                new String[]{"4.15 mΩ", "3.86 mΩ", "3.95 mΩ", "3.79 mΩ"});
+
+        addCircuitRow(table, "CKT-2", "80 A", "242 A", "54 s", "OK",
+                new String[]{"3.53 mΩ", "4.25 mΩ"});
+
+        addCircuitRow(table, "CKT-3", "80 A", "244 A", "33s", "OK",
+                new String[]{"3.23 mΩ", "3.23 mΩ", "2.85 mΩ"});
+
+        addCircuitRow(table, "CKT-4", "63 A", "189s", "28 s", "OK",
+                new String[]{"2.29 mΩ", "3.43 mΩ", "3.96 mΩ", "2.89 mΩ"});
+
+        addCircuitRow(table, "CKT-5", "80 A", "237 s", "51 s", "OK",
+                new String[]{"3.83 mΩ", "3.04 mΩ"});
+
+        addCircuitRow(table, "CKT-6", "80 A", "243 s", "46 s", "OK",
+                new String[]{"3.17 mΩ", "3.32 mΩ", "2.65 mΩ"});
+    }
+
+    /**
+     * Add a single circuit row with multiple resistance measurements
+     */
+    private static void addCircuitRow(XWPFTable table, String circuit, String size,
+                                      String testAmps, String tripTime, String instTrip,
+                                      String[] contactResistanceValues) {
+
+        int maxRows = Math.max(contactResistanceValues.length, 1);
+        int startRowIndex = table.getNumberOfRows();
+
+        // Create the required number of rows for this circuit
+        for (int i = 0; i < maxRows; i++) {
+            XWPFTableRow row = table.createRow();
+            expandRowTo16Columns(row);
+
+            if (i == 0) {
+                // First row contains all the circuit info
+                setCellText(row.getCell(0), circuit, false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(1), size, false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(2), testAmps, false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(3), tripTime, false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(4), instTrip, false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(5), contactResistanceValues[i], false, ParagraphAlignment.CENTER);
+            } else {
+                // Subsequent rows only have resistance values
+                setCellText(row.getCell(0), "", false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(1), "", false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(2), "", false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(3), "", false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(4), "", false, ParagraphAlignment.CENTER);
+                setCellText(row.getCell(5), contactResistanceValues[i], false, ParagraphAlignment.CENTER);
+            }
+
+            // Right side columns (6-15) - empty for now
+            for (int j = 6; j < 16; j++) {
+                setCellText(row.getCell(j), "", false, ParagraphAlignment.CENTER);
+            }
+        }
+
+        // Apply vertical merge to the first 5 columns for this circuit
+        if (maxRows > 1) {
+            mergeVerticalCells(table, startRowIndex, startRowIndex + maxRows - 1, 0); // Circuit #
+            mergeVerticalCells(table, startRowIndex, startRowIndex + maxRows - 1, 1); // Size
+            mergeVerticalCells(table, startRowIndex, startRowIndex + maxRows - 1, 2); // Test Amps
+            mergeVerticalCells(table, startRowIndex, startRowIndex + maxRows - 1, 3); // Trip Time
+            mergeVerticalCells(table, startRowIndex, startRowIndex + maxRows - 1, 4); // Inst Trip
+        }
+    }
+
+    /**
+     * Merge cells vertically
+     */
+    private static void mergeVerticalCells(XWPFTable table, int fromRow, int toRow, int col) {
+        for (int rowIndex = fromRow; rowIndex <= toRow; rowIndex++) {
+            XWPFTableCell cell = table.getRow(rowIndex).getCell(col);
+            CTTcPr tcPr = cell.getCTTc().getTcPr();
+            if (tcPr == null) {
+                tcPr = cell.getCTTc().addNewTcPr();
+            }
+
+            if (rowIndex == fromRow) {
+                tcPr.addNewVMerge().setVal(STMerge.RESTART);
+            } else {
+                tcPr.addNewVMerge().setVal(STMerge.CONTINUE);
+            }
         }
     }
 }

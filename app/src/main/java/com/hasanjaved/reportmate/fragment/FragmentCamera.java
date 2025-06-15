@@ -46,8 +46,6 @@ import java.util.concurrent.Executors;
 
 public class FragmentCamera extends Fragment {
 
-//    private PreviewView previewView;
-//    private ImageButton capture, toggleFlash, flipCamera;
     private int cameraFacing = CameraSelector.LENS_FACING_BACK;
 
     private FragmentCameraBinding binding;

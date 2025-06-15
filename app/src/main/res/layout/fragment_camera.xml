@@ -117,7 +117,7 @@
             android:id="@+id/btnPerformOCR"
             android:layout_width="0dp"
             android:layout_height="48dp"
-            android:text="@string/perform_ocr"
+            android:text="@string/save"
             android:drawableRight="@drawable/ic_checked"
             android:drawableTint="@color/white"
             android:textColor="#FFFFFF"

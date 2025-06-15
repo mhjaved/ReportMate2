@@ -120,7 +120,8 @@ public class ReportGeneralData {
         if (report!=null){
             PanelBoard panelBoard = report.getPanelBoard();
 
-            if (panelBoard==null) panelBoard = new PanelBoard();
+            if (panelBoard==null)
+                panelBoard = new PanelBoard();
 
             panelBoard.setTestVoltage(testVoltage);
             panelBoard.setModelNo(modelNumber);

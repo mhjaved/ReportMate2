@@ -158,5 +158,7 @@
     <string name="b_res">B-RES</string>
     <string name="r_res">R-RES</string>
     <string name="trip_time">Trip Time</string>
+    <string name="save_image">Save Image</string>
+    <string name="save">Save</string>
 
 </resources>

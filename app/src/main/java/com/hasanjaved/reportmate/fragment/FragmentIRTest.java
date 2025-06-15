@@ -281,7 +281,7 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
 
         binding.viewTwo.imgCameraCaConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageCaConnection,
-                        Utility.imgCcConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        Utility.imgCaConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
         );
 
         binding.viewTwo.imgCameraCaResult.setOnClickListener(view ->

@@ -74,4 +74,18 @@ public class TripTest {
     public void setInstantTrip(String instantTrip) {
         this.instantTrip = instantTrip;
     }
+
+    @Override
+    public String toString() {
+        return "TripTest{" +
+                "currentInjectorConnectionImage='" + currentInjectorConnectionImage + '\'' +
+                ", injectedCurrentImage='" + injectedCurrentImage + '\'' +
+                ", testAmplitude='" + testAmplitude + '\'' +
+                ", tripTimeConnectionImage='" + tripTimeConnectionImage + '\'' +
+                ", tripTimeImage='" + tripTimeImage + '\'' +
+                ", tripTime='" + tripTime + '\'' +
+                ", afterTripTimeImage='" + afterTripTimeImage + '\'' +
+                ", instantTrip='" + instantTrip + '\'' +
+                '}';
+    }
 }

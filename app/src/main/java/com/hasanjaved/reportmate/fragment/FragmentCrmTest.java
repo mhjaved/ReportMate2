@@ -43,7 +43,7 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
     private Activity activity;
 
 
-    private String rResUnite ="Ω",yResUnite ="Ω",bResUnite ="Ω";
+    private String rResUnite ="mΩ",yResUnite ="mΩ",bResUnite ="mΩ";
     private View rootView;
     //    , viewOne, viewCrm, viewTrip, viewFour;
     private FragmentCrmTestBinding binding;
@@ -168,6 +168,7 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
     private void saveCrmData() {
         TestData.saveCrmTestData(activity,
+                circuitBreaker,
                 binding.et1.getText().toString().trim(),rResUnite,
                 binding.et2.getText().toString().trim(),yResUnite,
                 binding.et3.getText().toString().trim(),bResUnite
@@ -175,7 +176,7 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
     }
 
     ArrayAdapter<String> arrayAdapter;
-    String[] unitList = {"Ω", "mΩ", "µΩ"};
+    String[] unitList = {"mΩ","Ω","µΩ"};
 
     private void setCrmCamera() {
 
