@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true"
+    android:orientation="vertical"
+    android:padding="@dimen/space_16">
+
+    <RelativeLayout
+        android:id="@+id/rlTestResults"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="@dimen/space_12">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ir_test_results"
+            android:textSize="@dimen/summery_label_size"
+            android:textColor="@color/text_black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <!-- Line to Ground Connection Section -->
+        <RelativeLayout
+            android:id="@+id/rlLineToGround"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/bg_edit_text"
+            android:gravity="center_vertical"
+            android:layout_marginBottom="@dimen/space_8">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:text="@string/line_to_ground_connection"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivArrowLineToGround"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_12"
+                android:src="@drawable/ic_arrow_up" />
+        </RelativeLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandLineToGround"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/space_12"
+            app:el_duration="600"
+            app:el_expanded="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:background="@color/white"
+                android:padding="@dimen/space_12">
+
+                <!-- A-G Connection -->
+                <RelativeLayout
+                    android:id="@+id/rlAGConnection"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/space_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="ag_connection"
+                        android:textColor="@color/text_black" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowAG"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandAG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_12"
+                    app:el_duration="600"
+                    app:el_expanded="false">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:padding="@dimen/space_8">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal"
+                            android:gravity="center_vertical"
+                            android:layout_marginBottom="@dimen/space_8">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="ag_label"
+                                android:textColor="@color/text_black"
+                                android:layout_marginEnd="@dimen/space_16" />
+
+                            <TextView
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:text="over_limit"
+                                android:textColor="@color/text_black" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text=">4000"
+                                android:textColor="@color/text_black"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ir_test_connection_img_ag"
+                            android:textColor="@color/text_black"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="@dimen/space_8" />
+
+                        <ImageView
+                            android:id="@+id/ivTestImage1"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:layout_marginBottom="@dimen/space_8"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_demo_temp"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="ir_test_connection_img_ag"
+                            android:textColor="@color/text_black"
+                            android:textStyle="bold"
+                            android:layout_marginBottom="@dimen/space_8" />
+
+                        <ImageView
+                            android:id="@+id/ivTestImage2"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            android:scaleType="centerCrop"
+                            android:src="@drawable/img_demo_temp"/>
+
+                    </LinearLayout>
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <!-- B-G Connection -->
+                <RelativeLayout
+                    android:id="@+id/rlBGConnection"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
+                    android:layout_marginBottom="@dimen/space_8">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="bg_connection"
+                        android:textColor="@color/text_black" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowBG"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_down" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandBG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/space_12"
+                    app:el_duration="600"
+                    app:el_expanded="false">
+
+<!--                    <include-->
+<!--                        android:id="@+id/sectionBGDetails"-->
+<!--                        layout="@layout/section_bg_connection_details" />-->
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <!-- C-G Connection -->
+                <RelativeLayout
+                    android:id="@+id/rlCGConnection"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="cg_connection"
+                        android:textColor="@color/text_black" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowCG"
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_down" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandCG"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:el_duration="600"
+                    app:el_expanded="false">
+
+<!--                    <include-->
+<!--                        android:id="@+id/sectionCGDetails"-->
+<!--                        layout="@layout/section_cg_connection_details" />-->
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+            </LinearLayout>
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        <!-- Line to Line Connection Section -->
+        <RelativeLayout
+            android:id="@+id/rlLineToLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/bg_edit_text"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:text="@string/line_to_line_connection"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivArrowLineToLine"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_12"
+                android:src="@drawable/ic_arrow_down" />
+        </RelativeLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandLineToLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:el_duration="600"
+            app:el_expanded="false">
+
+<!--            <include-->
+<!--                android:id="@+id/sectionLineToLineDetails"-->
+<!--                layout="@layout/section_line_to_line_details" />-->
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+    </LinearLayout>
+
+    <!-- Bottom Buttons -->
+<!--    <LinearLayout-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:orientation="horizontal"-->
+<!--        android:layout_marginTop="@dimen/space_16">-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnCancel"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="@dimen/button_height"-->
+<!--            android:layout_weight="1"-->
+<!--            android:layout_marginEnd="@dimen/space_8"-->
+<!--            android:background="@drawable/bg_button_secondary"-->
+<!--            android:text="@string/cancel"-->
+<!--            android:textColor="@color/text_gray"-->
+<!--            android:textAllCaps="false" />-->
+
+<!--        <Button-->
+<!--            android:id="@+id/btnBackToInspectionType"-->
+<!--            android:layout_width="0dp"-->
+<!--            android:layout_height="@dimen/button_height"-->
+<!--            android:layout_weight="2"-->
+<!--            android:layout_marginStart="@dimen/space_8"-->
+<!--            android:background="@drawable/bg_button_primary"-->
+<!--            android:text="@string/back_to_inspection_type"-->
+<!--            android:textColor="@color/white"-->
+<!--            android:textAllCaps="false" />-->
+
+<!--    </LinearLayout>-->
+
+</LinearLayout>

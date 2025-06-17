@@ -8,7 +8,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.hasanjaved.reportmate.R;
-import com.hasanjaved.reportmate.doc_generator.ReportGenerator;
 import com.hasanjaved.reportmate.doc_generator.ReportGenerator2;
 import com.hasanjaved.reportmate.fragment.FragmentCamera;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTest;
@@ -17,6 +16,7 @@ import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseOne;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTripTest;
 import com.hasanjaved.reportmate.fragment.FragmentIRTest;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseTwo;
+import com.hasanjaved.reportmate.fragment.FragmentReportSummary;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
@@ -32,7 +32,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
 
-        addNewReportFragment();
+//        addNewReportFragment();
 //        generateSampleDocument();
 //        addNewReportFragmentPhaseThreeIR();
 //        addNewReportFragmentPhaseTwo();
@@ -42,6 +42,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 //        addFragmentCamera();
 //        createFile();
 
+        addFragmentReportSummary();
 //        SharedPreferences preferences = getSharedPreferences("pref", Context.MODE_PRIVATE);
 //        String fileLocation = "file:"+preferences.getString(Utility.ImageToken,"hasan");
 //
@@ -175,6 +176,18 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
         NewReportFragmentPhaseTwo fragment = NewReportFragmentPhaseTwo.newInstance("","");
         fragment.setFragmentClickListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentHolder,fragment,"")
+                .addToBackStack("")
+                .commit();
+
+    }
+
+  private void addFragmentReportSummary(){
+
+        FragmentReportSummary fragment = FragmentReportSummary.newInstance("","");
+//        fragment.setFragmentClickListener(this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentHolder,fragment,"")

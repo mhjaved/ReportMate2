@@ -20,5 +20,6 @@
     <dimen name="circle_progress_thickness">5dp</dimen>
     <dimen name="checked_icon_size">18dp</dimen>
     <dimen name="heading_size">20sp</dimen>
+    <dimen name="summery_label_size">16sp</dimen>
 
 </resources>

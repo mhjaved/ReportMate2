@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/rlSummary"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:gravity="center_vertical"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/lineToGroundLabel">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/summary"
+            android:textSize="@dimen/summery_label_size"
+            android:textColor="@color/text_black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="start"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+                <RelativeLayout
+                    android:id="@+id/rlCustomerDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineToGroundLabel">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="@string/customer_details"
+                        android:textColor="@color/text_black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowCustomer"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandCustomer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    app:el_duration="600"
+                    app:el_expanded="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/agLabel">
+
+                    <include
+                        android:id="@+id/viewCustomerDetails"
+                        layout="@layout/section_customer_details" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rlSideDetails"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginTop="@dimen/space_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineToGroundLabel">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="@string/site_details"
+                        android:textColor="@color/text_black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowSite"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandSite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    app:el_duration="600"
+                    app:el_expanded="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/agLabel">
+
+                    <include
+                        android:id="@+id/sectionSiteDetails"
+                        layout="@layout/section_site_details" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rlEquipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginTop="@dimen/space_12"
+                    android:background="@drawable/bg_edit_text"
+                    android:gravity="center_vertical"
+                    android:textStyle="bold"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/lineToGroundLabel">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/space_12"
+                        android:text="@string/equipment_details"
+                        android:textColor="@color/text_black"
+                        android:textStyle="bold" />
+
+                    <ImageView
+                        android:id="@+id/ivArrowEquipment"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:layout_alignParentEnd="true"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up" />
+                </RelativeLayout>
+
+                <net.cachapa.expandablelayout.ExpandableLayout
+                    android:id="@+id/expandEquipment"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/space_8"
+                    app:el_duration="600"
+                    app:el_expanded="false"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/agLabel">
+
+                    <include
+                        android:id="@+id/section_equipment_details"
+                        layout="@layout/section_equipment_details" />
+
+                </net.cachapa.expandablelayout.ExpandableLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+
+</LinearLayout>

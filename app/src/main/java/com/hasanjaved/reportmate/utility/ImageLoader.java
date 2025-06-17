@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 
 import java.io.File;
 
@@ -98,19 +99,35 @@ public class ImageLoader {
      * @param imageFile Image file to load
      */
     private static void loadImageWithGlide(Context context, ImageView imageView, File imageFile) {
-        RequestOptions options = new RequestOptions()
-                .centerCrop() // or .fitCenter() depending on your needs
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
-                .error(android.R.drawable.ic_menu_close_clear_cancel); // Error placeholder
 
+        String signature = imageFile.lastModified() + "_" + imageFile.length();
+
+        RequestOptions options = new RequestOptions()
+                .centerCrop()
+                .placeholder(android.R.drawable.ic_menu_gallery)
+                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .signature(new ObjectKey(signature));
 
         Glide.with(context)
                 .load(imageFile)
-                .skipMemoryCache(true)       // skip memory cache
+                .skipMemoryCache(true)
                 .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .apply(options)
                 .into(imageView);
+
+        //        RequestOptions options = new RequestOptions()
+//                .centerCrop() // or .fitCenter() depending on your needs
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
+//                .error(android.R.drawable.ic_menu_close_clear_cancel); // Error placeholder
+//
+//
+//        Glide.with(context)
+//                .load(imageFile)
+//                .skipMemoryCache(true)       // skip memory cache
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .apply(options)
+//                .into(imageView);
     }
 
     /**

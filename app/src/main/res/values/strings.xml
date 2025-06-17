@@ -160,5 +160,11 @@
     <string name="trip_time">Trip Time</string>
     <string name="save_image">Save Image</string>
     <string name="save">Save</string>
+    <string name="ir_test_results">IR Test Results</string>
+    <string name="crm_test_result">CRM Test Result</string>
+    <string name="trip_test_result">Trip Test Result</string>
+    <string name="a_g_">A-G:</string>
+    <string name="contact_resis">Contact Resis:</string>
+    <string name="crm_test_result_img">CRM Test Result Img</string>
 
 </resources>

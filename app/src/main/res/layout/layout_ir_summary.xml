@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#F5F9FC"
+    android:clickable="true"
+    android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:id="@+id/rlTestResults"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:gravity="center_vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/ir_test_results"
+            android:textSize="@dimen/summery_label_size"
+            android:textColor="@color/text_black"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:background="@drawable/bg_expand_box"
+            >
+            <!-- Line to Ground Connection Section -->
+            <RelativeLayout
+                android:id="@+id/rlLineToGround"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/edit_text_height"
+                android:background="@drawable/bg_edit_text"
+                android:gravity="center_vertical"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/space_12"
+                    android:text="@string/line_to_ground_connection"
+                    android:textColor="@color/text_black"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivArrowLineToGround"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="@dimen/space_12"
+                    android:src="@drawable/ic_arrow_up" />
+
+            </RelativeLayout>
+
+            <net.cachapa.expandablelayout.ExpandableLayout
+                android:id="@+id/expandLineToGround"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_12"
+                app:el_duration="600"
+                app:el_expanded="true">
+
+                <include
+                    android:id="@+id/groundConnection"
+                    layout="@layout/section_ir_test_summary1" />
+
+
+            </net.cachapa.expandablelayout.ExpandableLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginTop="@dimen/space_12"
+            android:background="@drawable/bg_expand_box"
+            >
+        <!-- Line to Line Connection Section -->
+        <RelativeLayout
+            android:id="@+id/rlLineToLine"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/bg_edit_text"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_12"
+                android:text="@string/line_to_line_connection"
+                android:textColor="@color/text_black"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:id="@+id/ivArrowLineToLine"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/space_12"
+                android:src="@drawable/ic_arrow_down" />
+        </RelativeLayout>
+
+        <net.cachapa.expandablelayout.ExpandableLayout
+            android:id="@+id/expandLineToLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:el_duration="600"
+            android:layout_marginTop="@dimen/space_12"
+            app:el_expanded="false">
+
+            <include
+                android:id="@+id/lineConnection"
+                layout="@layout/section_ir_test_summary1" />
+
+        </net.cachapa.expandablelayout.ExpandableLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+</LinearLayout>

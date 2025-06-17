@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical">
+
+    <include
+        android:id="@+id/connectionOne"
+        layout="@layout/section_ir_test_summary2" />
+
+    <include
+        android:id="@+id/connectionTwo"
+        layout="@layout/section_ir_test_summary2" />
+
+    <include
+        android:id="@+id/connectionThree"
+        layout="@layout/section_ir_test_summary2" />
+
+
+</LinearLayout>
