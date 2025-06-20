@@ -10,29 +10,18 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 
-import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.hasanjaved.reportmate.R;
-import com.hasanjaved.reportmate.adapter.CircuitListRecyclerAdapter2;
 import com.hasanjaved.reportmate.data_manager.TestData;
 import com.hasanjaved.reportmate.databinding.FragmentCrmTestBinding;
-import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseThreeCrmTripBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
-import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
-import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.FileMover2;
 import com.hasanjaved.reportmate.utility.Utility;
 
-import net.cachapa.expandablelayout.ExpandableLayout;
-
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
 
 
@@ -111,10 +100,14 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
     private void setViewListeners() {
 
-        binding.ivBack.setOnClickListener(view -> closeFragment());
+        binding.ivBack.setOnClickListener(view ->{
+            closeFragment();
+            fragmentClickListener.checkTestStatus();
+        } );
         binding.btnNext.setOnClickListener(view -> {
             saveCrmData();
             closeFragment();
+            fragmentClickListener.checkTestStatus();
         });
         binding.sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

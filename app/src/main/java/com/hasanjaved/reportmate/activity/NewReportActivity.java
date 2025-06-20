@@ -41,11 +41,14 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 //        addNewReportFragmentPhaseThreeCrmTrip();
 //        addFragmentCamera();
 //        createFile();
+        addNewReportFragmentPhaseThreeCrmTrip();
 
-        addFragmentReportSummary();
+//        generateReport(Utility.getReport(this));
+//        addFragmentReportSummary();
+
 //        SharedPreferences preferences = getSharedPreferences("pref", Context.MODE_PRIVATE);
 //        String fileLocation = "file:"+preferences.getString(Utility.ImageToken,"hasan");
-//
+
 
 
 //        // Check permissions first
@@ -222,7 +225,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
         Utility.showLog("addNewReportFragmentPhaseThreeIR");
 
-
         FragmentIRTest fragment = FragmentIRTest.newInstance("","");
         fragment.setFragmentClickListener(this);
         getSupportFragmentManager()
@@ -232,19 +234,30 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .commit();
 
     }
+
+    FragmentCrmTripTest fragmentCrmTripTest;
     @Override
     public void addNewReportFragmentPhaseThreeCrmTrip(){
-         
-        Utility.showLog("addNewReportFragmentPhaseThreeCrmTrip");
 
-        FragmentCrmTripTest fragment = FragmentCrmTripTest.newInstance("","");
+        fragmentCrmTripTest = FragmentCrmTripTest.newInstance("","");
+        fragmentCrmTripTest.setFragmentClickListener(this);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentHolder,fragmentCrmTripTest,"")
+                .addToBackStack("")
+                .commit();
+
+    }
+
+    @Override
+    public void addSummaryReportFragment() {
+        FragmentReportSummary fragment = FragmentReportSummary.newInstance("","");
         fragment.setFragmentClickListener(this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentHolder,fragment,"")
                 .addToBackStack("")
                 .commit();
-
     }
 
     @Override
@@ -265,6 +278,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .commit();
 
     }
+
 
     @Override
     public void addFragmentTripTest(CircuitBreaker circuitBreaker) {
@@ -287,6 +301,12 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .add(R.id.fragmentHolder,fragment,"")
                 .addToBackStack("")
                 .commit();
+    }
+
+    @Override
+    public void checkTestStatus() {
+        if (fragmentCrmTripTest!=null)
+            fragmentCrmTripTest.checkStatus();
     }
 
     @Override

@@ -13,6 +13,7 @@ public interface FragmentClickListener {
     void addNewReportFragmentPhaseThreeIR();
 
     void addNewReportFragmentPhaseThreeCrmTrip();
+    void addSummaryReportFragment();
     void generateReport(Report report);
 
     void addFragmentCrmTest(CircuitBreaker circuitBreaker);
@@ -20,6 +21,7 @@ public interface FragmentClickListener {
     void addFragmentTripTest(CircuitBreaker circuitBreaker);
     void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder);
 
+    void checkTestStatus();
     void onFragmentButtonClicked(int buttonNumber, int id, String name);
 //     void onScreenTouched();
 //     void onOutsideTouched();

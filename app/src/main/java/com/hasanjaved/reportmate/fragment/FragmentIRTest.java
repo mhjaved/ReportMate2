@@ -106,15 +106,9 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
         binding.viewTwo.btnNext.setOnClickListener(view ->{
                     saveIrLineConnectionData();
                     getParentFragmentManager().popBackStack();
-                    fragmentClickListener.generateReport(Utility.getReport(activity));
-//                    showPage(viewThree, viewOne,
-//                            viewTwo, viewFour);
+                    fragmentClickListener.addSummaryReportFragment();
                 }
           );
-
-//        binding.viewThree.btnNext.setOnClickListener(view ->
-//                showPage(viewFour, viewOne,
-//                        viewTwo, viewThree));
 
 
         binding.viewOne.ivBack.setOnClickListener(view -> {
@@ -290,7 +284,6 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
         );
 
     }
-
 
     private void setExpandView(ExpandableLayout expand, ImageView arrow) {
 

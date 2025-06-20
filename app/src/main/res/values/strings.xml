@@ -89,6 +89,10 @@
     <string name="b_c">B-C</string>
     <string name="c_a">C-A</string>
 
+    <string name="a_b_">A-B:</string>
+    <string name="b_c_">B-C:</string>
+    <string name="c_a_">C-A:</string>
+
     <string name="ir_test_connection_img_a_g">IR Test Connection Img(A-G)</string>
     <string name="ir_test_result_img_a_g">IR Test Result Img(A-G)</string>
 
@@ -164,7 +168,12 @@
     <string name="crm_test_result">CRM Test Result</string>
     <string name="trip_test_result">Trip Test Result</string>
     <string name="a_g_">A-G:</string>
+    <string name="b_g_">B-G:</string>
+    <string name="c_g_">C-G:</string>
     <string name="contact_resis">Contact Resis:</string>
     <string name="crm_test_result_img">CRM Test Result Img</string>
+    <string name="current_injector_connection_img">Current Injector connection Img</string>
+    <string name="report_summary">Report Summary</string>
+    <string name="all_details">All Details</string>
 
 </resources>

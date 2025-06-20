@@ -100,6 +100,71 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
         return binding.getRoot();
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        checkStatusOnResume();
+    }
+
+//    @Override
+//    public void onHiddenChanged(boolean hidden) {
+//        super.onHiddenChanged(hidden);
+//        Utility.showToast(activity,"onHiddenChanged");
+//
+//    }
+
+    public void checkStatus(){
+        try {
+
+
+            setCircuitList();
+
+            if (Utility.isCrmTestDone(activity)){
+                binding.viewOne.ivCrmChecked.setVisibility(View.VISIBLE);
+                Utility.showToast(activity,"Crm Test done for all circuits");
+            }else  binding.viewOne.ivCrmChecked.setVisibility(View.GONE);
+
+            if (Utility.isTripTestDone(activity)){
+                binding.viewOne.ivTripChecked.setVisibility(View.VISIBLE);
+                Utility.showToast(activity,"Trip Test done for all circuits");
+            }else  binding.viewOne.ivTripChecked.setVisibility(View.GONE);
+
+            if (Utility.isCrmTestDone(activity)&&Utility.isTripTestDone(activity)){
+                Utility.showToast(activity,"Crm and Trip Test done for all circuits");
+                closeFragment();
+            }
+
+        }catch (Exception e){
+            Utility.showLog("jjjjj"+e);
+        }
+    }
+
+    public void checkStatusOnResume(){
+        try {
+
+            if (Utility.isCrmTestDone(activity)){
+                binding.viewOne.ivCrmChecked.setVisibility(View.VISIBLE);
+                Utility.showToast(activity,"Crm Test done for all circuits");
+            }else  binding.viewOne.ivCrmChecked.setVisibility(View.GONE);
+
+            if (Utility.isTripTestDone(activity)){
+                binding.viewOne.ivTripChecked.setVisibility(View.VISIBLE);
+                Utility.showToast(activity,"Trip Test done for all circuits");
+            }else  binding.viewOne.ivTripChecked.setVisibility(View.GONE);
+
+            if (Utility.isCrmTestDone(activity)&&Utility.isTripTestDone(activity)){
+                Utility.showToast(activity,"Crm and Trip Test done for all circuits");
+//                closeFragment();
+            }
+
+        }catch (Exception e){
+            Utility.showLog(e.toString());
+        }
+    }
+
+    private void closeFragment() {
+        getParentFragmentManager().popBackStack();
+    }
     private void setPageOneData() {
         Report report = Utility.getReport(activity);
         if (report != null) {
@@ -119,34 +184,6 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
         }
 
     }
-
-//    private void setCrmCamera(CircuitBreaker circuitBreaker) {
-//
-//        binding.viewCrmOne.imgCameraConnection.setOnClickListener(view ->
-//                fragmentClickListener.openCamera(this, binding.viewCrmOne.ivShowImageConnection,
-//                        Utility.imgCrmConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
-//        );
-//
-//        binding.viewCrmOne.imgCameraResult.setOnClickListener(view ->
-//                fragmentClickListener.openCamera(this, binding.viewCrmOne.ivShowImageResult,
-//                        Utility.imgCrmResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
-//        );
-//
-//    }
-
-//    private void setCrmPage() {
-//
-//        binding.viewCrmOne.imgCameraConnection.setOnClickListener(view ->
-//                fragmentClickListener.openCamera(this, binding.viewCrmOne.ivShowImageConnection,
-//                        Utility.imgCrmConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
-//        );
-//
-//        binding.viewCrmOne.imgCameraResult.setOnClickListener(view ->
-//                fragmentClickListener.openCamera(this, binding.viewCrmOne.ivShowImageResult,
-//                        Utility.imgCrmResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
-//        );
-//
-//    }
 
     private void setCircuitList() {
 

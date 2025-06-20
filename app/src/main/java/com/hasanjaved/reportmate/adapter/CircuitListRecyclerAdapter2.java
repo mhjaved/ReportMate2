@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
+import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.List;
 
@@ -78,12 +79,16 @@ public class CircuitListRecyclerAdapter2 extends RecyclerView.Adapter<CircuitLis
         holder.tvName.setText(list.get(currentPosition).getName());
         holder.tvBreakerSize.setText(list.get(currentPosition).getSize());
 
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                recyclerViewClickListener.onItemClicked(currentPosition);
-            }
-        });
+        if (Utility.checkCrmForCircuit(context,list.get(currentPosition)))
+            holder.tvCrm.setVisibility(View.VISIBLE);
+        else holder.tvCrm.setVisibility(View.GONE);
+
+        if (Utility.checkTripForCircuit(context,list.get(currentPosition)))
+            holder.tvTrip.setVisibility(View.VISIBLE);
+        else holder.tvTrip.setVisibility(View.GONE);
+
+
+        holder.itemView.setOnClickListener(view -> recyclerViewClickListener.onItemClicked(currentPosition));
 
     }
 
@@ -96,13 +101,15 @@ public class CircuitListRecyclerAdapter2 extends RecyclerView.Adapter<CircuitLis
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvBreakerSize;
+        public TextView tvName, tvBreakerSize,tvCrm,tvTrip;
 
         public MyViewHolder(View view) {
             super(view);
 
             tvName = view.findViewById(R.id.tvName);
             tvBreakerSize = view.findViewById(R.id.tvBreakerSize);
+            tvCrm = view.findViewById(R.id.tvCrm);
+            tvTrip = view.findViewById(R.id.tvTrip);
 
         }
     }

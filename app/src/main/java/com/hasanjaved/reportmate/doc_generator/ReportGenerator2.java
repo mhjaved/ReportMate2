@@ -36,6 +36,19 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
+import android.os.Environment;
+import android.util.Log;
+
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.math.BigInteger;
 
 public class ReportGenerator2 {
 
@@ -84,6 +97,8 @@ public class ReportGenerator2 {
                     "ReportMate/" + reportName + "/" + Utility.dbBoxPanelNameplate + ".jpg"
             };
 
+//                                        Utility.showLog(dbBoxImages[0]);
+
 
             String[] irTestLabels = {
                     "IR Test Connection (A-G)", "IR Test Result (A-G)",
@@ -93,8 +108,9 @@ public class ReportGenerator2 {
                     "IR Test Connection (A-B)", "IR Test Result (A-B)",
                     "IR Test Connection (B-C)", "IR Test Result (B-C)",
                     "IR Test Connection (C-A)", "IR Test Result (C-A)"
-
             };
+
+
 
             String irLinkBase = "ReportMate/" + reportName + "/" + Utility.IrTest + "/";
             String[] irTestImages = {
@@ -109,6 +125,44 @@ public class ReportGenerator2 {
 
             addImageSection(document, "Panel general images", report, dbBoxImages, dbBoxTitles);
             addImageSection(document, "MCCB & MCB: IR Test and Results", report, irTestImages, irTestLabels);
+
+            String[] crmTestLabels = {
+                    "CRM Test Connection",
+                    "CRM Test Result"
+            };
+
+            String[] tripTestLabels = {
+                    "Current Injector Connection",
+                    "Injected Current",
+                    "Trip Time",
+                    "Trip"
+            };
+            if (report.getEquipment() != null)
+                if (report.getEquipment().getCircuitBreakerList() != null)
+                    if (!report.getEquipment().getCircuitBreakerList().isEmpty()){
+                        List<CircuitBreaker> circuitBreakerList = report.getEquipment().getCircuitBreakerList();
+
+                        for (CircuitBreaker circuitBreaker: circuitBreakerList){
+
+                            String[] crmImages = new String[2];
+                            List<String> imagesCrm = Utility.getCrmImageForReport(context,circuitBreaker.getName());
+                            crmImages[0] = imagesCrm.get(0);
+                            crmImages[1] = imagesCrm.get(1);
+
+                            addImageSection(document, circuitBreaker.getName()+", CRM Test Connection and Result Pictures", report, crmImages, crmTestLabels);
+
+                            String[] tripImages = new String[4];
+                            List<String> imagesTrip = Utility.getTripImageForReport(context,circuitBreaker.getName());
+                            tripImages[0] = imagesTrip.get(0);
+                            tripImages[1] = imagesTrip.get(1);
+                            tripImages[2] = imagesTrip.get(2);
+                            tripImages[3] = imagesTrip.get(3);
+
+                            addImageSection(document, circuitBreaker.getName()+", Tripping Test Connection and Result Pictures", report, tripImages, tripTestLabels);
+
+                        }
+                    }
+
 
             boolean success = saveDocument(context, document, reportName);
 
@@ -167,10 +221,11 @@ public class ReportGenerator2 {
     static PanelBoard panelBoard = null;
     static IrTest irTest = null;
 
-    private static String checkNull(String val){
-        if (val==null) return "";
+    private static String checkNull(String val) {
+        if (val == null) return "";
         else return val;
     }
+
     /**
      * Create the exact table structure matching the original document
      */
@@ -270,13 +325,12 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 10, 10, 11); // C-A
 
         irTest = report.getIrTest();
-        setCellText(row11.getCell(0), "A-G: "+checkNull(irTest.getAgValue()), false, ParagraphAlignment.CENTER);
-        setCellText(row11.getCell(2), "B-G: "+checkNull(irTest.getBgValue()), false, ParagraphAlignment.CENTER);
-        setCellText(row11.getCell(4), "C-G: "+checkNull(irTest.getCgValue()), false, ParagraphAlignment.CENTER);
-        setCellText(row11.getCell(6), "A-B: "+checkNull(irTest.getAbValue()), false, ParagraphAlignment.CENTER);
-        setCellText(row11.getCell(8), "B-C: "+checkNull(irTest.getBcValue()), false, ParagraphAlignment.CENTER);
-        setCellText(row11.getCell(10), "C-A: "+checkNull(irTest.getCaValue()), false, ParagraphAlignment.CENTER);
-
+        setCellText(row11.getCell(0), "A-G: " + checkNull(irTest.getAgValue()), false, ParagraphAlignment.CENTER);
+        setCellText(row11.getCell(2), "B-G: " + checkNull(irTest.getBgValue()), false, ParagraphAlignment.CENTER);
+        setCellText(row11.getCell(4), "C-G: " + checkNull(irTest.getCgValue()), false, ParagraphAlignment.CENTER);
+        setCellText(row11.getCell(6), "A-B: " + checkNull(irTest.getAbValue()), false, ParagraphAlignment.CENTER);
+        setCellText(row11.getCell(8), "B-C: " + checkNull(irTest.getBcValue()), false, ParagraphAlignment.CENTER);
+        setCellText(row11.getCell(10), "C-A: " + checkNull(irTest.getCaValue()), false, ParagraphAlignment.CENTER);
 
 
         panelBoard = report.getPanelBoard();
@@ -287,8 +341,8 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 11, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 11, 8, 11);  // colspan=4
         setCellText(row12.getCell(0), "PANELBOARD Rating", false, ParagraphAlignment.LEFT);
-        setCellText(row12.getCell(4), "AMPS:"+checkNull(panelBoard.getAmps())+"A", false, ParagraphAlignment.LEFT);
-        setCellText(row12.getCell(8), "VOLTAGE: "+checkNull(panelBoard.getVoltage())+"V", false, ParagraphAlignment.LEFT);
+        setCellText(row12.getCell(4), "AMPS:" + checkNull(panelBoard.getAmps()) + "A", false, ParagraphAlignment.LEFT);
+        setCellText(row12.getCell(8), "VOLTAGE: " + checkNull(panelBoard.getVoltage()) + "V", false, ParagraphAlignment.LEFT);
 
         // Row 13: TEST VOLTAGE, MODEL NO, CATALOG (colspan=4,4,4)
         XWPFTableRow row13 = table.createRow();
@@ -296,12 +350,12 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 12, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 12, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 12, 8, 11);  // colspan=4
-        setCellText(row13.getCell(0), "TEST VOLTAGE:"+checkNull(panelBoard.getTestVoltage())+"V", false, ParagraphAlignment.LEFT);
-        setCellText(row13.getCell(4), "MODEL NO.: "+checkNull(panelBoard.getModelNo()), false, ParagraphAlignment.LEFT);
-        setCellText(row13.getCell(8), "CATALOG:"+checkNull(panelBoard.getCatalog()), false, ParagraphAlignment.LEFT);
+        setCellText(row13.getCell(0), "TEST VOLTAGE:" + checkNull(panelBoard.getTestVoltage()) + "V", false, ParagraphAlignment.LEFT);
+        setCellText(row13.getCell(4), "MODEL NO.: " + checkNull(panelBoard.getModelNo()), false, ParagraphAlignment.LEFT);
+        setCellText(row13.getCell(8), "CATALOG:" + checkNull(panelBoard.getCatalog()), false, ParagraphAlignment.LEFT);
 
 
-         manufacturerCurveDetails = report.getManufacturerCurveDetails();
+        manufacturerCurveDetails = report.getManufacturerCurveDetails();
 
         // Row 14: MFG, CURVE NO Type-C, CURVE RANGE (colspan=4,4,4)
         XWPFTableRow row14 = table.createRow();
@@ -309,9 +363,9 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 13, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 13, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 13, 8, 11);  // colspan=4
-        setCellText(row14.getCell(0), "MFG.:"+checkNull(manufacturerCurveDetails.getMfgOne()), false, ParagraphAlignment.LEFT);
-        setCellText(row14.getCell(4), "CURVE NO.: "+checkNull(manufacturerCurveDetails.getCurveNumberOne()), false, ParagraphAlignment.LEFT);
-        setCellText(row14.getCell(8), "CURVE RANGE:"+checkNull(manufacturerCurveDetails.getCurveRangeOne()), false, ParagraphAlignment.LEFT);
+        setCellText(row14.getCell(0), "MFG.:" + checkNull(manufacturerCurveDetails.getMfgOne()), false, ParagraphAlignment.LEFT);
+        setCellText(row14.getCell(4), "CURVE NO.: " + checkNull(manufacturerCurveDetails.getCurveNumberOne()), false, ParagraphAlignment.LEFT);
+        setCellText(row14.getCell(8), "CURVE RANGE:" + checkNull(manufacturerCurveDetails.getCurveRangeOne()), false, ParagraphAlignment.LEFT);
 
         // Row 15: MFG, CURVE NO Type-B, CURVE RANGE (colspan=4,4,4)
         XWPFTableRow row15 = table.createRow();
@@ -320,9 +374,9 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 14, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 14, 8, 11);  // colspan=4
 
-        setCellText(row15.getCell(0), "MFG.:"+checkNull(manufacturerCurveDetails.getMfgTwo()), false, ParagraphAlignment.LEFT);
-        setCellText(row15.getCell(4), "CURVE NO.:"+checkNull(manufacturerCurveDetails.getCurveNumberTwo()), false, ParagraphAlignment.LEFT);
-        setCellText(row15.getCell(8), "CURVE RANGE:"+checkNull(manufacturerCurveDetails.getCurveRangeTwo()), false, ParagraphAlignment.LEFT);
+        setCellText(row15.getCell(0), "MFG.:" + checkNull(manufacturerCurveDetails.getMfgTwo()), false, ParagraphAlignment.LEFT);
+        setCellText(row15.getCell(4), "CURVE NO.:" + checkNull(manufacturerCurveDetails.getCurveNumberTwo()), false, ParagraphAlignment.LEFT);
+        setCellText(row15.getCell(8), "CURVE RANGE:" + checkNull(manufacturerCurveDetails.getCurveRangeTwo()), false, ParagraphAlignment.LEFT);
 
         // Row 16: Empty MFG rows (colspan=4,4,4)
         XWPFTableRow row16 = table.createRow();
@@ -330,9 +384,9 @@ public class ReportGenerator2 {
         mergeCellsHorizontally(table, 15, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 15, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 15, 8, 11);  // colspan=4
-        setCellText(row16.getCell(0), "MFG."+checkNull(manufacturerCurveDetails.getMfgThree()), false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(4), "CURVE NO."+checkNull(manufacturerCurveDetails.getCurveNumberThree()), false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(8), "CURVE RANGE"+checkNull(manufacturerCurveDetails.getCurveRangeThree()), false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(0), "MFG." + checkNull(manufacturerCurveDetails.getMfgThree()), false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(4), "CURVE NO." + checkNull(manufacturerCurveDetails.getCurveNumberThree()), false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(8), "CURVE RANGE" + checkNull(manufacturerCurveDetails.getCurveRangeThree()), false, ParagraphAlignment.LEFT);
 
         // Row 17: Empty MFG rows (colspan=4,4,4)
         XWPFTableRow row17 = table.createRow();
@@ -361,7 +415,6 @@ public class ReportGenerator2 {
         setCellText(row18.getCell(11), "CONTACT\nRESIS", false, ParagraphAlignment.CENTER);
 
 
-
         List<CircuitBreaker> circuitBreakerList;
         if (report.getEquipment() != null) {
             if (report.getEquipment().getCircuitBreakerList() != null)
@@ -372,56 +425,55 @@ public class ReportGenerator2 {
 
                     for (int i = 0; i < circuitBreakerList.size(); i += 2) {
 
-                        String leftCircuit="", leftSize="", leftTestAmps="", leftTripTime="", leftInstTrip="";
+                        String leftCircuit = "", leftSize = "", leftTestAmps = "", leftTripTime = "", leftInstTrip = "";
                         String[] leftResistanceValues = new String[3];
 
-                        String rightCircuit="", rightSize="", rightTestAmps="", rightTripTime="", rightInstTrip="";
+                        String rightCircuit = "", rightSize = "", rightTestAmps = "", rightTripTime = "", rightInstTrip = "";
                         String[] rightResistanceValues = new String[3];
 
                         try {
-                            CircuitBreaker circuitBreakerLeft=null;
-                            if (circuitBreakerList.get(i) != null){
+                            CircuitBreaker circuitBreakerLeft = null;
+                            if (circuitBreakerList.get(i) != null) {
 
                                 circuitBreakerLeft = circuitBreakerList.get(i);
-                                leftCircuit=circuitBreakerLeft.getName();
-                                leftSize=circuitBreakerLeft.getSize()+"A";
-                                leftTestAmps=circuitBreakerLeft.getTripTest().getTestAmplitude()+"A";
-                                leftTripTime=circuitBreakerLeft.getTripTest().getTripTime();
-                                leftInstTrip=circuitBreakerLeft.getTripTest().getInstantTrip();
+                                leftCircuit = circuitBreakerLeft.getName();
+                                leftSize = circuitBreakerLeft.getSize() + "A";
+                                leftTestAmps = circuitBreakerLeft.getTripTest().getTestAmplitude() + "A";
+                                leftTripTime = circuitBreakerLeft.getTripTest().getTripTime();
+                                leftInstTrip = circuitBreakerLeft.getTripTest().getInstantTrip();
 
-                                leftResistanceValues[0] = circuitBreakerLeft.getCrmTest().getrResValue()+circuitBreakerLeft.getCrmTest().getrResUnit();
-                                leftResistanceValues[1] = circuitBreakerLeft.getCrmTest().getyResValue()+circuitBreakerLeft.getCrmTest().getyResUnit();
-                                leftResistanceValues[2] = circuitBreakerLeft.getCrmTest().getbResValue()+circuitBreakerLeft.getCrmTest().getbResUnit();
+                                leftResistanceValues[0] = circuitBreakerLeft.getCrmTest().getrResValue() + circuitBreakerLeft.getCrmTest().getrResUnit();
+                                leftResistanceValues[1] = circuitBreakerLeft.getCrmTest().getyResValue() + circuitBreakerLeft.getCrmTest().getyResUnit();
+                                leftResistanceValues[2] = circuitBreakerLeft.getCrmTest().getbResValue() + circuitBreakerLeft.getCrmTest().getbResUnit();
 
                             }
 
 
-                            CircuitBreaker circuitBreakerRight=null;
+                            CircuitBreaker circuitBreakerRight = null;
 
                             if (i + 1 < circuitBreakerList.size()) {
                                 circuitBreakerRight = circuitBreakerList.get(i + 1);
 
-                                rightCircuit=circuitBreakerRight.getName();
-                                rightSize=circuitBreakerRight.getSize()+"A";
-                                rightTestAmps=circuitBreakerRight.getTripTest().getTestAmplitude()+"A";
-                                rightTripTime=circuitBreakerRight.getTripTest().getTripTime()+"sec";
-                                rightInstTrip=circuitBreakerRight.getTripTest().getInstantTrip();
+                                rightCircuit = circuitBreakerRight.getName();
+                                rightSize = circuitBreakerRight.getSize() + "A";
+                                rightTestAmps = circuitBreakerRight.getTripTest().getTestAmplitude() + "A";
+                                rightTripTime = circuitBreakerRight.getTripTest().getTripTime() + "sec";
+                                rightInstTrip = circuitBreakerRight.getTripTest().getInstantTrip();
 
-                                rightResistanceValues[0] = circuitBreakerRight.getCrmTest().getrResValue()+circuitBreakerRight.getCrmTest().getrResUnit();
-                                rightResistanceValues[1] = circuitBreakerRight.getCrmTest().getyResValue()+circuitBreakerRight.getCrmTest().getyResUnit();
-                                rightResistanceValues[2] = circuitBreakerRight.getCrmTest().getbResValue()+circuitBreakerRight.getCrmTest().getbResUnit();
+                                rightResistanceValues[0] = circuitBreakerRight.getCrmTest().getrResValue() + circuitBreakerRight.getCrmTest().getrResUnit();
+                                rightResistanceValues[1] = circuitBreakerRight.getCrmTest().getyResValue() + circuitBreakerRight.getCrmTest().getyResUnit();
+                                rightResistanceValues[2] = circuitBreakerRight.getCrmTest().getbResValue() + circuitBreakerRight.getCrmTest().getbResUnit();
                             }
-                        }catch (Exception e){
+                        } catch (Exception e) {
                             Utility.showLog(e.toString());
                         }
 
 
-
-                            addCircuitWithResistanceRowsBothSides(table,
-                                    // Left side data
-                                    leftCircuit, leftSize, leftTestAmps, leftTripTime, leftInstTrip, leftResistanceValues,
-                                    // Right side data
-                                    rightCircuit, rightSize, rightTestAmps, rightTripTime, rightInstTrip, rightResistanceValues);
+                        addCircuitWithResistanceRowsBothSides(table,
+                                // Left side data
+                                leftCircuit, leftSize, leftTestAmps, leftTripTime, leftInstTrip, leftResistanceValues,
+                                // Right side data
+                                rightCircuit, rightSize, rightTestAmps, rightTripTime, rightInstTrip, rightResistanceValues);
 
                     }
 
@@ -430,112 +482,8 @@ public class ReportGenerator2 {
 
         }
 
-        // Circuit data - using a loop to add circuits to both sides
-//        String[][] circuitData = {
-//                {"CKT-0", "200\nA", "600 A", "22s", "OK", "3.40\nmΩ,3.08\nmΩ,2.95\nmΩ"},
-//                {"CKT-1", "80 A", "243 A", "48s", "OK", "4.15\nmΩ,3.86\nmΩ,3.95\nmΩ,3.79\nmΩ"},
-//                {"CKT-2", "80 A", "242 A", "54 s", "OK", "3.53\nmΩ,4.25\nmΩ"},
-//                {"CKT-3", "80 A", "244 A", "33s", "OK", "3.23\nmΩ,3.23\nmΩ,2.85\nmΩ"},
-//                {"CKT-4", "63 A", "189s", "28 s", "OK", "2.29\nmΩ,3.43\nmΩ,3.96\nmΩ"},
-//                {"CKT-5", "80 A", "237 s", "51 s", "OK", "3.83\nmΩ,3.04\nmΩ"},
-//                {"CKT-6", "80 A", "243 s", "46 s", "OK", "3.17\nmΩ,3.32\nmΩ,2.65\nmΩ"},
-//                {"CKT-7", "100 A", "300 A", "35s", "OK", "2.50\nmΩ,2.75\nmΩ"},
-//                {"CKT-8", "125 A", "375 A", "40s", "OK", "2.10\nmΩ,2.35\nmΩ,2.60\nmΩ"},
-//                {"CKT-9", "150 A", "450 A", "30s", "OK", "1.95\nmΩ,2.20\nmΩ"},
-//                {"CKT-10", "200 A", "600 A", "25s", "OK", "1.80\nmΩ,2.05\nmΩ,2.30\nmΩ"},
-//                {"CKT-11", "250 A", "750 A", "20s", "OK", "1.65\nmΩ,1.90\nmΩ"},
-//                {"CKT-12", "300 A", "900 A", "18s", "OK", "1.50\nmΩ,1.75\nmΩ,2.00\nmΩ"}
-//        };
-        // Add circuits using a loop - process pairs (left and right sides)
-//        for (int i = 0; i < circuitData.length; i += 2) {
-//            // Left side data
-//            String leftCircuit = circuitData[i][0];
-//            String leftSize = circuitData[i][1];
-//            String leftTestAmps = circuitData[i][2];
-//            String leftTripTime = circuitData[i][3];
-//            String leftInstTrip = circuitData[i][4];
-//            String[] leftResistanceValues = circuitData[i][5].split(",");
-//
-//            // Right side data (next circuit or same if odd number)
-//            String rightCircuit, rightSize, rightTestAmps, rightTripTime, rightInstTrip;
-//            String[] rightResistanceValues;
-//
-//            if (i + 1 < circuitData.length) {
-//                // Use next circuit for right side
-//                rightCircuit = circuitData[i + 1][0];
-//                rightSize = circuitData[i + 1][1];
-//                rightTestAmps = circuitData[i + 1][2];
-//                rightTripTime = circuitData[i + 1][3];
-//                rightInstTrip = circuitData[i + 1][4];
-//                rightResistanceValues = circuitData[i + 1][5].split(",");
-//            } else {
-//                // Use empty data for right side if odd number of circuits
-//                rightCircuit = "";
-//                rightSize = "";
-//                rightTestAmps = "";
-//                rightTripTime = "";
-//                rightInstTrip = "";
-//                rightResistanceValues = new String[]{""};
-//            }
-//
-//            addCircuitWithResistanceRowsBothSides(table,
-//                    // Left side data
-//                    leftCircuit, leftSize, leftTestAmps, leftTripTime, leftInstTrip, leftResistanceValues,
-//                    // Right side data
-//                    rightCircuit, rightSize, rightTestAmps, rightTripTime, rightInstTrip, rightResistanceValues);
-//
-//        }
-//
-
-        // Add circuit breaker data with proper vertical merging for both left and right sides
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-0", "200\nA", "600 A", "22s", "OK", new String[]{"3.40\nmΩ", "3.08\nmΩ", "2.95\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-0", "200\nA", "600 A", "22s", "OK", new String[]{"3.40\nmΩ", "3.08\nmΩ", "2.95\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-1", "80 A", "243 A", "48s", "OK", new String[]{"4.15\nmΩ", "3.86\nmΩ", "3.95\nmΩ", "3.79\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-1", "80 A", "243 A", "48s", "OK", new String[]{"4.15\nmΩ", "3.86\nmΩ", "3.95\nmΩ", "3.79\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-2", "80 A", "242 A", "54 s", "OK", new String[]{"3.53\nmΩ", "4.25\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-2", "80 A", "242 A", "54 s", "OK", new String[]{"3.53\nmΩ", "4.25\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-3", "80 A", "244 A", "33s", "OK", new String[]{"3.23\nmΩ", "3.23\nmΩ", "2.85\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-3", "80 A", "244 A", "33s", "OK", new String[]{"3.23\nmΩ", "3.23\nmΩ", "2.85\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-4", "63 A", "189s", "28 s", "OK", new String[]{"2.29\nmΩ", "3.43\nmΩ", "3.96\nmΩ", "2.89\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-4", "63 A", "189s", "28 s", "OK", new String[]{"2.29\nmΩ", "3.43\nmΩ", "3.96\nmΩ", "2.89\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-5", "80 A", "237 s", "51 s", "OK", new String[]{"3.83\nmΩ", "3.04\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-5", "80 A", "237 s", "51 s", "OK", new String[]{"3.83\nmΩ", "3.04\nmΩ"});
-//
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-6", "80 A", "243 s", "46 s", "OK", new String[]{"3.17\nmΩ", "3.32\nmΩ", "2.65\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-6", "80 A", "243 s", "46 s", "OK", new String[]{"3.17\nmΩ", "3.32\nmΩ", "2.65\nmΩ"});
 
 
-//        addCircuitWithResistanceRowsBothSides(table,
-//                // Left side data
-//                "CKT-7", "80 A", "243 s", "46 s", "OK", new String[]{"3.17\nmΩ", "3.32\nmΩ", "2.65\nmΩ"},
-//                // Right side data (same data)
-//                "CKT-7", "80 A", "243 s", "46 s", "OK", new String[]{"3.17\nmΩ", "3.32\nmΩ", "2.65\nmΩ"});
 
         // Add remarks section
         addRemarksToTable(table);
@@ -988,7 +936,7 @@ public class ReportGenerator2 {
             imageSectionPara.setSpacingAfter(200);
             imageSectionPara.setSpacingBefore(200);
             XWPFRun imageSectionRun = imageSectionPara.createRun();
-            imageSectionRun.setText("6.2    DB-3.1 " + title);
+            imageSectionRun.setText( title);
             imageSectionRun.setBold(true);
             imageSectionRun.setFontFamily("Arial");
             imageSectionRun.setFontSize(12);
@@ -1027,11 +975,11 @@ public class ReportGenerator2 {
                 }
 
                 // Add first image with smaller size
-                addImageToCell(imageRow.getCell(0), imagePaths[i], 250, 180);
+                addImageToCell2(imageRow.getCell(0), imagePaths[i], 250, 180);
 
                 // Add second image (if exists) with smaller size
                 if (i + 1 < imagePaths.length) {
-                    addImageToCell(imageRow.getCell(1), imagePaths[i + 1], 250, 180);
+                    addImageToCell2(imageRow.getCell(1), imagePaths[i + 1], 250, 180);
                 } else {
                     // Empty cell if odd number of images
                     setCellText(imageRow.getCell(1), "", false, ParagraphAlignment.CENTER);
@@ -1187,6 +1135,286 @@ public class ReportGenerator2 {
             }
         } catch (Exception e) {
             Log.e(TAG, "Error adding image from MediaStore: " + imageName, e);
+        }
+    }
+
+
+    private static void addImageToCell2(XWPFTableCell cell, String imagePath, int maxWidth, int maxHeight) {
+
+        Utility.showLog("imagePath "+imagePath);
+        try {
+            // Clear existing content
+            if (cell.getParagraphs().size() > 0) {
+                cell.removeParagraph(0);
+            }
+
+            XWPFParagraph para = cell.addParagraph();
+            para.setAlignment(ParagraphAlignment.CENTER);
+            XWPFRun run = para.createRun();
+
+            // Read image from public documents
+            File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), imagePath);
+
+            if (imageFile.exists()) {
+                // Process the image to fix orientation and resize
+                byte[] processedImageBytes = processImage(imageFile, maxWidth, maxHeight);
+
+                if (processedImageBytes != null) {
+                    ByteArrayInputStream imageStream = new ByteArrayInputStream(processedImageBytes);
+
+                    // Determine image format
+                    String fileName = imageFile.getName().toLowerCase();
+                    int pictureType;
+                    if (fileName.endsWith(".png")) {
+                        pictureType = XWPFDocument.PICTURE_TYPE_PNG;
+                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+                        pictureType = XWPFDocument.PICTURE_TYPE_JPEG;
+                    } else {
+                        pictureType = XWPFDocument.PICTURE_TYPE_JPEG; // Default
+                    }
+
+                    // Get the actual dimensions after processing
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inJustDecodeBounds = true;
+                    BitmapFactory.decodeByteArray(processedImageBytes, 0, processedImageBytes.length, options);
+
+                    int finalWidth = options.outWidth;
+                    int finalHeight = options.outHeight;
+
+                    // Use the processed image dimensions for Word document
+                    // Scale for display in document (keep higher resolution)
+                    if (finalWidth > maxWidth || finalHeight > maxHeight) {
+                        float scale = Math.min((float) maxWidth / finalWidth, (float) maxHeight / finalHeight);
+                        finalWidth = Math.round(finalWidth * scale);
+                        finalHeight = Math.round(finalHeight * scale);
+                    }
+
+                    // Add picture to the run with correct dimensions
+                    run.addPicture(imageStream, pictureType, imageFile.getName(),
+                            Units.toEMU(finalWidth), Units.toEMU(finalHeight));
+
+                    imageStream.close();
+                } else {
+                    addErrorText(run, "Failed to process image: " + imagePath);
+                }
+            } else {
+                addErrorText(run, "Image not found: " + imagePath);
+            }
+
+            // Set cell properties for better image display
+            setCellProperties(cell);
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error adding image to cell: " + imagePath, e);
+            addErrorTextToCell(cell, "Error loading image: " + imagePath);
+        }
+    }
+
+    /**
+     * Process image to fix rotation and resize appropriately while maintaining high quality
+     */
+    private static byte[] processImage(File imageFile, int maxWidth, int maxHeight) {
+        try {
+            // Read EXIF data to get orientation
+            ExifInterface exif = new ExifInterface(imageFile.getAbsolutePath());
+            int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+
+            // Decode image with high quality settings
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+
+            // Use higher resolution target for better quality
+            int targetWidth = maxWidth * 3; // 3x the display size for higher quality
+            int targetHeight = maxHeight * 3;
+
+            // Calculate sample size more conservatively for higher quality
+            int sampleSize = calculateSampleSizeHighQuality(options.outWidth, options.outHeight, targetWidth, targetHeight);
+
+            options.inSampleSize = sampleSize;
+            options.inJustDecodeBounds = false;
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888; // Highest quality color format
+            options.inDither = false;
+            options.inScaled = false;
+
+            Bitmap bitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath(), options);
+            if (bitmap == null) {
+                return null;
+            }
+
+            // Apply rotation based on EXIF orientation using high quality filtering
+            bitmap = rotateImageIfNeeded(bitmap, orientation);
+
+            // Resize if necessary while maintaining aspect ratio and high quality
+            bitmap = resizeImageHighQuality(bitmap, targetWidth, targetHeight);
+
+            // Convert to byte array with maximum quality
+            ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+
+            // Always use PNG for maximum quality in documents
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, outputStream);
+            bitmap.recycle();
+
+            return outputStream.toByteArray();
+
+        } catch (IOException e) {
+            Log.e(TAG, "Error processing image: " + imageFile.getAbsolutePath(), e);
+            return null;
+        }
+    }
+
+    /**
+     * Rotate image based on EXIF orientation
+     */
+    private static Bitmap rotateImageIfNeeded(Bitmap bitmap, int orientation) {
+        Matrix matrix = new Matrix();
+
+        switch (orientation) {
+            case ExifInterface.ORIENTATION_ROTATE_90:
+                matrix.postRotate(90);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_180:
+                matrix.postRotate(180);
+                break;
+            case ExifInterface.ORIENTATION_ROTATE_270:
+                matrix.postRotate(270);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_HORIZONTAL:
+                matrix.preScale(-1.0f, 1.0f);
+                break;
+            case ExifInterface.ORIENTATION_FLIP_VERTICAL:
+                matrix.preScale(1.0f, -1.0f);
+                break;
+            case ExifInterface.ORIENTATION_TRANSPOSE:
+                matrix.postRotate(90);
+                matrix.preScale(-1.0f, 1.0f);
+                break;
+            case ExifInterface.ORIENTATION_TRANSVERSE:
+                matrix.postRotate(-90);
+                matrix.preScale(-1.0f, 1.0f);
+                break;
+            default:
+                return bitmap; // No rotation needed
+        }
+
+        try {
+            Bitmap rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            if (rotated != bitmap) {
+                bitmap.recycle();
+            }
+            return rotated;
+        } catch (OutOfMemoryError e) {
+            Log.e(TAG, "Out of memory rotating image", e);
+            return bitmap;
+        }
+    }
+
+    /**
+     * Resize image while maintaining aspect ratio with high quality filtering
+     */
+    private static Bitmap resizeImageHighQuality(Bitmap bitmap, int maxWidth, int maxHeight) {
+        int width = bitmap.getWidth();
+        int height = bitmap.getHeight();
+
+        // Calculate scale factor
+        float scale = Math.min((float) maxWidth / width, (float) maxHeight / height);
+
+        // Only scale down if the image is significantly larger
+        if (scale >= 0.8f) { // Keep original size if only minor scaling needed
+            return bitmap;
+        }
+
+        int newWidth = Math.round(width * scale);
+        int newHeight = Math.round(height * scale);
+
+        try {
+            // Use createScaledBitmap with filter=true for high quality scaling
+            Bitmap resized = Bitmap.createScaledBitmap(bitmap, newWidth, newHeight, true);
+            if (resized != bitmap) {
+                bitmap.recycle();
+            }
+            return resized;
+        } catch (OutOfMemoryError e) {
+            Log.e(TAG, "Out of memory resizing image", e);
+            return bitmap;
+        }
+    }
+
+    /**
+     * Calculate sample size for high quality loading (more conservative)
+     */
+    private static int calculateSampleSizeHighQuality(int width, int height, int reqWidth, int reqHeight) {
+        int sampleSize = 1;
+
+        // Only use sample size if image is much larger than required
+        if (height > reqHeight * 2 || width > reqWidth * 2) {
+            final int halfHeight = height / 2;
+            final int halfWidth = width / 2;
+
+            // More conservative sampling to maintain quality
+            while ((halfHeight / sampleSize) >= reqHeight * 1.5 && (halfWidth / sampleSize) >= reqWidth * 1.5) {
+                sampleSize *= 2;
+            }
+        }
+
+        return sampleSize;
+    }
+
+    /**
+     * Set cell properties for better image display
+     */
+    private static void setCellProperties(XWPFTableCell cell) {
+        try {
+            // Set cell vertical alignment
+            cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            // Set cell properties for better image display
+            CTTcPr tcPr = cell.getCTTc().getTcPr();
+            if (tcPr == null) {
+                tcPr = cell.getCTTc().addNewTcPr();
+            }
+
+            // Set cell margins for better spacing
+            CTTcMar tcMar = tcPr.getTcMar();
+            if (tcMar == null) {
+                tcMar = tcPr.addNewTcMar();
+            }
+
+            // Set smaller margins for better image fit
+            if (tcMar.getTop() == null) tcMar.addNewTop().setW(BigInteger.valueOf(50));
+            if (tcMar.getBottom() == null) tcMar.addNewBottom().setW(BigInteger.valueOf(50));
+            if (tcMar.getLeft() == null) tcMar.addNewLeft().setW(BigInteger.valueOf(50));
+            if (tcMar.getRight() == null) tcMar.addNewRight().setW(BigInteger.valueOf(50));
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting cell properties", e);
+        }
+    }
+
+    /**
+     * Add error text to run
+     */
+    private static void addErrorText(XWPFRun run, String message) {
+        run.setText(message);
+        run.setFontFamily("Arial");
+        run.setFontSize(10);
+        run.setColor("FF0000"); // Red color for errors
+    }
+
+    /**
+     * Add error text to cell
+     */
+    private static void addErrorTextToCell(XWPFTableCell cell, String message) {
+        try {
+            if (cell.getParagraphs().size() > 0) {
+                cell.removeParagraph(0);
+            }
+            XWPFParagraph para = cell.addParagraph();
+            para.setAlignment(ParagraphAlignment.CENTER);
+            XWPFRun run = para.createRun();
+            addErrorText(run, message);
+        } catch (Exception ex) {
+            Log.e(TAG, "Error adding error text to cell", ex);
         }
     }
 

@@ -209,6 +209,7 @@
                 android:layout_marginTop="@dimen/space_16"
                 android:background="@drawable/bg_generate_report_button"
                 android:gravity="center"
+                android:visibility="gone"
                 android:orientation="horizontal"
                 android:textColor="@color/theme_color"
                 app:layout_constraintEnd_toEndOf="parent"

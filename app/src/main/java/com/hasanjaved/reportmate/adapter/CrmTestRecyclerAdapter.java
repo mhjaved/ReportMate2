@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
+import com.hasanjaved.reportmate.model.CrmTest;
+import com.hasanjaved.reportmate.utility.ImageLoader;
+import com.hasanjaved.reportmate.utility.Utility;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -71,12 +74,30 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
 
         int currentPosition = position;
 
+        List<String> images = Utility.getCrmImage(context,list.get(position).getName());
 
-//        holder.tvName.setText(list.get(currentPosition).getName());
-//        holder.tvBreakerSize.setText(list.get(currentPosition).getSize());
+        holder.tvCircuitName.setText(list.get(currentPosition).getName());
+
+        try {
+            CrmTest crmTest = list.get(currentPosition).getCrmTest();
+
+            String text = crmTest.getrResValue()+crmTest.getrResUnit();
+            holder.tvRResValue.setText(text);
+
+            text =crmTest.getyResValue()+crmTest.getyResUnit();
+            holder.tvYResValue.setText(text);
+
+            text =crmTest.getbResValue()+crmTest.getbResUnit();
+            holder.tvBResValue.setText(text);
+
+        }catch (Exception e){
+            Utility.showLog(getClass().getSimpleName()+e);
+        }
+
+        ImageLoader.showImageFromStorage(context, holder.ivConnection, images.get(0));
+        ImageLoader.showImageFromStorage(context, holder.ivResult, images.get(1));
 
         holder.rl.setOnClickListener(view -> {
-
             if (holder.expand.isExpanded()) {
                 holder.ivArrow.animate().rotation(180).start();
                 holder.expand.collapse();
@@ -84,23 +105,22 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
                 holder.ivArrow.animate().rotation(0).start();
                 holder.expand.expand();
             }
-
         });
-
     }
 
 
     @Override
     public int getItemCount() {
-//        return list.size();
-    return 3;
+        return list.size();
+//    return 3;
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public RelativeLayout rl;
         public ExpandableLayout expand;
-        public ImageView ivArrow;
+        private TextView tvCircuitName,tvRResValue,tvYResValue,tvBResValue;
+        public ImageView ivArrow,ivResult,ivConnection;
 
         public MyViewHolder(View view) {
             super(view);
@@ -108,7 +128,12 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
             rl = view.findViewById(R.id.rl);
             expand = view.findViewById(R.id.expand);
             ivArrow = view.findViewById(R.id.ivArrow);
-
+            tvCircuitName = view.findViewById(R.id.tvCircuitName);
+            ivResult = view.findViewById(R.id.ivResult);
+            ivConnection = view.findViewById(R.id.ivConnection);
+            tvRResValue = view.findViewById(R.id.tvRResValue);
+            tvYResValue = view.findViewById(R.id.tvYResValue);
+            tvBResValue = view.findViewById(R.id.tvBResValue);
         }
     }
 

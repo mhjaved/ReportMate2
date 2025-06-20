@@ -71,4 +71,30 @@
 
     <!-- Edit Icon -->
 
+    <TextView
+        android:id="@+id/tvCrm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="crm done"
+        android:textStyle="bold"
+        android:textColor="@color/text_black"
+        android:textSize="12sp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/tvTrip"
+        />
+
+    <TextView
+        android:id="@+id/tvTrip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="trip done"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:textColor="@color/text_black"
+        app:layout_constraintTop_toBottomOf="@+id/tvCrm"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

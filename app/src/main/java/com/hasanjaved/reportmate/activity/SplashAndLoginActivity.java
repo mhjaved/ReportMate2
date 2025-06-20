@@ -29,6 +29,7 @@ public class SplashAndLoginActivity extends AppCompatActivity {
 
         layoutLogin = findViewById(R.id.layoutLogin);
 
+
         handler = new Handler();
         runnable = () -> {
             showLoginPage();
@@ -41,30 +42,34 @@ public class SplashAndLoginActivity extends AppCompatActivity {
         etEmployeeId = findViewById(R.id.etEmployeeId);
         etPassword = findViewById(R.id.etPassword);
 
-        findViewById(R.id.btnLogin).setOnClickListener(view ->{
+        findViewById(R.id.btnLogin).setOnClickListener(view -> {
 
-            if (etEmployeeId.getText().toString().isEmpty()||etPassword.getText().toString().isEmpty())
-                Utility.showToast(this,"provide valid information");
+            if (etEmployeeId.getText().toString().isEmpty() || etPassword.getText().toString().isEmpty())
+                Utility.showToast(this, "provide valid information");
             else {
-                Employee employee = new Employee();
-                employee.setEmployeeId(etEmployeeId.getText().toString());
-                Utility.saveEmployee(this, employee);
-                gotoHomeActivity();
+                if (etPassword.getText().toString().equals("35112")) {
+                    Employee employee = new Employee();
+                    employee.setEmployeeId(etEmployeeId.getText().toString());
+                    Utility.saveEmployee(this, employee);
+                    gotoHomeActivity();
+                } else Utility.showToast(this, "wrong password");
+
+
             }
         });
 
     }
 
-    private void showLoginPage(){
+    private void showLoginPage() {
 
-        if (Utility.getEmployee(this)!=null)
+        if (Utility.getEmployee(this) != null)
             gotoHomeActivity();
         else layoutLogin.setVisibility(View.VISIBLE);
 
     }
 
-    private void gotoHomeActivity(){
-        Intent intent = new Intent(SplashAndLoginActivity.this , HomeActivity.class);
+    private void gotoHomeActivity() {
+        Intent intent = new Intent(SplashAndLoginActivity.this, HomeActivity.class);
         startActivity(intent);
         finish();
     }
