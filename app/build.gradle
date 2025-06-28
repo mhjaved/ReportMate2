@@ -45,6 +45,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.2.1'
     implementation 'com.google.firebase:firebase-crashlytics:18.3.2'
     implementation 'com.google.firebase:firebase-analytics:21.2.0'
+    implementation 'androidx.activity:activity:1.8.0'
 //    implementation project(path: ':openCV')// default
     testImplementation 'junit:junit:4.13.2'// default
     androidTestImplementation 'androidx.test.ext:junit:1.2.1'// default

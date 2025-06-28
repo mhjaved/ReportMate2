@@ -4,7 +4,7 @@ public class Report {
 
     Employee employee;
     String testDate;
-    String EmployeeId;
+    String employeeId;
     String projectNo;
     String folderLocation;
     String customerName;
@@ -68,11 +68,11 @@ public class Report {
 
 
     public String getEmployeeId() {
-        return EmployeeId;
+        return employeeId;
     }
 
     public void setEmployeeId(String employeeName) {
-        EmployeeId = employeeName;
+        employeeId = employeeName;
     }
 
 
@@ -177,7 +177,7 @@ public class Report {
         return "Report{" +
                 "employee=" + employee +
                 ", testDate='" + testDate + '\'' +
-                ", EmployeeId='" + EmployeeId + '\'' +
+                ", EmployeeId='" + employeeId + '\'' +
                 ", projectNo='" + projectNo + '\'' +
                 ", folderLocation='" + folderLocation + '\'' +
                 ", customerName='" + customerName + '\'' +

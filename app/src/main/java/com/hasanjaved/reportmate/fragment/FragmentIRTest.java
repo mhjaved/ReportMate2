@@ -95,6 +95,11 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
     private void setViewListeners() {
 
         binding.viewOne.btnNext.setOnClickListener(view ->{

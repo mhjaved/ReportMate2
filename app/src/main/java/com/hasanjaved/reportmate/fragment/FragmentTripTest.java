@@ -90,6 +90,12 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     private void setPageOneData() {
         binding.etCircuitBreakerName.setText(circuitBreaker.getName());
         binding.etCircuitBreakerSize.setText(circuitBreaker.getSize());

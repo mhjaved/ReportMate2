@@ -73,6 +73,9 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
         assert employee != null;
         Utility.showLog(employee.toString());
 
+//        intent.putExtra("show_id", String.valueOf(content.getShowId()));
+
+
     }
 
     @Override
@@ -96,7 +99,11 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
     }
 
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        binding = null;
+    }
 
 
     private void addHomeFragment() {
@@ -160,6 +167,11 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 //        }
 //    }
 
+    private void gotoHistoryActivity(String Token) {
+        Intent intent = new Intent(HomeActivity.this, HistoryActivity.class);
+        intent.putExtra(Utility.HISTORY_FRAGMENT_TOKEN, Token);
+        startActivity(intent);
+    }
 
     public void generateReportFile(Report report) {
         String reportName = report.getProjectNo();
@@ -219,7 +231,12 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
     @Override
     public void onPreviousReportHistoryClicked() {
+        gotoHistoryActivity(Utility.HISTORY_FRAGMENT_HISTORY);
+    }
 
+    @Override
+    public void onOngoingReportClicked() {
+        gotoHistoryActivity(Utility.HISTORY_FRAGMENT_ONGOING);
     }
 
 

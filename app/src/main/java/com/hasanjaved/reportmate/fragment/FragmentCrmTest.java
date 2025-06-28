@@ -89,6 +89,11 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
         return binding.getRoot();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
     private void closeFragment() {
         getParentFragmentManager().popBackStack();
     }

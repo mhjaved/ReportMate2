@@ -76,6 +76,7 @@ public class SettingsFragment extends Fragment {
 
     }
 
+
     public void setCallback(OnSettingsItemClickedListener callback) {
         mCallback = callback;
     }

@@ -62,14 +62,25 @@ public class SplashAndLoginActivity extends AppCompatActivity {
 
     private void showLoginPage() {
 
-        if (Utility.getEmployee(this) != null)
+        if (Utility.getEmployee(this) != null){
             gotoHomeActivity();
+//            gotoHistoryActivity();
+        }
+
         else layoutLogin.setVisibility(View.VISIBLE);
 
     }
 
     private void gotoHomeActivity() {
         Intent intent = new Intent(SplashAndLoginActivity.this, HomeActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    private void gotoHistoryActivity() {
+        Intent intent = new Intent(SplashAndLoginActivity.this, HistoryActivity.class);
+        intent.putExtra(Utility.HISTORY_FRAGMENT_TOKEN, Utility.HISTORY_FRAGMENT_ONGOING);
+
         startActivity(intent);
         finish();
     }

@@ -149,6 +149,19 @@
                     android:textStyle="bold" />
             </LinearLayout>
 
+
+            <TextView
+                android:id="@+id/tvViewAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/view_all"
+                android:textColor="@color/text_green"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/draftReportSection" />
+
+
             <TextView
                 android:id="@+id/noMatchText"
                 android:layout_width="wrap_content"
@@ -209,7 +222,7 @@
                 android:layout_marginTop="@dimen/space_16"
                 android:background="@drawable/bg_generate_report_button"
                 android:gravity="center"
-                android:visibility="gone"
+                android:visibility="visible"
                 android:orientation="horizontal"
                 android:textColor="@color/theme_color"
                 app:layout_constraintEnd_toEndOf="parent"

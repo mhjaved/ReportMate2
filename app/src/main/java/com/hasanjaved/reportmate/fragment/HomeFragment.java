@@ -69,12 +69,23 @@ public class HomeFragment extends Fragment {
                 homeFragmentClickListener.onGenerateNewReportClicked();
         });
 
+        binding.llPreviousReport.setOnClickListener(view1 -> {
+            if (homeFragmentClickListener != null)
+                homeFragmentClickListener.onPreviousReportHistoryClicked();
+        });
+
+        binding.tvViewAll.setOnClickListener(view1 -> {
+            if (homeFragmentClickListener != null)
+                homeFragmentClickListener.onOngoingReportClicked();
+        });
+
 
         setPageData();
 
         return view;
 
     }
+
 
     private void setPageData() {
         Employee employee = Utility.getEmployee(activity);

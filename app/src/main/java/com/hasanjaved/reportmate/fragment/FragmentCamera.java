@@ -96,7 +96,6 @@ public class FragmentCamera extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-//        View view = inflater.inflate(R.layout.activity_camera2, container, false);
 
         binding = FragmentCameraBinding.inflate(inflater, container, false);
         View view = binding.getRoot();
@@ -132,6 +131,11 @@ public class FragmentCamera extends Fragment {
         return view;
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
     private void closeFragment(){
         getParentFragmentManager().popBackStack();
     }

@@ -40,6 +40,9 @@ public class Utility {
     public static final String IMAGE_SAMPLE_DIRECTORY3 = "/storage/emulated/0/Documents/ReportMate/img.jpg";
     public static final String TAG = "ReportMate";
     public static final String BASE_FOLDER_NAME = "ReportMate";
+    public static final String HISTORY_FRAGMENT_TOKEN = "HISTORY_FRAGMENT_TOKEN";
+    public static final String HISTORY_FRAGMENT_HISTORY = "HISTORY_FRAGMENT_HISTORY";
+    public static final String HISTORY_FRAGMENT_ONGOING = "HISTORY_FRAGMENT_ONGOING";
     private static final String REPORTMATE_DIRECTORY = "ReportMate";
 
     public static final String TRIP_TEST = "TripTest";

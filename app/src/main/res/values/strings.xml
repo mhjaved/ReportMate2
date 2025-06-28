@@ -14,7 +14,7 @@
     <string name="account_settings">Account Settings</string>
     <string name="home">Home</string>
     <string name="user_guidelines">User Guidelines</string>
-    <string name="draft_report">Draft Report</string>
+    <string name="draft_report">Ongoing Report</string>
     <string name="no_match_yet">No match yet</string>
     <string name="generate_new_report">Generate New Report</string>
     <string name="previous_report_history">Previous Report History</string>
@@ -175,5 +175,8 @@
     <string name="current_injector_connection_img">Current Injector connection Img</string>
     <string name="report_summary">Report Summary</string>
     <string name="all_details">All Details</string>
+    <string name="view_all">View All</string>
+    <string name="ongoing_report">Ongoing Report</string>
+    <string name="report_history">Report History</string>
 
 </resources>

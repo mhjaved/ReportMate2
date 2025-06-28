@@ -22,4 +22,5 @@ public class ReportHistory {
     public void setIncompleteReportList(List<Report> incompleteReportList) {
         this.incompleteReportList = incompleteReportList;
     }
+
 }

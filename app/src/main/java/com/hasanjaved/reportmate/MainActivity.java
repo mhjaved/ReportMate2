@@ -1,18 +1,13 @@
 package com.hasanjaved.reportmate;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.hasanjaved.reportmate.doc_generator.PanelOnlyGenerator;
-import com.hasanjaved.reportmate.doc_generator.PanelPicturesGenerator;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.hasanjaved.reportmate.utility.Utility;
 
 import org.apache.poi.xwpf.usermodel.ParagraphAlignment;
@@ -60,18 +55,6 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void generatePanelPicturesOnly() {
-        String imageUrl = "/storage/emulated/0/Pictures/Capture.jpg";
-
-        boolean success = PanelOnlyGenerator.generatePanelGeneralPicturesOnly(this, imageUrl);
-
-        if (success) {
-            Log.d("MainActivity", "Panel General Pictures report generated successfully");
-            // File saved to: /storage/emulated/0/Documents/ReportMate/DB31_Panel_General_Pictures_[timestamp].docx
-        } else {
-            Log.e("MainActivity", "Failed to generate Panel Pictures report");
-        }
-    }
 
     private boolean checkPermissions() {
 //        for (String permission : REQUIRED_PERMISSIONS) {

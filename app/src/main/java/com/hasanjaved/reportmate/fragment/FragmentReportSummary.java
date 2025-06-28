@@ -95,6 +95,11 @@ public class FragmentReportSummary extends Fragment {
         setPageData();
         return rootView;
     }
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 
     private void setViewListeners() {
 

@@ -32,7 +32,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
 
-//        addNewReportFragment();
+        addNewReportFragment();
 //        generateSampleDocument();
 //        addNewReportFragmentPhaseThreeIR();
 //        addNewReportFragmentPhaseTwo();
@@ -41,15 +41,13 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 //        addNewReportFragmentPhaseThreeCrmTrip();
 //        addFragmentCamera();
 //        createFile();
-        addNewReportFragmentPhaseThreeCrmTrip();
+//        addNewReportFragmentPhaseThreeCrmTrip();
 
 //        generateReport(Utility.getReport(this));
 //        addFragmentReportSummary();
 
 //        SharedPreferences preferences = getSharedPreferences("pref", Context.MODE_PRIVATE);
 //        String fileLocation = "file:"+preferences.getString(Utility.ImageToken,"hasan");
-
-
 
 //        // Check permissions first
 //        if (checkSelfPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)

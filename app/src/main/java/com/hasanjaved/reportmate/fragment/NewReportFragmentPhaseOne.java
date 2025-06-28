@@ -238,6 +238,12 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
+
     public boolean validateEditText(EditText editText) {
         boolean allFilled = true;
 

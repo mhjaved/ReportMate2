@@ -106,6 +106,11 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
         checkStatusOnResume();
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
 //    @Override
 //    public void onHiddenChanged(boolean hidden) {
 //        super.onHiddenChanged(hidden);

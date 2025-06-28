@@ -7,5 +7,6 @@ public interface HomeFragmentClickListener {
     void onGenerateNewReportClicked();
 
     void onPreviousReportHistoryClicked();
+    void onOngoingReportClicked();
 
 }

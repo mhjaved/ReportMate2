@@ -103,6 +103,11 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        binding = null;
+    }
     private void setPageData() {
         Report report = Utility.getReport(activity);
         if (report != null) {
