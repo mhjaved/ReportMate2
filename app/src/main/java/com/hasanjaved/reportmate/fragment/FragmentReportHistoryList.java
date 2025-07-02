@@ -9,21 +9,20 @@ import android.view.ViewGroup;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
-import com.hasanjaved.reportmate.adapter.CircuitListRecyclerAdapter2;
 import com.hasanjaved.reportmate.adapter.HistoryRecyclerAdapter;
 import com.hasanjaved.reportmate.databinding.FragmentHistoryBinding;
-import com.hasanjaved.reportmate.databinding.FragmentHomeBinding;
+import com.hasanjaved.reportmate.listeners.HistoryFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
-import com.hasanjaved.reportmate.model.Employee;
-import com.hasanjaved.reportmate.utility.Utility;
 
-public class HistoryFragment extends Fragment implements RecyclerViewClickListener {
+public class FragmentReportHistoryList extends Fragment implements RecyclerViewClickListener {
 
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private HomeFragmentClickListener homeFragmentClickListener;
+    private HistoryFragmentClickListener fragmentClickListener;
+    private HistoryRecyclerAdapter historyRecyclerAdapter;
+
     private FragmentHistoryBinding binding;
     private Activity activity;
 
@@ -31,13 +30,13 @@ public class HistoryFragment extends Fragment implements RecyclerViewClickListen
     private String mParam1;
     private String mParam2;
 
-    public HistoryFragment() {
+    public FragmentReportHistoryList() {
 
     }
 
 
-    public static HistoryFragment newInstance(String param1, String param2) {
-        HistoryFragment fragment = new HistoryFragment();
+    public static FragmentReportHistoryList newInstance(String param1, String param2) {
+        FragmentReportHistoryList fragment = new FragmentReportHistoryList();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -82,8 +81,8 @@ public class HistoryFragment extends Fragment implements RecyclerViewClickListen
         });
     }
 
-    private HistoryRecyclerAdapter historyRecyclerAdapter;
     private void setReportHistory() {
+//        if (Re)
 
         LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(activity);
         binding.rvHistory.setLayoutManager(linearLayoutManager);
@@ -96,13 +95,12 @@ public class HistoryFragment extends Fragment implements RecyclerViewClickListen
         getParentFragmentManager().popBackStack();
     }
 
-    public void setFragmentClickListener(HomeFragmentClickListener homeFragmentClickListener) {
-        this.homeFragmentClickListener = homeFragmentClickListener;
+    public void setFragmentClickListener(HistoryFragmentClickListener fragmentClickListener) {
+        this.fragmentClickListener = fragmentClickListener;
     }
 
     @Override
     public void onItemClicked(int index) {
-
     }
 
     @Override

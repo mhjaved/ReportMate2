@@ -178,5 +178,10 @@
     <string name="view_all">View All</string>
     <string name="ongoing_report">Ongoing Report</string>
     <string name="report_history">Report History</string>
+    <string name="client_name">Client Name</string>
+    <string name="project_name">Project Name</string>
+    <string name="confirm_action">Confirm Action</string>
+    <string name="are_you_sure_you_want_to_save_circuits">Are you sure you want to save circuits?</string>
+    <string name="report_saved_to_ongoing_list">Report saved to ongoing list</string>
 
 </resources>

@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:background="#F5F9FC"
     android:clickable="true">
 
@@ -15,7 +16,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-
             >
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
@@ -51,11 +51,52 @@
 
             </androidx.constraintlayout.widget.ConstraintLayout>
 
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
+                >
+
+                <!-- Company Name -->
+                <TextView
+                    android:id="@+id/tvProjectName"
+                    android:layout_width="150dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/client_name"
+                    android:textColor="@color/text_black"
+                    android:textStyle="normal"
+                    android:maxLines="1"
+                    android:maxLength="18"
+                    android:textSize="16sp"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    />
+
+                <!-- Project Code -->
+                <TextView
+                    android:id="@+id/tvProjectCode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/project_name"
+                    android:textColor="@color/text_black"
+                    android:textSize="16sp"
+                    android:maxLength="18"
+                    android:layout_marginStart="@dimen/space_24"
+                    android:maxLines="1"
+                    app:layout_constraintStart_toEndOf="@+id/tvProjectName"
+                    app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintBottom_toBottomOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvHistory"
                 android:layout_margin="@dimen/space_16"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                tools:listitem="@layout/item_history"
                 />
         </LinearLayout>
 

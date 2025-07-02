@@ -1,7 +1,6 @@
 package com.hasanjaved.reportmate.data_manager;
 
 import android.content.Context;
-
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Equipment;
 import com.hasanjaved.reportmate.model.ManufacturerCurveDetails;
@@ -9,7 +8,6 @@ import com.hasanjaved.reportmate.model.PanelBoard;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.MediaStoreUtils;
 import com.hasanjaved.reportmate.utility.Utility;
-
 import java.util.List;
 
 public class ReportGeneralData {

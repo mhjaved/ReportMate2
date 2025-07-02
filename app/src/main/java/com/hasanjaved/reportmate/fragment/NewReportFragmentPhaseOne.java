@@ -13,7 +13,6 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 import androidx.fragment.app.Fragment;
@@ -34,9 +33,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
-import com.hasanjaved.reportmate.utility.FileMover2;
-import com.hasanjaved.reportmate.utility.ImageLoader;
-import com.hasanjaved.reportmate.utility.not.FolderManager;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
@@ -232,7 +229,6 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 showPage(viewGeneralImage, viewCustomerDetails, viewGenerateNewReport,
                         viewSiteDetails, viewGeneralImage2));
 
-        Utility.showLog("doesReportMateFolderExist " + FolderManager.doesFolderExist(activity, "ReportMate"));
 
         return binding.getRoot();
 
@@ -404,7 +400,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover2.moveImageToDocumentsSubfolder(
+            FileMover.moveImageToDocumentsSubfolder(
                     activity,
                     imageLocation,
                     imageName,

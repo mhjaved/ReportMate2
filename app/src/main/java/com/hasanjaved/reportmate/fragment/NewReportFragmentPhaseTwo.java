@@ -8,12 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.hasanjaved.reportmate.adapter.CircuitListRecyclerAdapter;
 import com.hasanjaved.reportmate.data_manager.ReportGeneralData;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
@@ -23,20 +21,18 @@ import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.ImageLoader;
+import com.hasanjaved.reportmate.utility.PopupManager;
 import com.hasanjaved.reportmate.utility.Utility;
-
 import net.cachapa.expandablelayout.ExpandableLayout;
-
 import java.util.ArrayList;
 import java.util.List;
 
-
-public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewClickListener {
+public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewClickListener, PopupManager.ConfirmCircuitList {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private Activity activity;
-    List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
+    private List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
 
     private LinearLayoutManager linearLayoutManager;
 
@@ -144,7 +140,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
     }
 
     private void setCircuitListRv() {
-
         linearLayoutManager = new LinearLayoutManager(activity);
         binding.viewOne.rvCircuit.setLayoutManager(linearLayoutManager);
         circuitListRecyclerAdapter = new CircuitListRecyclerAdapter(activity, circuitBreakerList, 0, this);
@@ -157,11 +152,8 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                     if (circuitBreakerList.isEmpty()) {
                         Utility.showToast(activity, "Add Circuit");
                     } else {
-                        ReportGeneralData.saveCircuitList(activity, circuitBreakerList);
-                        showPage(viewTwo, viewOne,
-                                viewThree, viewFour);
+                     PopupManager.showConfirmCircuitPopup(activity,this);
                     }
-
                 }
         );
 
@@ -258,7 +250,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                 setExpandView(binding.viewOne.expandSite, binding.viewOne.ivArrowSite)
         );
 
-
         binding.viewOne.rlEquipment.setOnClickListener(view ->
                 setExpandView(binding.viewOne.expandEquipment, binding.viewOne.ivArrowEquipment)
         );
@@ -270,7 +261,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         binding.viewOne.viewEditCircuitName.ivClose.setOnClickListener(view ->
                 viewEditCircuitName.setVisibility(View.GONE)
         );
-
 
         binding.viewOne.etNumberOfCircuit.addTextChangedListener(new TextWatcher() {
 
@@ -392,6 +382,13 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         hide3.setVisibility(View.GONE);
     }
 
+    private void saveCircuitListAndShowPageTwo() {
+        ReportGeneralData.saveCircuitList(activity, circuitBreakerList);
+        Utility.saveReportOngoing(activity, Utility.getReport(activity));
+        showPage(viewTwo, viewOne,
+                viewThree, viewFour);
+    }
+
     @Override
     public void onItemClicked(int index) {
         circuitListRecyclerAdapter.setSelectedItem(index);
@@ -448,5 +445,17 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
                 Utility.showLog("Delete Index out of bounds: " + index);
             }
         });
+    }
+
+    @Override
+    public void confirmed() {
+        saveCircuitListAndShowPageTwo();
+    }
+
+
+
+    @Override
+    public void cancelled() {
+
     }
 }

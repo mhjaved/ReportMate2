@@ -11,8 +11,7 @@ import android.widget.Toast;
 
 import com.hasanjaved.reportmate.DesignFragment;
 import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
-import com.hasanjaved.reportmate.doc_generator.ReportGenerator;
-import com.hasanjaved.reportmate.doc_generator.ReportGenerator2;
+import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
 import com.hasanjaved.reportmate.OcrTestFragment;
 import com.hasanjaved.reportmate.R;
@@ -21,7 +20,6 @@ import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
-import com.hasanjaved.reportmate.utility.MediaStoreUtils;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity implements OnSettingsItemClickedListener, HomeFragmentClickListener {
@@ -173,61 +171,61 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
         startActivity(intent);
     }
 
-    public void generateReportFile(Report report) {
-        String reportName = report.getProjectNo();
-
-        // Show loading dialog
-        ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setTitle("Generating Report");
-        progressDialog.setMessage("Initializing...");
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
-        progressDialog.setMax(100);
-        progressDialog.setCancelable(false);
-        progressDialog.show();
-
-        // Generate report asynchronously
-        ReportGenerator2.generateReport(this, reportName, report,
-                new ReportGenerator2.ReportGenerationCallback() {
-                    @Override
-                    public void onStarted() {
-                        Utility.showLog("Report generation started");
-                        progressDialog.setMessage("Starting report generation...");
-                    }
-
-                    @Override
-                    public void onProgress(int progress, String message) {
-                        progressDialog.setProgress(progress);
-                        progressDialog.setMessage(message);
-                        Utility.showLog("Progress: " + progress + "% - " + message);
-                    }
-
-                    @Override
-                    public void onSuccess(String filePath) {
-                        progressDialog.dismiss();
-                        Utility.showLog("Report generated successfully: " + filePath);
-
-                        // Show success message
-                        Toast.makeText(HomeActivity.this,
-                                "Report saved successfully!",
-                                Toast.LENGTH_LONG).show();
-
-                        // Optional: Open the file or show notification
-                        // showReportCompletedNotification(filePath);
-                    }
-
-                    @Override
-                    public void onError(String errorMessage) {
-                        progressDialog.dismiss();
-                        Utility.showLog("Failed to generate report: " + errorMessage);
-
-                        // Show error message
-                        Toast.makeText(HomeActivity.this,
-                                "Failed to generate report: " + errorMessage,
-                                Toast.LENGTH_LONG).show();
-                    }
-                }
-        );
-    }
+//    public void generateReportFile(Report report) {
+//        String reportName = report.getProjectNo();
+//
+//        // Show loading dialog
+//        ProgressDialog progressDialog = new ProgressDialog(this);
+//        progressDialog.setTitle("Generating Report");
+//        progressDialog.setMessage("Initializing...");
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//        progressDialog.setMax(100);
+//        progressDialog.setCancelable(false);
+//        progressDialog.show();
+//
+//        // Generate report asynchronously
+//        ReportGenerator.generateReport(this, reportName, report,
+//                new ReportGenerator.ReportGenerationCallback() {
+//                    @Override
+//                    public void onStarted() {
+//                        Utility.showLog("Report generation started");
+//                        progressDialog.setMessage("Starting report generation...");
+//                    }
+//
+//                    @Override
+//                    public void onProgress(int progress, String message) {
+//                        progressDialog.setProgress(progress);
+//                        progressDialog.setMessage(message);
+//                        Utility.showLog("Progress: " + progress + "% - " + message);
+//                    }
+//
+//                    @Override
+//                    public void onSuccess(String filePath) {
+//                        progressDialog.dismiss();
+//                        Utility.showLog("Report generated successfully: " + filePath);
+//
+//                        // Show success message
+//                        Toast.makeText(HomeActivity.this,
+//                                "Report saved successfully!",
+//                                Toast.LENGTH_LONG).show();
+//
+//                        // Optional: Open the file or show notification
+//                        // showReportCompletedNotification(filePath);
+//                    }
+//
+//                    @Override
+//                    public void onError(String errorMessage) {
+//                        progressDialog.dismiss();
+//                        Utility.showLog("Failed to generate report: " + errorMessage);
+//
+//                        // Show error message
+//                        Toast.makeText(HomeActivity.this,
+//                                "Failed to generate report: " + errorMessage,
+//                                Toast.LENGTH_LONG).show();
+//                    }
+//                }
+//        );
+//    }
 
     @Override
     public void onPreviousReportHistoryClicked() {

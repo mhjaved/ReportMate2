@@ -6,10 +6,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
@@ -25,14 +23,13 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
-import com.hasanjaved.reportmate.utility.FileMover2;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickListener, CameraFragmentClickListener {
 
@@ -371,7 +368,7 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover2.moveImageToDocumentsSubfolder(
+            FileMover.moveImageToDocumentsSubfolder(
                     activity,
                     imageLocation,
                     imageName,

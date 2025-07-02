@@ -7,7 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import androidx.core.content.ContextCompat;
+
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -20,7 +20,7 @@ import com.hasanjaved.reportmate.databinding.FragmentIrTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
-import com.hasanjaved.reportmate.utility.FileMover2;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -337,7 +337,7 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover2.moveImageToDocumentsSubfolder(
+            FileMover.moveImageToDocumentsSubfolder(
                     activity,
                     imageLocation,
                     imageName,

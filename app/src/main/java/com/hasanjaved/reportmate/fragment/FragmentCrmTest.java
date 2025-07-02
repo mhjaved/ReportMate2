@@ -19,7 +19,7 @@ import com.hasanjaved.reportmate.databinding.FragmentCrmTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
-import com.hasanjaved.reportmate.utility.FileMover2;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Objects;
@@ -205,7 +205,7 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover2.moveImageToDocumentsSubfolder(
+            FileMover.moveImageToDocumentsSubfolder(
                     activity,
                     imageLocation,
                     imageName,

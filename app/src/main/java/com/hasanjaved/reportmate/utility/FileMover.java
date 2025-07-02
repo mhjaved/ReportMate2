@@ -6,13 +6,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.util.Log;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.OutputStream;
 
-public class FileMover2 {
+public class FileMover {
     public static void moveImageToDocumentsSubfolder(Context context, String sourcePath, String newFileName, String targetSubfolder) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
             try {

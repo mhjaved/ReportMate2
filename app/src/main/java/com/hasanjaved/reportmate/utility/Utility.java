@@ -18,6 +18,8 @@ import com.hasanjaved.reportmate.activity.HomeActivity;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.model.ReportHistory;
+import com.hasanjaved.reportmate.model.ReportOngoing;
 
 import java.io.File;
 import java.lang.reflect.Type;
@@ -29,6 +31,8 @@ public class Utility {
 
     public static final String SHARED_PREFERENCE_USER = "SHARED_PREFERENCE_USER";
     public static final String CURRENT_REPORT = "CURRENT_REPORT";
+    public static final String ONGOING_REPORT_LIST = "ONGOING_REPORT_LIST";
+    public static final String REPORT_HISTORY_LIST = "REPORT_HISTORY_LIST";
     public static final String PAGE_ONE = "PAGE_ONE";
     public static final String PAGE_THREE = "PAGE_ONE";
     public static final String EMPLOYEE = "EMPLOYEE";
@@ -142,9 +146,6 @@ public class Utility {
         }
     }
 
-//    public static void createNewReport(Context context,String reportName, String reportDate, String employeeId){
-//        FolderManager.createReportMateFolder(context)
-//    }
 
     public static void saveReport(Context context, Report report) {
 
@@ -154,6 +155,48 @@ public class Utility {
         Gson gson = new Gson();
         String string = gson.toJson(report);
         prefsEditor.putString(Utility.CURRENT_REPORT, string);
+
+        prefsEditor.apply();
+    }
+
+    public static ReportOngoing getOngoingReportList(Context context) {
+        try {
+            String connectionsJSONString = context.getSharedPreferences
+                    (Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE).getString(Utility.ONGOING_REPORT_LIST, null);
+            Gson gson = new Gson();
+             return gson.fromJson(connectionsJSONString, ReportOngoing.class);
+
+        } catch (NullPointerException e) {
+            Log.d(Utility.TAG, "\n NullPointerException in getOngoingReportList");
+            return null;
+        }
+    }
+
+    public static void saveReportOngoing(Context context, Report report) {
+
+        SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
+
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        ReportOngoing ongoing = getOngoingReportList(context);
+        if (ongoing==null){
+           ongoing = new ReportOngoing();
+           List<Report> list = new ArrayList<>();
+           list.add(report);
+           ongoing.setOngoingReportList(list);
+        }else {
+            List<Report> list = ongoing.getOngoingReportList();
+            if (list==null){
+                list = new ArrayList<>();
+            }
+            list.add(report);
+            ongoing.setOngoingReportList(list);
+
+        }
+
+
+        Gson gson = new Gson();
+        String string = gson.toJson(ongoing);
+        prefsEditor.putString(Utility.ONGOING_REPORT_LIST, string);
 
         prefsEditor.apply();
 

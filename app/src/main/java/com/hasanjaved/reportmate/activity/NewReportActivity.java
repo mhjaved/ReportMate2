@@ -4,12 +4,10 @@ import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import com.hasanjaved.reportmate.R;
-import com.hasanjaved.reportmate.doc_generator.ReportGenerator2;
-import com.hasanjaved.reportmate.fragment.FragmentCamera;
+import com.hasanjaved.reportmate.utility.ReportGenerator;
+import com.hasanjaved.reportmate.fragment.FragmentCamera2;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTest;
 import com.hasanjaved.reportmate.fragment.FragmentTripTest;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseOne;
@@ -21,8 +19,6 @@ import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
-import com.hasanjaved.reportmate.utility.ImageLoader;
-import com.hasanjaved.reportmate.utility.not.DocumentGenerator;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class NewReportActivity extends AppCompatActivity implements FragmentClickListener {
@@ -63,36 +59,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
 
-    private void generateSampleDocument() {
-        String textContent = "j This is a sample document generated using Apache POI on Android. " +
-                "It contains text content and images from local storage.";
-///storage/emulated/0/Pictures/1748521045717.jpg
-        // Example with local file paths
-        String[] imagePaths = {
-                ImageLoader.getImagePath("img.jpg"),
-                ImageLoader.getImagePath("img.jpg")
-        };
-
-//        String[] imagePaths = {
-//                Utility.IMAGE_SAMPLE_DIRECTORY3,
-//                Utility.IMAGE_SAMPLE_DIRECTORY3
-//        };
-
-        String filePath = DocumentGenerator.generateDocument(
-                this, "SampleDocument", textContent, imagePaths);
-
-        if (filePath != null) {
-            Utility.showLog(" filePath "+ filePath);
-            Toast.makeText(this, "Document created: " + filePath, Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this, "Failed to create document", Toast.LENGTH_SHORT).show();
-        }
-
-        // Or generate from assets
-        String[] assetImages = {"sample_image1.jpg", "sample_image2.png"};
-        String assetFilePath = DocumentGenerator.generateDocumentFromAssets(
-                this, "AssetDocument", textContent, assetImages);
-    }
 
     private void addNewReportFragment(){
 
@@ -131,8 +97,8 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         progressDialog.show();
 
         // Generate report asynchronously
-        ReportGenerator2.generateReport(this, reportName, report,
-                new ReportGenerator2.ReportGenerationCallback() {
+        ReportGenerator.generateReport(this, reportName, report,
+                new ReportGenerator.ReportGenerationCallback() {
                     @Override
                     public void onStarted() {
                         Utility.showLog("Report generation started");
@@ -292,7 +258,16 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     @Override
     public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder) {
-        FragmentCamera fragment = FragmentCamera.newInstance("","");
+//        FragmentCamera fragment = FragmentCamera.newInstance("","");
+//        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.fragmentHolder,fragment,"")
+//                .addToBackStack("")
+//                .commit();
+
+
+        FragmentCamera2 fragment = FragmentCamera2.newInstance("","");
         fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
         getSupportFragmentManager()
                 .beginTransaction()

@@ -10,7 +10,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
-import com.hasanjaved.reportmate.model.CircuitBreaker;
+import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.List;
@@ -18,17 +19,16 @@ import java.util.List;
 public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecyclerAdapter.MyViewHolder> {
 
 
-    private List<CircuitBreaker> list;
+    private List<Report> list;
     private Context context;
     private RecyclerViewClickListener recyclerViewClickListener;
-
-
+    
     private int selectedItem;
 
 
     private static int lastClickedPosition = -1;
 
-    public HistoryRecyclerAdapter(Context context, List<CircuitBreaker> list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
+    public HistoryRecyclerAdapter(Context context, List<Report> list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
         this.context = context;
         this.list = list;
         this.selectedItem = selectedItem;
@@ -39,7 +39,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         return selectedItem;
     }
 
-    public CircuitBreaker getSelectedCircuit() {
+    public Report getSelectedCircuit() {
         if (getSelectedItem() >= 0)
             return list.get(getSelectedItem());
         return null;
@@ -75,8 +75,8 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
         int currentPosition = position;
 
 //
-//        holder.tvName.setText(list.get(currentPosition).getName());
-//        holder.tvBreakerSize.setText(list.get(currentPosition).getSize());
+        holder.tvClientName.setText(list.get(currentPosition).getCustomerName());
+        holder.tvProjectCode.setText(list.get(currentPosition).getProjectNo());
 //
 //        if (Utility.checkCrmForCircuit(context,list.get(currentPosition)))
 //            holder.tvCrm.setVisibility(View.VISIBLE);
@@ -87,26 +87,26 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 //        else holder.tvTrip.setVisibility(View.GONE);
 //
 //
-//        holder.itemView.setOnClickListener(view -> recyclerViewClickListener.onItemClicked(currentPosition));
+        holder.itemView.setOnClickListener(view -> recyclerViewClickListener.onItemClicked(currentPosition));
 
     }
 
 
     @Override
     public int getItemCount() {
-//        return list.size();
-    return 5;
+        return list.size();
+//    return 5;
     }
 
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView tvName, tvBreakerSize,tvCrm,tvTrip;
+        public TextView tvClientName, tvProjectCode,tvCrm,tvTrip;
 
         public MyViewHolder(View view) {
             super(view);
 
-//            tvName = view.findViewById(R.id.tvName);
-//            tvBreakerSize = view.findViewById(R.id.tvBreakerSize);
+            tvClientName = view.findViewById(R.id.tvClientName);
+            tvProjectCode = view.findViewById(R.id.tvProjectCode);
 //            tvCrm = view.findViewById(R.id.tvCrm);
 //            tvTrip = view.findViewById(R.id.tvTrip);
 

@@ -4,23 +4,13 @@ import java.util.List;
 
 public class ReportHistory {
 
-    List<Report> completedReportList ;
-    List<Report> incompleteReportList ;
+    List<Report> reportHistoryList ;
 
-    public List<Report> getCompletedReportList() {
-        return completedReportList;
+    public List<Report> getReportHistoryList() {
+        return reportHistoryList;
     }
 
-    public void setCompletedReportList(List<Report> completedReportList) {
-        this.completedReportList = completedReportList;
+    public void setReportHistoryList(List<Report> reportHistoryList) {
+        this.reportHistoryList = reportHistoryList;
     }
-
-    public List<Report> getIncompleteReportList() {
-        return incompleteReportList;
-    }
-
-    public void setIncompleteReportList(List<Report> incompleteReportList) {
-        this.incompleteReportList = incompleteReportList;
-    }
-
 }

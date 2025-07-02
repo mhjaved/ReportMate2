@@ -1,6 +1,5 @@
 package com.hasanjaved.reportmate.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.activity.EdgeToEdge;
@@ -11,13 +10,15 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.ActivityHistoryBinding;
-import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
-import com.hasanjaved.reportmate.fragment.HistoryFragment;
-import com.hasanjaved.reportmate.fragment.HomeFragment;
-import com.hasanjaved.reportmate.fragment.OngoingFragment;
+import com.hasanjaved.reportmate.fragment.FragmentOngoingReportDetails;
+import com.hasanjaved.reportmate.fragment.FragmentReportHistoryList;
+import com.hasanjaved.reportmate.fragment.FragmentOngoingReportList;
+import com.hasanjaved.reportmate.fragment.FragmentTripTest;
+import com.hasanjaved.reportmate.listeners.HistoryFragmentClickListener;
+import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.Utility;
 
-public class HistoryActivity extends AppCompatActivity {
+public class HistoryActivity extends AppCompatActivity implements HistoryFragmentClickListener {
 
     private ActivityHistoryBinding binding;
 
@@ -55,8 +56,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void addHistoryFragment() {
 
-        HistoryFragment fragment = HistoryFragment.newInstance("", "");
-//        homeFragment.setFragmentClickListener( this);
+        FragmentReportHistoryList fragment = FragmentReportHistoryList.newInstance("", "");
+        fragment.setFragmentClickListener( this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentHolder, fragment,
@@ -67,8 +68,8 @@ public class HistoryActivity extends AppCompatActivity {
 
     private void addOngoingFragment() {
 
-         OngoingFragment fragment = OngoingFragment.newInstance("", "");
-//        homeFragment.setFragmentClickListener( this);
+         FragmentOngoingReportList fragment = FragmentOngoingReportList.newInstance("", "");
+        fragment.setFragmentClickListener( this);
         getSupportFragmentManager()
                 .beginTransaction()
                 .replace(R.id.fragmentHolder, fragment,
@@ -77,4 +78,19 @@ public class HistoryActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void addOngoingReportDetails(Report report) {
+        FragmentOngoingReportDetails fragment = FragmentOngoingReportDetails.newInstance("","");
+        fragment.setFragmentClickListener(this,report);
+        getSupportFragmentManager()
+                .beginTransaction()
+                .add(R.id.fragmentHolder,fragment,"")
+                .addToBackStack("")
+                .commit();
+    }
+
+    @Override
+    public void addHistoryReportDetails(Report report) {
+
+    }
 }

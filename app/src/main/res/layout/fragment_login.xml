@@ -132,6 +132,8 @@
     </LinearLayout>
 
     <!-- Help and Support -->
+
+    <!-- Footer -->
     <LinearLayout
         android:id="@+id/btnHelp"
         android:layout_width="0dp"
@@ -142,6 +144,7 @@
         android:orientation="horizontal"
         android:textColor="@color/theme_color"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btnLogin">
 
@@ -165,7 +168,6 @@
 
     </LinearLayout>
 
-    <!-- Footer -->
     <TextView
         android:id="@+id/tvFooter"
         android:layout_width="wrap_content"

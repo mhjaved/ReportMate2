@@ -18,7 +18,7 @@ import com.hasanjaved.reportmate.databinding.FragmentTripTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
-import com.hasanjaved.reportmate.utility.FileMover2;
+import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.ArrayList;
@@ -170,7 +170,7 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover2.moveImageToDocumentsSubfolder(
+            FileMover.moveImageToDocumentsSubfolder(
                     activity,
                     imageLocation,
                     imageName,

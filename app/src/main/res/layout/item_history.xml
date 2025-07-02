@@ -12,8 +12,8 @@
 
     <!-- Company Name -->
     <TextView
-        android:id="@+id/tvProjectName"
-        android:layout_width="wrap_content"
+        android:id="@+id/tvClientName"
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:text="New Era Fashionskkkkkkkk"
         android:textColor="@color/text_black"
@@ -37,7 +37,7 @@
         android:maxLength="18"
         android:layout_marginStart="@dimen/space_24"
         android:maxLines="1"
-        app:layout_constraintStart_toEndOf="@+id/tvProjectName"
+        app:layout_constraintStart_toEndOf="@+id/tvClientName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent" />
 
