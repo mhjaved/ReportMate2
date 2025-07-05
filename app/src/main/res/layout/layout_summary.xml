@@ -63,9 +63,22 @@
                         android:id="@+id/ivArrowCustomer"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up"
+                        android:layout_toStartOf="@+id/ivEditCustomer"
+                        android:contentDescription="@string/demo_description"
+                        />
+
+                    <ImageView
+                        android:id="@+id/ivEditCustomer"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/space_12"
-                        android:src="@drawable/ic_arrow_up" />
+                        android:contentDescription="@string/demo_description"
+                        android:src="@drawable/ic_edit" />
+
+
                 </RelativeLayout>
 
                 <net.cachapa.expandablelayout.ExpandableLayout
@@ -110,9 +123,20 @@
                         android:id="@+id/ivArrowSite"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up"
+                        android:layout_toStartOf="@+id/ivEditSite"
+                        />
+
+                    <ImageView
+                        android:id="@+id/ivEditSite"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/space_12"
-                        android:src="@drawable/ic_arrow_up" />
+                        android:contentDescription="@string/demo_description"
+                        android:src="@drawable/ic_edit" />
+
                 </RelativeLayout>
 
                 <net.cachapa.expandablelayout.ExpandableLayout
@@ -156,9 +180,20 @@
                         android:id="@+id/ivArrowEquipment"
                         android:layout_width="24dp"
                         android:layout_height="24dp"
+                        android:layout_marginEnd="@dimen/space_12"
+                        android:src="@drawable/ic_arrow_up"
+                        android:layout_alignParentEnd="true"
+                        />
+
+                    <ImageView
+                        android:id="@+id/ivEditEquipment"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
                         android:layout_alignParentEnd="true"
                         android:layout_marginEnd="@dimen/space_12"
-                        android:src="@drawable/ic_arrow_up" />
+                        android:visibility="gone"
+                        android:contentDescription="@string/demo_description"
+                        android:src="@drawable/ic_edit" />
                 </RelativeLayout>
 
                 <net.cachapa.expandablelayout.ExpandableLayout

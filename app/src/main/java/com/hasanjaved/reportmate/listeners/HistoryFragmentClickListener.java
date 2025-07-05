@@ -7,7 +7,7 @@ import com.hasanjaved.reportmate.model.Report;
 
 public interface HistoryFragmentClickListener {
 
-    void addOngoingReportDetails(Report report);
+    void addOngoingReportDetails(int index);
 
     void addHistoryReportDetails(Report report);
 

@@ -12,6 +12,7 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.signature.ObjectKey;
+import com.hasanjaved.reportmate.R;
 
 import java.io.File;
 
@@ -104,7 +105,7 @@ public class ImageLoader {
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(android.R.drawable.ic_menu_gallery)
+                .placeholder(R.drawable.ic_camera_short)
                 .error(android.R.drawable.ic_menu_close_clear_cancel)
                 .signature(new ObjectKey(signature));
 
@@ -137,7 +138,7 @@ public class ImageLoader {
      */
     private static void loadPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(android.R.drawable.ic_menu_gallery)
+                .load(R.drawable.ic_camera_short)
                 .into(imageView);
     }
 
@@ -148,7 +149,7 @@ public class ImageLoader {
      */
     private static void loadErrorPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(android.R.drawable.ic_menu_close_clear_cancel)
+                .load(R.drawable.ic_camera_short)
                 .into(imageView);
     }
 
@@ -211,8 +212,8 @@ public class ImageLoader {
                     .override(width, height)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_close_clear_cancel);
+                    .placeholder(R.drawable.ic_camera_short)
+                    .error(R.drawable.ic_camera_short);
 
             if (imageFile.exists()) {
                 Glide.with(context)
@@ -242,8 +243,8 @@ public class ImageLoader {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(android.R.drawable.ic_menu_gallery)
-                    .error(android.R.drawable.ic_menu_close_clear_cancel);
+                    .placeholder(R.drawable.ic_camera_short)
+                    .error(R.drawable.ic_camera_short);
 
             Glide.with(context)
                     .load(imageUri)

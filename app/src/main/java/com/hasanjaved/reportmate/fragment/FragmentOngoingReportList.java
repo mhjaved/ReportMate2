@@ -119,7 +119,7 @@ public class FragmentOngoingReportList extends Fragment implements RecyclerViewC
     public void onItemClicked(int index) {
 
         if (ongoingReportList.get(index)!=null)
-            fragmentClickListener.addOngoingReportDetails(ongoingReportList.get(index));
+            fragmentClickListener.addOngoingReportDetails(index);
     }
 
     @Override

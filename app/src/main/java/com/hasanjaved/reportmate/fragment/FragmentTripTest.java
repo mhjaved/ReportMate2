@@ -18,6 +18,7 @@ import com.hasanjaved.reportmate.databinding.FragmentTripTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -108,27 +109,27 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
 
     private void setTripCamera() {
 
-        String tripDirectory = Utility.getTripFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker);
+        String tripDirectory = DirectoryManager.getTripFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker);
 
         binding.imgInjectorCurrent.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.imgInjectorCurrentShow,
-                        Utility.imgInjectorCurrent, tripDirectory));
+                        DirectoryManager.imgInjectorCurrent, tripDirectory));
 
         binding.imgInjectedCurrent.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.imgInjectedCurrentShow,
-                        Utility.imgInjectedCurrent, tripDirectory));
+                        DirectoryManager.imgInjectedCurrent, tripDirectory));
 
-        binding.imgTripTimeConnection.setOnClickListener(view ->
-                fragmentClickListener.openCamera(this, binding.imgTripTimeConnectionShow,
-                        Utility.imgTripTimeConnection,tripDirectory));
+//        binding.imgTripTimeConnection.setOnClickListener(view ->
+//                fragmentClickListener.openCamera(this, binding.imgTripTimeConnectionShow,
+//                        Utility.imgTripTimeConnection,tripDirectory));
 
         binding.imgTripTime.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.imgTripTimeShow,
-                        Utility.imgTripTime, tripDirectory));
+                        DirectoryManager.imgTripTime, tripDirectory));
 
         binding.imgAfterTripTime.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.imgAfterTripTimeShow,
-                        Utility.imgAfterTripTime, tripDirectory));
+                        DirectoryManager.imgAfterTripTime, tripDirectory));
 
     }
 

@@ -77,8 +77,8 @@
     <string name="not_selected">not_selected</string>
     <string name="selected">selected</string>
     <string name="line_to_ground_connection">Line To Ground Connection</string>
-    <string name="a_g_connection">A-G Connection</string>
-    <string name="a_b_connection">A-B Connection</string>
+    <string name="a_g_connection">A-G </string>
+    <string name="a_b_connection">A-B </string>
     <string name="filled_from_ocr_edit_if_needed">Filled from OCR. Edit if needed.</string>
     <string name="click_the_icon_to_open_your_camera">Click the icon to open your camera</string>
     <string name="a_g">A-G</string>
@@ -108,11 +108,11 @@
     <string name="ir_test_result_img_c_a">IR Test Result Img(C-A)</string>
     <string name="ir_test_connection_img_c_g">IR Test Connection Img(C-G)</string>
     <string name="ir_test_result_img_c_g">IR Test Result Img(C-G)</string>
-    <string name="b_c_connection">B-C Connection</string>
-    <string name="c_a_connection">C-A Connection</string>
-    <string name="c_g_connection">C-G Connection</string>
+    <string name="b_c_connection">B-C </string>
+    <string name="c_a_connection">C-A </string>
+    <string name="c_g_connection">C-G </string>
     <string name="line_to_line_connection">Line to Line connection</string>
-    <string name="b_g_connection">B-G Connection</string>
+    <string name="b_g_connection">B-G </string>
     <string name="select_circuit_breaker">Select Circuit Breaker</string>
     <string name="ckt_breaker_size">Ckt Breaker Size</string>
     <string name="crm_test">CRM Test</string>
@@ -142,7 +142,7 @@
     <string name="injected_current_img">Injected Current Img</string>
     <string name="trip_time_connection_image">Trip Time Connection Image</string>
     <string name="trip_time_img">Trip Time Img</string>
-    <string name="after_trip_time">After Trip Time</string>
+    <string name="after_trip_time">After Trip </string>
     <string name="curve_range">Curve Range</string>
     <string name="mfg">MFG</string>
     <string name="test_amplitude">Test Amplitude</string>
@@ -159,8 +159,11 @@
     <string name="equipment_name_">Equipment Name:</string>
     <string name="circuit_breaker_size">Circuit Breaker Size</string>
     <string name="y_res">Y-RES</string>
+    <string name="y_res_">Y-RES:</string>
     <string name="b_res">B-RES</string>
+    <string name="b_res_">B-RES:</string>
     <string name="r_res">R-RES</string>
+    <string name="r_res_">R-RES:</string>
     <string name="trip_time">Trip Time</string>
     <string name="save_image">Save Image</string>
     <string name="save">Save</string>
@@ -183,5 +186,6 @@
     <string name="confirm_action">Confirm Action</string>
     <string name="are_you_sure_you_want_to_save_circuits">Are you sure you want to save circuits?</string>
     <string name="report_saved_to_ongoing_list">Report saved to ongoing list</string>
+    <string name="customer_">Customer:</string>
 
 </resources>

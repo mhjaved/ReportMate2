@@ -26,6 +26,8 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.IrTest;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.DirectoryCreator;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -156,13 +158,13 @@ public class FragmentReportSummary extends Fragment {
 
         //=================== line to line inside
         binding.viewIrSummary.lineConnection.connectionOne.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionOne.expandA, binding.viewIrSummary.groundConnection.connectionOne.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionOne.expandA, binding.viewIrSummary.lineConnection.connectionOne.ivArrow)
         );
         binding.viewIrSummary.lineConnection.connectionTwo.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionTwo.expandA, binding.viewIrSummary.groundConnection.connectionTwo.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionTwo.expandA, binding.viewIrSummary.lineConnection.connectionTwo.ivArrow)
         );
         binding.viewIrSummary.lineConnection.connectionThree.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionThree.expandA, binding.viewIrSummary.groundConnection.connectionThree.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionThree.expandA, binding.viewIrSummary.lineConnection.connectionThree.ivArrow)
         );
 
     }
@@ -215,9 +217,10 @@ public class FragmentReportSummary extends Fragment {
     private void setEquipmentSummary(Report report){
         try {
 
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionSiteDetails.ivSiteDetails, Utility.getTemperatureImage(activity));
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivPanelImage, Utility.getPanelImage(activity));
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivDbBoxCircuitImage, Utility.getDbBoxCircuitImage(activity));
+            String equipmentName = report.getEquipment().getEquipmentName();
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionSiteDetails.ivSiteDetails, DirectoryManager.getTemperatureImage(equipmentName));
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivPanelImage, DirectoryManager.getPanelImage(equipmentName));
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivDbBoxCircuitImage, DirectoryManager.getDbBoxCircuitImage(equipmentName));
 
             binding.viewSummary.viewCustomerDetails.tvCustomerName.setText(report.getCustomerName());
             binding.viewSummary.viewCustomerDetails.tvCustomerAddress.setText(report.getCustomerAddress());
@@ -292,31 +295,35 @@ public class FragmentReportSummary extends Fragment {
                 binding.viewIrSummary.lineConnection.connectionThree.tvValue.setText(irTest.getCaValue());
 
 
-                List<String> groundConnectionImages =  Utility.getIrGroundConnectionImages(activity);
-                List<String> groundResultImages =  Utility.getIrGroundResultImages(activity);
+//                DirectoryCreator.createFolderInDocuments(context,
+//                        BASE_FOLDER_NAME + "/" + equipmentName + "/" + IrTest + "/" + IrTest1_AG + "/" + Pictures);
 
-                List<String> lineConnectionImages =  Utility.getIrLineConnectionImages(activity);
-                List<String> lineResultImages =  Utility.getIrLineResultImages(activity);
+//                List<String> groundConnectionImages =  DirectoryManager.getIrGroundConnectionImages(activity);
+//                List<String> groundResultImages =  DirectoryManager.getIrGroundResultImages(activity);
 
+//                List<String> lineConnectionImages =  DirectoryManager.getIrLineConnectionImages(activity);
+//                List<String> lineResultImages =  DirectoryManager.getIrLineResultImages(activity);
+
+                String equipmentName = report.getEquipment().getEquipmentName();
                 // ground connection images
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivOne, groundConnectionImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivOne, groundConnectionImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivOne, groundConnectionImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivOne, DirectoryManager.getIrAgConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivOne, DirectoryManager.getIrBgConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivOne, DirectoryManager.getIrCgConnectionImages(equipmentName));
 
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivTwo, groundResultImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivTwo, groundResultImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivTwo, groundResultImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivTwo,DirectoryManager.getIrAgResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivTwo, DirectoryManager.getIrBgResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivTwo, DirectoryManager.getIrCgResultImages(equipmentName));
 
 
                 // line connection images
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivOne, lineConnectionImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivOne, lineConnectionImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivOne, lineConnectionImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivOne,  DirectoryManager.getIrAbConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivOne,  DirectoryManager.getIrBcConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivOne,  DirectoryManager.getIrCaConnectionImages(equipmentName));
 
 
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivTwo, lineResultImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivTwo, lineResultImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivTwo, lineResultImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivTwo, DirectoryManager.getIrAbResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivTwo, DirectoryManager.getIrBcResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivTwo, DirectoryManager.getIrCaResultImages(equipmentName));
 
             }
         }

@@ -33,6 +33,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -169,38 +170,37 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         );
 
 
-        binding.viewGeneralImage2.btnNext.setOnClickListener(view ->
-                {
+        binding.viewGeneralImage2.btnNext.setOnClickListener(view -> {
                     if (fragmentClickListener != null) {
                         fragmentClickListener.addNewReportPhaseTwoFragment();
                     }
                 }
         );
 
+        String generalImageDirectory = DirectoryManager.getGeneralImageDirectory(Utility.getReport(activity).getEquipment().getEquipmentName());
+
         binding.viewGeneralImage.imgCamera.setOnClickListener(view ->{
 
-//            getImagePermission();
                     fragmentClickListener.openCamera(this, binding.viewGeneralImage.ivShowImage,
-                            Utility.generalImageTemperature, Utility.getReportDirectory(activity));
+                            DirectoryManager.generalImageTemperature,generalImageDirectory );
                 }
-
         );
 
         binding.viewGeneralImage2.imgCamera1.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage1,
-                        Utility.dbBoxPanelFront, Utility.getReportDirectory(activity))
+                        DirectoryManager.dbBoxPanelFront, generalImageDirectory)
         );
         binding.viewGeneralImage2.imgCamera2.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage2,
-                        Utility.dbBoxPanelInside, Utility.getReportDirectory(activity))
+                        DirectoryManager.dbBoxPanelInside,  generalImageDirectory)
         );
         binding.viewGeneralImage2.imgCamera3.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage3,
-                        Utility.dbBoxPanelNameplate, Utility.getReportDirectory(activity))
+                        DirectoryManager.dbBoxPanelNameplate,  generalImageDirectory)
         );
         binding.viewGeneralImage2.imgCamera4.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage4,
-                        Utility.dbBoxPanelGrounging, Utility.getReportDirectory(activity))
+                        DirectoryManager.dbBoxPanelGrounding,  generalImageDirectory)
         );
 
 
@@ -286,16 +286,6 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         return false;
     }
 
-//    @RequiresApi(api = Build.VERSION_CODES.TIRAMISU)
-//    private void getImagePermission(){
-//        if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.READ_MEDIA_IMAGES)
-//                != PackageManager.PERMISSION_GRANTED) {
-//            permissionLauncher.launch(Manifest.permission.READ_MEDIA_IMAGES);
-//        } else {
-////            startCamera(cameraFacing);
-//        }
-//    }
-
 
     private static final int REQUEST_READ_MEDIA_IMAGES = 101;
 
@@ -339,8 +329,6 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         );
         Utility.showLog(Utility.getReport(activity).toString());
     }
-
-
 
     private void savePageTwoData() {
         ReportGeneralData.savePageTwoData(activity,

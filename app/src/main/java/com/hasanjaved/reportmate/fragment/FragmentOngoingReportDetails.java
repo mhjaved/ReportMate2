@@ -1,28 +1,31 @@
 package com.hasanjaved.reportmate.fragment;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hasanjaved.reportmate.R;
+import com.hasanjaved.reportmate.adapter.CrmTestHistoryRecyclerAdapter;
 import com.hasanjaved.reportmate.adapter.CrmTestRecyclerAdapter;
+import com.hasanjaved.reportmate.adapter.TripTestHistoryRecyclerAdapter;
 import com.hasanjaved.reportmate.adapter.TripTestRecyclerAdapter;
 import com.hasanjaved.reportmate.databinding.FragmentOngoingReportDetailsBinding;
-import com.hasanjaved.reportmate.databinding.FragmentReportSummaryBinding;
-import com.hasanjaved.reportmate.listeners.FragmentClickListener;
+import com.hasanjaved.reportmate.listeners.EditRecyclerViewClickListener;
 import com.hasanjaved.reportmate.listeners.HistoryFragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.IrTest;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.ImageLoader;
+import com.hasanjaved.reportmate.utility.PopupManager;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -31,28 +34,27 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragmentOngoingReportDetails extends Fragment {
+public class FragmentOngoingReportDetails extends Fragment implements PopupManager.EditPopupListener, EditRecyclerViewClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-
     private FragmentOngoingReportDetailsBinding binding;
-    List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
+    private List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rvCrmList;
-    private CrmTestRecyclerAdapter crmTestRecyclerAdapter;
-    private TripTestRecyclerAdapter tripTestRecyclerAdapter;
+    private CrmTestHistoryRecyclerAdapter crmTestRecyclerAdapter;
+    private TripTestHistoryRecyclerAdapter tripTestRecyclerAdapter;
     private Activity activity;
-
     private View rootView;
     private String mParam1;
     private String mParam2;
     private HistoryFragmentClickListener fragmentClickListener;
-    private Report report;
+    private int reportIndex;
 
-    public void setFragmentClickListener(HistoryFragmentClickListener fragmentClickListener, Report report) {
+    public void setFragmentClickListener(HistoryFragmentClickListener fragmentClickListener, int reportIndex) {
         this.fragmentClickListener = fragmentClickListener;
-        this.report = report;
+        this.reportIndex = reportIndex;
+        Utility.showLog("setFragmentClickListener "+reportIndex);
     }
 
     public FragmentOngoingReportDetails() {
@@ -76,7 +78,6 @@ public class FragmentOngoingReportDetails extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
         activity = getActivity();
-
     }
 
     @Override
@@ -100,7 +101,7 @@ public class FragmentOngoingReportDetails extends Fragment {
         super.onDestroyView();
         binding = null;
         fragmentClickListener = null;
-        report = null;
+//        reportIndex = null;
     }
 
     private void setViewListeners() {
@@ -121,11 +122,9 @@ public class FragmentOngoingReportDetails extends Fragment {
                 setExpandView(binding.viewSummary.expandCustomer, binding.viewSummary.ivArrowCustomer)
         );
 
-
         binding.viewSummary.rlSideDetails.setOnClickListener(view ->
                 setExpandView(binding.viewSummary.expandSite, binding.viewSummary.ivArrowSite)
         );
-
 
         binding.viewSummary.rlEquipment.setOnClickListener(view ->
                 setExpandView(binding.viewSummary.expandEquipment, binding.viewSummary.ivArrowEquipment)
@@ -145,7 +144,7 @@ public class FragmentOngoingReportDetails extends Fragment {
                 setExpandView(binding.viewIrSummary.expandLineToLine, binding.viewIrSummary.ivArrowLineToLine)
         );
 
-        //=================== line to ground inside
+        //--------------------------------- line to ground inside
         binding.viewIrSummary.groundConnection.connectionOne.rlAConnection.setOnClickListener(view ->
                 setExpandView(binding.viewIrSummary.groundConnection.connectionOne.expandA, binding.viewIrSummary.groundConnection.connectionOne.ivArrow)
         );
@@ -156,24 +155,43 @@ public class FragmentOngoingReportDetails extends Fragment {
                 setExpandView(binding.viewIrSummary.groundConnection.connectionThree.expandA, binding.viewIrSummary.groundConnection.connectionThree.ivArrow)
         );
 
-        //=================== line to line inside
+        //--------------------------------- line to line inside -----------------------------------
         binding.viewIrSummary.lineConnection.connectionOne.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionOne.expandA, binding.viewIrSummary.groundConnection.connectionOne.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionOne.expandA, binding.viewIrSummary.lineConnection.connectionOne.ivArrow)
         );
         binding.viewIrSummary.lineConnection.connectionTwo.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionTwo.expandA, binding.viewIrSummary.groundConnection.connectionTwo.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionTwo.expandA, binding.viewIrSummary.lineConnection.connectionTwo.ivArrow)
         );
         binding.viewIrSummary.lineConnection.connectionThree.rlAConnection.setOnClickListener(view ->
-                setExpandView(binding.viewIrSummary.lineConnection.connectionThree.expandA, binding.viewIrSummary.groundConnection.connectionThree.ivArrow)
+                setExpandView(binding.viewIrSummary.lineConnection.connectionThree.expandA, binding.viewIrSummary.lineConnection.connectionThree.ivArrow)
         );
 
+        //---------------------------------show pop ups ---------------------------------------------
+        binding.viewSummary.ivEditCustomer.setOnClickListener(view ->
+                PopupManager.showEditCustomerPopup(activity, getReport(reportIndex), this)
+        );
+        binding.viewSummary.ivEditSite.setOnClickListener(view ->
+                PopupManager.showEditSitePopup(activity,  getReport(reportIndex), this)
+        );
+
+        binding.viewIrSummary.ivEditLineToGround.setOnClickListener(view ->
+                PopupManager.showEditIrPopupGround(activity,  getReport(reportIndex), this)
+        );
+        binding.viewIrSummary.ivEditLineToLine.setOnClickListener(view ->
+                PopupManager.showEditIrPopupLine(activity,  getReport(reportIndex), this)
+        );
+
+    }
+
+    private Report getReport(int reportIndex) {
+       return Utility.getOngoingReportList(activity).getOngoingReportList().get(reportIndex);
     }
 
     private void setCrmListRv() {
 
         linearLayoutManager = new LinearLayoutManager(activity);
         binding.viewCrmSummary.rvCrm.setLayoutManager(linearLayoutManager);
-        crmTestRecyclerAdapter = new CrmTestRecyclerAdapter(activity, circuitBreakerList, -1, null);
+        crmTestRecyclerAdapter = new CrmTestHistoryRecyclerAdapter(activity, circuitBreakerList, -1, this);
         binding.viewCrmSummary.rvCrm.setAdapter(crmTestRecyclerAdapter);
 
     }
@@ -183,14 +201,13 @@ public class FragmentOngoingReportDetails extends Fragment {
         linearLayoutManager = new LinearLayoutManager(activity);
         binding.viewTripSummary.rvCrm.setLayoutManager(linearLayoutManager);
         binding.viewTripSummary.rvCrm.setNestedScrollingEnabled(true);
-        tripTestRecyclerAdapter = new TripTestRecyclerAdapter(activity, circuitBreakerList, -1, null);
+        tripTestRecyclerAdapter = new TripTestHistoryRecyclerAdapter(activity, circuitBreakerList, -1, this);
         binding.viewTripSummary.rvCrm.setAdapter(tripTestRecyclerAdapter);
 
     }
 
     private void setExpandView(ExpandableLayout expand, ImageView arrow) {
 
-        Utility.showLog("000000000");
         if (expand.isExpanded()) {
             arrow.animate().rotation(180).start();
             expand.collapse();
@@ -203,11 +220,13 @@ public class FragmentOngoingReportDetails extends Fragment {
 
     private void setPageData() {
 //        Report report = Utility.getReport(activity);
+        Report report = getReport(reportIndex);
+        Utility.showLog("setPageData "+report);
+
         if (report != null) {
             setEquipmentSummary(report);
-            Utility.showLog(report.toString());
-//            setIrData(report);
-//            setCrmData(report);
+            setIrData(report);
+            setCrmData(report);
 //            setTripData(report);
         }
 
@@ -217,9 +236,10 @@ public class FragmentOngoingReportDetails extends Fragment {
     private void setEquipmentSummary(Report report) {
         try {
 
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionSiteDetails.ivSiteDetails, Utility.getTemperatureImage(activity));
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivPanelImage, Utility.getPanelImage(activity));
-            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivDbBoxCircuitImage, Utility.getDbBoxCircuitImage(activity));
+            String equipmentName = report.getEquipment().getEquipmentName();
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionSiteDetails.ivSiteDetails, DirectoryManager.getTemperatureImage(equipmentName));
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivPanelImage, DirectoryManager.getPanelImage(equipmentName));
+            ImageLoader.showImageFromStorage(activity, binding.viewSummary.sectionEquipmentDetails.ivDbBoxCircuitImage, DirectoryManager.getDbBoxCircuitImage(equipmentName));
 
             binding.viewSummary.viewCustomerDetails.tvCustomerName.setText(report.getCustomerName());
             binding.viewSummary.viewCustomerDetails.tvCustomerAddress.setText(report.getCustomerAddress());
@@ -294,31 +314,34 @@ public class FragmentOngoingReportDetails extends Fragment {
                 binding.viewIrSummary.lineConnection.connectionThree.tvValue.setText(irTest.getCaValue());
 
 
-                List<String> groundConnectionImages = Utility.getIrGroundConnectionImages(activity);
-                List<String> groundResultImages = Utility.getIrGroundResultImages(activity);
-
-                List<String> lineConnectionImages = Utility.getIrLineConnectionImages(activity);
-                List<String> lineResultImages = Utility.getIrLineResultImages(activity);
+//                List<String> groundConnectionImages = DirectoryManager.getIrGroundConnectionImages(activity, report);
+//                List<String> groundResultImages = DirectoryManager.getIrGroundResultImages(activity);
+//
+//                List<String> lineConnectionImages = DirectoryManager.getIrLineConnectionImages(activity);
+//                List<String> lineResultImages = DirectoryManager.getIrLineResultImages(activity);
 
                 // ground connection images
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivOne, groundConnectionImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivOne, groundConnectionImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivOne, groundConnectionImages.get(2));
 
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivTwo, groundResultImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivTwo, groundResultImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivTwo, groundResultImages.get(2));
+                String equipmentName = report.getEquipment().getEquipmentName();
+                // ground connection images
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivOne, DirectoryManager.getIrAgConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivOne, DirectoryManager.getIrBgConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivOne, DirectoryManager.getIrCgConnectionImages(equipmentName));
+
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionOne.ivTwo,DirectoryManager.getIrAgResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionTwo.ivTwo, DirectoryManager.getIrBgResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.groundConnection.connectionThree.ivTwo, DirectoryManager.getIrCgResultImages(equipmentName));
 
 
                 // line connection images
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivOne, lineConnectionImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivOne, lineConnectionImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivOne, lineConnectionImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivOne,  DirectoryManager.getIrAbConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivOne,  DirectoryManager.getIrBcConnectionImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivOne,  DirectoryManager.getIrCaConnectionImages(equipmentName));
 
 
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivTwo, lineResultImages.get(0));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivTwo, lineResultImages.get(1));
-                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivTwo, lineResultImages.get(2));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionOne.ivTwo, DirectoryManager.getIrAbResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionTwo.ivTwo, DirectoryManager.getIrBcResultImages(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewIrSummary.lineConnection.connectionThree.ivTwo, DirectoryManager.getIrCaResultImages(equipmentName));
 
             }
         } catch (Exception e) {
@@ -331,8 +354,11 @@ public class FragmentOngoingReportDetails extends Fragment {
             circuitBreakerList.clear();
             circuitBreakerList.addAll(report.getEquipment().getCircuitBreakerList());
             crmTestRecyclerAdapter.notifyDataSetChanged();
+
+            Utility.showLog("setCrmData "+report.getEquipment().getCircuitBreakerList());
+
         } catch (Exception e) {
-            Utility.showLog(e.toString());
+            Utility.showLog("setCrmData "+e.toString());
         }
     }
 
@@ -346,4 +372,57 @@ public class FragmentOngoingReportDetails extends Fragment {
         }
     }
 
+
+
+
+    @Override
+    public void onItemClicked(int index) {
+
+    }
+
+    @Override
+    public void onTripEditClicked(List<CircuitBreaker> list, int index) {
+        PopupManager.showEditTripPopupLine(activity,getReport(reportIndex),list,index,this);
+    }
+
+    @Override
+    public void onCrmEditClicked(List<CircuitBreaker> list, int index) {
+        PopupManager.showEditCrmPopupLine(activity,getReport(reportIndex),list,index,this);
+    }
+
+
+    @Override
+    public void onDeleteClicked(int index) {
+
+    }
+
+    @Override
+    public void savedCustomerDetails() {
+        setEquipmentSummary(getReport(reportIndex));
+    }
+
+    @Override
+    public void savedSiteDetails() {
+        setEquipmentSummary(getReport(reportIndex));
+
+    }
+
+    @Override
+    public void savedIrTestData() {
+
+        setIrData(getReport(reportIndex));
+    }
+
+    @Override
+    public void savedCrmTestData() {
+
+        setCrmData(getReport(reportIndex));
+
+    }
+
+    @Override
+    public void savedTripTestData() {
+
+        setTripData(getReport(reportIndex));
+    }
 }

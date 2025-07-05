@@ -85,10 +85,10 @@ public class ReportGenerator {
 
             // Add images section
             String[] dbBoxImages = {
-                    "ReportMate/" + reportName + "/" + Utility.generalImageTemperature + ".jpg",
-                    "ReportMate/" + reportName + "/" + Utility.dbBoxPanelFront + ".jpg",
-                    "ReportMate/" + reportName + "/" + Utility.dbBoxPanelInside + ".jpg",
-                    "ReportMate/" + reportName + "/" + Utility.dbBoxPanelNameplate + ".jpg"
+                    "ReportMate/" + reportName + "/" + DirectoryManager.generalImageTemperature + ".jpg",
+                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelFront + ".jpg",
+                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelInside + ".jpg",
+                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelNameplate + ".jpg"
             };
 
 //                                        Utility.showLog(dbBoxImages[0]);
@@ -106,15 +106,15 @@ public class ReportGenerator {
 
 
 
-            String irLinkBase = "ReportMate/" + reportName + "/" + Utility.IrTest + "/";
+            String irLinkBase = "ReportMate/" + reportName + "/" + DirectoryManager.IrTest + "/";
             String[] irTestImages = {
-                    irLinkBase + Utility.imgAgConnection + ".jpg", irLinkBase + Utility.imgAgResult + ".jpg",
-                    irLinkBase + Utility.imgBgConnection + ".jpg", irLinkBase + Utility.imgBgResult + ".jpg",
-                    irLinkBase + Utility.imgCgConnection + ".jpg", irLinkBase + Utility.imgCgResult + ".jpg",
+                    irLinkBase + DirectoryManager.imgAgConnection + ".jpg", irLinkBase + DirectoryManager.imgAgResult + ".jpg",
+                    irLinkBase + DirectoryManager.imgBgConnection + ".jpg", irLinkBase + DirectoryManager.imgBgResult + ".jpg",
+                    irLinkBase + DirectoryManager.imgCgConnection + ".jpg", irLinkBase + DirectoryManager.imgCgResult + ".jpg",
 
-                    irLinkBase + Utility.imgAbConnection + ".jpg", irLinkBase + Utility.imgAbResult + ".jpg",
-                    irLinkBase + Utility.imgBcConnection + ".jpg", irLinkBase + Utility.imgBcResult + ".jpg",
-                    irLinkBase + Utility.imgCaConnection + ".jpg", irLinkBase + Utility.imgCaResult + ".jpg"
+                    irLinkBase + DirectoryManager.imgAbConnection + ".jpg", irLinkBase + DirectoryManager.imgAbResult + ".jpg",
+                    irLinkBase + DirectoryManager.imgBcConnection + ".jpg", irLinkBase + DirectoryManager.imgBcResult + ".jpg",
+                    irLinkBase + DirectoryManager.imgCaConnection + ".jpg", irLinkBase + DirectoryManager.imgCaResult + ".jpg"
             };
 
             addImageSection(document, "Panel general images", report, dbBoxImages, dbBoxTitles);
@@ -139,14 +139,14 @@ public class ReportGenerator {
                         for (CircuitBreaker circuitBreaker: circuitBreakerList){
 
                             String[] crmImages = new String[2];
-                            List<String> imagesCrm = Utility.getCrmImageForReport(context,circuitBreaker.getName());
+                            List<String> imagesCrm = DirectoryManager.getCrmImageForReport(context,circuitBreaker.getName());
                             crmImages[0] = imagesCrm.get(0);
                             crmImages[1] = imagesCrm.get(1);
 
                             addImageSection(document, circuitBreaker.getName()+", CRM Test Connection and Result Pictures", report, crmImages, crmTestLabels);
 
                             String[] tripImages = new String[4];
-                            List<String> imagesTrip = Utility.getTripImageForReport(context,circuitBreaker.getName());
+                            List<String> imagesTrip = DirectoryManager.getTripImageForReport(context,circuitBreaker.getName());
                             tripImages[0] = imagesTrip.get(0);
                             tripImages[1] = imagesTrip.get(1);
                             tripImages[2] = imagesTrip.get(2);

@@ -79,9 +79,9 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
     }
 
     @Override
-    public void addOngoingReportDetails(Report report) {
+    public void addOngoingReportDetails(int index) {
         FragmentOngoingReportDetails fragment = FragmentOngoingReportDetails.newInstance("","");
-        fragment.setFragmentClickListener(this,report);
+        fragment.setFragmentClickListener(this,index);
         getSupportFragmentManager()
                 .beginTransaction()
                 .add(R.id.fragmentHolder,fragment,"")

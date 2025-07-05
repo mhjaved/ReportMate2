@@ -215,6 +215,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     @Override
     public void addSummaryReportFragment() {
+
         FragmentReportSummary fragment = FragmentReportSummary.newInstance("","");
         fragment.setFragmentClickListener(this);
         getSupportFragmentManager()
@@ -222,13 +223,13 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .add(R.id.fragmentHolder,fragment,"")
                 .addToBackStack("")
                 .commit();
+
     }
 
     @Override
     public void generateReport(Report report) {
         generateReportFile(report);
     }
-
 
     @Override
     public void addFragmentCrmTest(CircuitBreaker circuitBreaker) {
@@ -242,7 +243,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .commit();
 
     }
-
 
     @Override
     public void addFragmentTripTest(CircuitBreaker circuitBreaker) {

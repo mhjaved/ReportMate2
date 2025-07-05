@@ -19,6 +19,7 @@ import com.hasanjaved.reportmate.databinding.FragmentCrmTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -180,12 +181,12 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
         binding.imgCameraConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.ivShowImageConnection,
-                        Utility.imgCrmConnection, Utility.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
+                        DirectoryManager.imgCrmConnection, DirectoryManager.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
         );
 
         binding.imgCameraResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.ivShowImageResult,
-                        Utility.imgCrmResult, Utility.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
+                        DirectoryManager.imgCrmResult, DirectoryManager.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
         );
 
     }

@@ -20,6 +20,7 @@ import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseTwoBinding;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.PopupManager;
 import com.hasanjaved.reportmate.utility.Utility;
@@ -109,9 +110,12 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         if (report != null) {
             try {
 
-                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionSiteDetails.ivSiteDetails, Utility.getTemperatureImage(activity));
-                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivPanelImage, Utility.getPanelImage(activity));
-                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivDbBoxCircuitImage, Utility.getDbBoxCircuitImage(activity));
+                String equipmentName = Utility.getReport(activity).getEquipment().getEquipmentName();
+
+
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionSiteDetails.ivSiteDetails, DirectoryManager.getTemperatureImage(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivPanelImage, DirectoryManager.getPanelImage(equipmentName));
+                ImageLoader.showImageFromStorage(activity, binding.viewOne.sectionEquipmentDetails.ivDbBoxCircuitImage, DirectoryManager.getDbBoxCircuitImage(equipmentName));
 
 
                 binding.viewOne.etEquipmentName.setText(report.getEquipment().getEquipmentName());
@@ -452,10 +456,13 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         saveCircuitListAndShowPageTwo();
     }
 
-
-
     @Override
     public void cancelled() {
+
+    }
+
+    @Override
+    public void saved() {
 
     }
 }

@@ -1,0 +1,234 @@
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="16dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="4dp"
+    android:backgroundTint="@color/white"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Title -->
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/edit_inputs"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                />
+
+            <ImageView
+                android:id="@+id/ivCancel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/ic_close"
+                android:contentDescription="@string/demo_description"
+                />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <!-- Subtitle -->
+        <TextView
+            android:id="@+id/subtitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="The process will continue to perform as your inputs."
+            android:textSize="14sp"
+            android:paddingTop="4dp"
+            android:paddingBottom="16dp"
+            android:textColor="@color/text_black"
+            />
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvOwnerLabel"
+                android:layout_width="@dimen/edit_customer_margin_end"
+                android:layout_height="wrap_content"
+                android:text="@string/owner_"
+                android:textSize="14sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <EditText
+                android:id="@+id/etOwner"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="3"
+                style="@style/editTextStyle"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintStart_toEndOf="@id/tvOwnerLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvOwnerLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvOwnerLabel"
+                android:layout_marginStart="8dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvLastDateLabel"
+                android:layout_width="@dimen/edit_customer_margin_end"
+                android:layout_height="wrap_content"
+                android:text="@string/date_of_last_inspection_"
+                android:textSize="14sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <EditText
+                android:id="@+id/etLastDate"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/editTextStyle"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintStart_toEndOf="@id/tvLastDateLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvLastDateLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvLastDateLabel"
+                android:layout_marginStart="8dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp">
+
+            <TextView
+                android:id="@+id/tvLastReportLabel"
+                android:layout_width="@dimen/edit_customer_margin_end"
+                android:layout_height="wrap_content"
+                android:text="@string/last_report_no"
+                android:textSize="14sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <EditText
+                android:id="@+id/etLastReport"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/editTextStyle"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintStart_toEndOf="@id/tvLastReportLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvLastReportLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvLastReportLabel"
+                android:layout_marginStart="8dp" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvAirTempLabel"
+                android:layout_width="@dimen/edit_customer_margin_end"
+                android:layout_height="wrap_content"
+                android:text="@string/air_temp_"
+                android:textSize="14sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <EditText
+                android:id="@+id/etAirTemp"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/editTextStyle"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintStart_toEndOf="@id/tvAirTempLabel"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvAirTempLabel"
+                app:layout_constraintBottom_toBottomOf="@id/tvAirTempLabel"
+                android:layout_marginStart="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp">
+
+            <TextView
+                android:id="@+id/tvRelativeHumidity"
+                android:layout_width="@dimen/edit_customer_margin_end"
+                android:layout_height="wrap_content"
+                android:text="@string/rel_humidity"
+                android:textSize="14sp"
+                android:textColor="@color/text_black"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+            <EditText
+                android:id="@+id/etRelativeHumidity"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                style="@style/editTextStyle"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:background="@drawable/bg_edit_text"
+                app:layout_constraintStart_toEndOf="@id/tvRelativeHumidity"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvRelativeHumidity"
+                app:layout_constraintBottom_toBottomOf="@id/tvRelativeHumidity"
+                android:layout_marginStart="8dp" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <!-- Save Button -->
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Save the Changes"
+            android:backgroundTint="@color/black"
+            android:textColor="@android:color/white"
+            android:drawableEnd="@drawable/ic_checked"
+            android:drawableTint="@color/white"
+            android:background="@drawable/bg_button_next"
+            />
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

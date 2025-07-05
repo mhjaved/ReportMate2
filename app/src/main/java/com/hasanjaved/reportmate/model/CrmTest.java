@@ -78,8 +78,6 @@ public class CrmTest {
     @Override
     public String toString() {
         return "CrmTest{" +
-                "connectionImage='" + connectionImage + '\'' +
-                ", resultImage='" + resultImage + '\'' +
                 ", rResValue='" + rResValue + '\'' +
                 ", rResUnit='" + rResUnit + '\'' +
                 ", yResValue='" + yResValue + '\'' +

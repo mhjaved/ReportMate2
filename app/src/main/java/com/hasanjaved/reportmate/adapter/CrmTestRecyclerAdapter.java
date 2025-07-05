@@ -14,6 +14,7 @@ import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.CrmTest;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -74,7 +75,7 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
 
         int currentPosition = position;
 
-        List<String> images = Utility.getCrmImage(context,list.get(position).getName());
+        List<String> images = DirectoryManager.getCrmImage(context,list.get(position).getName());
 
         holder.tvCircuitName.setText(list.get(currentPosition).getName());
 

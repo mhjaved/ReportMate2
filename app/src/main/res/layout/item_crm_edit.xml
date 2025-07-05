@@ -17,18 +17,29 @@
             android:id="@+id/tvCircuitName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text=""
-            android:textColor="@color/text_black"
+            android:text="ag_connection"
+            android:textStyle="bold"
             android:textSize="16sp"
-            android:textStyle="bold" />
+            android:textColor="@color/text_black" />
 
         <ImageView
             android:id="@+id/ivArrow"
             android:layout_width="20dp"
             android:layout_height="20dp"
+            android:layout_marginEnd="@dimen/space_12"
+            android:src="@drawable/ic_arrow_up"
+            android:layout_toStartOf="@+id/ivEdit"
+            />
+
+        <ImageView
+            android:id="@+id/ivEdit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/space_12"
-            android:src="@drawable/ic_arrow_up" />
+            android:contentDescription="@string/demo_description"
+            android:src="@drawable/ic_edit" />
+
     </RelativeLayout>
 
     <net.cachapa.expandablelayout.ExpandableLayout
@@ -49,12 +60,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="@string/current_injector_connection_img"
+                android:text="@string/crm_test_connection_img"
                 android:textColor="@color/text_black"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/ivCurrentConnection"
+                android:id="@+id/ivConnection"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="@dimen/space_8"
@@ -67,143 +78,57 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:paddingTop="8dp"
-                android:text="Injected Current Img"
+                android:text="@string/crm_test_result_img"
                 android:textColor="#000000"
                 android:textStyle="bold" />
 
             <ImageView
-                android:id="@+id/ivInjectedCurrent"
+                android:id="@+id/ivResult"
                 android:layout_width="300dp"
                 android:layout_height="300dp"
                 android:layout_marginTop="@dimen/space_8"
                 android:adjustViewBounds="true"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_demo_temp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/test_amplitude"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTestAmplitude"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/a_g"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000000" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/space_8"
-                android:layout_marginBottom="@dimen/space_8"
-                android:background="@color/line_gray" />
-
-<!--            <TextView-->
-<!--                android:layout_width="wrap_content"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:paddingTop="8dp"-->
-<!--                android:text="Trip Time Connecting Img"-->
-<!--                android:textColor="@color/text_black"-->
-<!--                android:textStyle="bold" />-->
-
-<!--            <ImageView-->
-<!--                android:id="@+id/ivTripTimeConnection"-->
-<!--                android:layout_width="300dp"-->
-<!--                android:layout_height="300dp"-->
-<!--                android:layout_marginTop="@dimen/space_8"-->
-<!--                android:adjustViewBounds="true"-->
-<!--                android:scaleType="centerCrop"-->
-<!--                android:src="@drawable/img_demo_temp" />-->
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="8dp"
-                android:text="Trip Time Img"
-                android:textColor="#000000"
-                android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/ivTripTime"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="@dimen/space_8"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_demo_temp" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
-                android:orientation="horizontal"
-                android:paddingBottom="4dp">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/trip_time"
-                    android:textColor="#000000"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tvTripTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="2"
-                    android:text="@string/a_g"
-                    android:textAlignment="viewEnd"
-                    android:textColor="#000000" />
-
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:layout_marginTop="@dimen/space_8"
-                android:layout_marginBottom="@dimen/space_8"
-                android:background="@color/line_gray" />
 
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/space_8"
                 android:paddingTop="8dp"
-                android:text="After Trip Img"
+                android:text="@string/contact_resis"
                 android:textColor="#000000"
                 android:textStyle="bold" />
-
-            <ImageView
-                android:id="@+id/ivAfterTripTime"
-                android:layout_width="300dp"
-                android:layout_height="300dp"
-                android:layout_marginTop="@dimen/space_8"
-                android:adjustViewBounds="true"
-                android:scaleType="centerCrop"
-                android:src="@drawable/img_demo_temp" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/space_8"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:id="@+id/tvLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/r_res"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvRResValue"                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/a_g"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000000" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:paddingBottom="4dp">
 
@@ -211,12 +136,12 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="@string/instant_trip"
+                    android:text="@string/y_res"
                     android:textColor="#000000"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/tvInstantTrip"
+                    android:id="@+id/tvYResValue"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="2"
@@ -224,8 +149,33 @@
                     android:textAlignment="viewEnd"
                     android:textColor="#000000" />
 
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingBottom="4dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="@string/b_res"
+                    android:textColor="#000000"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tvBResValue"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="2"
+                    android:text="@string/a_g"
+                    android:textAlignment="viewEnd"
+                    android:textColor="#000000" />
 
             </LinearLayout>
+
 
         </LinearLayout>
 

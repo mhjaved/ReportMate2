@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.hasanjaved.reportmate.DesignFragment;
 import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
 import com.hasanjaved.reportmate.OcrTestFragment;
@@ -48,7 +49,9 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 //                "/storage/emulated/0/Android/data/com.hasanjaved.reportmate/files/Documents/ReportMate",
 //                "projectOne");
 
-        Utility.createBaseFolder(this,Utility.BASE_FOLDER_NAME);
+//        DirectoryManager.createIrFolder(this,"j test");
+
+        DirectoryManager.createBaseFolder(this,Utility.BASE_FOLDER_NAME);
 //        MediaStoreUtils.createFolderInDocuments(this,Utility.BASE_FOLDER_NAME);
 
 //        MediaStoreUtils.createSubFolderInDocuments(this,"ReportMate",Utility.getReport(this).getProjectNo());

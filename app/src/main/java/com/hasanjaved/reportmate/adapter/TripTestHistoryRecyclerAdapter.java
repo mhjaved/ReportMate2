@@ -11,6 +11,7 @@ import android.widget.TextView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.hasanjaved.reportmate.R;
+import com.hasanjaved.reportmate.listeners.EditRecyclerViewClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.TripTest;
@@ -22,12 +23,12 @@ import net.cachapa.expandablelayout.ExpandableLayout;
 
 import java.util.List;
 
-public class TripTestRecyclerAdapter extends RecyclerView.Adapter<TripTestRecyclerAdapter.MyViewHolder> {
+public class TripTestHistoryRecyclerAdapter extends RecyclerView.Adapter<TripTestHistoryRecyclerAdapter.MyViewHolder> {
 
 
     private List<CircuitBreaker> list;
     private Context context;
-    private RecyclerViewClickListener recyclerViewClickListener;
+    private EditRecyclerViewClickListener recyclerViewClickListener;
 
 
     private int selectedItem;
@@ -35,7 +36,7 @@ public class TripTestRecyclerAdapter extends RecyclerView.Adapter<TripTestRecycl
 
     private static int lastClickedPosition = -1;
 
-    public TripTestRecyclerAdapter(Context context, List<CircuitBreaker> list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
+    public TripTestHistoryRecyclerAdapter(Context context, List<CircuitBreaker> list, int selectedItem, EditRecyclerViewClickListener recyclerViewClickListener) {
         this.context = context;
         this.list = list;
         this.selectedItem = selectedItem;
@@ -68,7 +69,7 @@ public class TripTestRecyclerAdapter extends RecyclerView.Adapter<TripTestRecycl
         View itemView;
 
         itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_trip, parent, false);
+                .inflate(R.layout.item_trip_edit, parent, false);
         return new MyViewHolder(itemView);
 
     }
@@ -94,8 +95,10 @@ public class TripTestRecyclerAdapter extends RecyclerView.Adapter<TripTestRecycl
 
         }catch (Exception e){
             Utility.showLog(getClass().getSimpleName()+e);
-
         }
+
+
+        holder.ivEdit.setOnClickListener(view -> recyclerViewClickListener.onTripEditClicked(list,currentPosition));
 
 
         holder.rl.setOnClickListener(view -> {
@@ -123,13 +126,15 @@ public class TripTestRecyclerAdapter extends RecyclerView.Adapter<TripTestRecycl
         public RelativeLayout rl;
         public ExpandableLayout expand;
         public ImageView ivArrow, ivCurrentConnection, ivInjectedCurrent,
-                ivTripTimeConnection, ivTripTime, ivAfterTripTime;
+                ivTripTimeConnection, ivTripTime, ivAfterTripTime,
+                ivEdit;
         public TextView tvCircuitName, tvTestAmplitude, tvTripTime, tvInstantTrip;
 
         public MyViewHolder(View view) {
             super(view);
 
             rl = view.findViewById(R.id.rl);
+            ivEdit = view.findViewById(R.id.ivEdit);
             expand = view.findViewById(R.id.expand);
             ivArrow = view.findViewById(R.id.ivArrow);
             tvCircuitName = view.findViewById(R.id.tvCircuitName);

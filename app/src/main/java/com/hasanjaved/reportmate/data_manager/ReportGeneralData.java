@@ -6,31 +6,13 @@ import com.hasanjaved.reportmate.model.Equipment;
 import com.hasanjaved.reportmate.model.ManufacturerCurveDetails;
 import com.hasanjaved.reportmate.model.PanelBoard;
 import com.hasanjaved.reportmate.model.Report;
-import com.hasanjaved.reportmate.utility.MediaStoreUtils;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.Utility;
 import java.util.List;
 
 public class ReportGeneralData {
 
     public static void savePageOneData(Context context,String employeeId, String testDate, String projectNumber) {
-
-        Utility.createProjectFolders(context,projectNumber);
-//        if ()
-//        String folderLocation = FolderManager.createFolder(context,projectNumber);
-
-//        String baseFolderLink = FolderManager.getLinkIfFolderExist(context,Utility.BASE_FOLDER_NAME);
-//        String projectLink = null;
-//
-//        if (baseFolderLink==null)
-//            baseFolderLink = FolderManager.createBaseFolder(context);
-//        if (baseFolderLink!=null){
-//            projectLink = FolderManager.checkFolderInDirectory(context,baseFolderLink,projectNumber);
-//            if (projectLink!=null){
-//                Utility.showLog(projectLink);
-//            }else {
-//                projectLink =  FolderManager.createFolderInDirectory(context,baseFolderLink,projectNumber);
-//            }
-//        }
 
         Report report =  Utility.getReport(context);
 
@@ -64,6 +46,7 @@ public class ReportGeneralData {
     public static void savePageThreeData(Context context,String equipmentName, String equipmentLocation,
                                          String ownerIdentification, String dateOfLastInspection, String lastReportNumber) {
 
+
         Report report = Utility.getReport(context);
 
         if (report!=null){
@@ -71,6 +54,7 @@ public class ReportGeneralData {
 
             if (equipment==null)
                 equipment = new Equipment();
+
             equipment.setEquipmentName(equipmentName);
             equipment.setEquipmentLocation(equipmentLocation);
             report.setEquipment(equipment);
@@ -79,7 +63,7 @@ public class ReportGeneralData {
             report.setDateOfLastInspection(dateOfLastInspection);
             report.setLastInspectionReportNo(lastReportNumber);
 
-            createEquipmentFolder(context,report.getProjectNo(),equipmentName);
+            DirectoryManager.createProjectEquipmentFolders(context,equipmentName);
 
             report.setOwnerIdentification(ownerIdentification);
 
@@ -169,9 +153,9 @@ public class ReportGeneralData {
 
     }
 
-    private static void createEquipmentFolder(Context context, String projectNo, String equipmentName) {
-        MediaStoreUtils.createSubFolderInDocuments(context,Utility.BASE_FOLDER_NAME+"/"+projectNo,equipmentName);
-    }
+//    private static void createEquipmentFolder(Context context, String projectNo, String equipmentName) {
+//        MediaStoreUtils.createSubFolderInDocuments(context,Utility.BASE_FOLDER_NAME+"/"+projectNo,equipmentName);
+//    }
 
     public static void saveCircuitList(Context context,List<CircuitBreaker> circuitBreakerList){
         try {
@@ -182,7 +166,7 @@ public class ReportGeneralData {
             report.setEquipment(equipment);
             Utility.saveReport(context,report);
 
-            createCircuitFolders(context,circuitBreakerList);
+            DirectoryManager.createCircuitFolders(context,circuitBreakerList);
 
         }catch (Exception e){
             Utility.showLog("Exception "+e);
@@ -190,50 +174,6 @@ public class ReportGeneralData {
 
     }
 
-    private static void createCircuitFolders(Context context, List<CircuitBreaker> circuitBreakerList) {
-        Report report = Utility.getReport(context);
-        if (report!=null)
-            if (report.getProjectNo()!=null)
-                if (report.getEquipment().getEquipmentName()!=null){
-                    for (CircuitBreaker circuitBreaker: circuitBreakerList){
-                        MediaStoreUtils.createSubFolderInDocuments(context,
-                                Utility.BASE_FOLDER_NAME+"/"+report.getProjectNo()+"/"+report.getEquipment().getEquipmentName(),
-                                circuitBreaker.getName());
-                        createTripAndCrmFolder(context,
-                                Utility.BASE_FOLDER_NAME+"/"+report.getProjectNo()+"/"+report.getEquipment().getEquipmentName()+"/"+ circuitBreaker.getName());
-                    }
-                }
-
-    }
-
-    private static void createTripAndCrmFolder(Context context, String s) {
-        MediaStoreUtils.createSubFolderInDocuments(context,s,Utility.TRIP_TEST);
-        MediaStoreUtils.createSubFolderInDocuments(context,s,Utility.CRM_TEST);
-    }
-
-//    public static void savePageFourData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
-//
-//    public static void savePageFiveData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
 
 
-
-//    public static void savePageData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
-//
-//    public static void savePageData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
-//
-//    public static void savePageData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
-//
-//    public static void savePageData(String, String, String, String, String, String, String, String, String, String) {
-//
-//    }
 }

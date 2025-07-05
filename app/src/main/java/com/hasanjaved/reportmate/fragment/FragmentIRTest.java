@@ -20,6 +20,7 @@ import com.hasanjaved.reportmate.databinding.FragmentIrTestBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
+import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
 import com.hasanjaved.reportmate.utility.Utility;
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -128,39 +129,6 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
         binding.viewTwo.ivBack.setOnClickListener(view ->
                 showPage(viewOne, viewTwo));
 
-//        binding.viewThree.ivBack.setOnClickListener(view ->
-//                showPage(viewTwo, viewOne,
-//                        viewThree, viewFour));
-
-//        binding.viewFour.ivBack.setOnClickListener(view ->
-//                showPage(viewThree, viewTwo, viewOne,
-//                        viewFour));
-
-//        binding.viewFour.tvCrmTrip.setOnClickListener(view -> {
-//
-//                    binding.viewFour.tvCrmTrip.setContentDescription(getString(R.string.selected));
-//                    binding.viewFour.tvIr.setContentDescription(getString(R.string.not_selected));
-//
-//                    binding.viewFour.tvCrmTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
-//                    binding.viewFour.tvIr.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
-//
-//        setViewFourNextButtonStatus();
-//        }
-//        );
-
-//        binding.viewFour.tvIr.setOnClickListener(view -> {
-//
-//            binding.viewFour.tvIr.setContentDescription(getString(R.string.selected));
-//            binding.viewFour.tvCrmTrip.setContentDescription(getString(R.string.not_selected));
-//
-//                    binding.viewFour.tvIr.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_item_circuit_list_selected));
-//                    binding.viewFour.tvCrmTrip.setBackground(ContextCompat.getDrawable(activity, R.drawable.bg_edit_text));
-//
-//                    setViewFourNextButtonStatus();
-//
-//                }
-//        );
-
 
         binding.viewOne.rlAg.setOnClickListener(view ->
                 setExpandView(binding.viewOne.expandAg, binding.viewOne.ivArrowAg)
@@ -213,79 +181,85 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
 
     private void setPageOneCamera(){
         //------------------------ set camera
+
+        // -------------------------------------  AG
         binding.viewOne.imgCameraAgConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageAgConnection,
-                        Utility.imgAgConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgAgConnection, DirectoryManager.getIrFolderLinkAG( Objects.requireNonNull(Utility.getReport(activity))))
         );
-
 
         binding.viewOne.imgCameraAgResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageAgResult,
-                        Utility.imgAgResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgAgResult, DirectoryManager.getIrFolderLinkAG(Objects.requireNonNull(Utility.getReport(activity))))
         );
 
 
-
+        // -------------------------------------  BG
         binding.viewOne.imgCameraBgConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageBgConnection,
-                        Utility.imgBgConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgBgConnection, DirectoryManager.getIrFolderLinkBG( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
         binding.viewOne.imgCameraBgResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageBgResult,
-                        Utility.imgBgResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgBgResult, DirectoryManager.getIrFolderLinkBG( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
 
-
+        // -------------------------------------  CG
 
         binding.viewOne.imgCameraCgConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageCgConnection,
-                        Utility.imgCgConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgCgConnection, DirectoryManager.getIrFolderLinkCG( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
         binding.viewOne.imgCameraCgResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewOne.ivShowImageCgResult,
-                        Utility.imgCgResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgCgResult, DirectoryManager.getIrFolderLinkCG( Objects.requireNonNull(Utility.getReport(activity))))
         );
+
 
     }
 
     private void setPageTwoCamera(){
         //------------------------ set camera
+        // -------------------------------------  AB
+
         binding.viewTwo.imgCameraAbConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageAbConnection,
-                        Utility.imgAbConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgAbConnection, DirectoryManager.getIrFolderLinkAB( Objects.requireNonNull(Utility.getReport(activity))))
         );
-
 
         binding.viewTwo.imgCameraAbResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageAbResult,
-                        Utility.imgAbResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgAbResult, DirectoryManager.getIrFolderLinkAB( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
 
 
+        // -------------------------------------  BC
+
         binding.viewTwo.imgCameraBcConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageBcConnection,
-                        Utility.imgBcConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgBcConnection, DirectoryManager.getIrFolderLinkBC( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
         binding.viewTwo.imgCameraBcResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageBcResult,
-                        Utility.imgBcResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgBcResult, DirectoryManager.getIrFolderLinkBC( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
 
 
+        // -------------------------------------  CA
         binding.viewTwo.imgCameraCaConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageCaConnection,
-                        Utility.imgCaConnection, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgCaConnection, DirectoryManager.getIrFolderLinkCA( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
         binding.viewTwo.imgCameraCaResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewTwo.ivShowImageCaResult,
-                        Utility.imgCaResult, Utility.getIrFolderLink(activity, Objects.requireNonNull(Utility.getReport(activity))))
+                        DirectoryManager.imgCaResult, DirectoryManager.getIrFolderLinkCA( Objects.requireNonNull(Utility.getReport(activity))))
         );
 
     }
