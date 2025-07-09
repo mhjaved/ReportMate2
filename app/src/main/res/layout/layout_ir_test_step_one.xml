@@ -726,6 +726,7 @@
             android:text="@string/cancel"
             android:textColor="@color/theme_color"
             app:iconGravity="textEnd"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
@@ -743,7 +744,9 @@
             app:icon="@drawable/ic_arrow_right"
             app:iconGravity="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

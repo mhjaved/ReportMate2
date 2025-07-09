@@ -58,6 +58,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/space_16"
                 android:layout_marginEnd="@dimen/space_16"
+                android:padding="@dimen/space_16"
                 >
                 <!-- Company Name -->
                 <TextView
@@ -66,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/client_name"
                     android:textColor="@color/text_black"
-                    android:textStyle="normal"
+                    android:textStyle="bold"
                     android:maxLines="1"
                     android:maxLength="18"
                     android:textSize="16sp"
@@ -86,6 +87,7 @@
                     android:maxLength="18"
                     android:layout_marginStart="@dimen/space_24"
                     android:maxLines="1"
+                    android:textStyle="bold"
                     app:layout_constraintStart_toEndOf="@+id/tvProjectName"
                     app:layout_constraintTop_toTopOf="parent"
                     app:layout_constraintBottom_toBottomOf="parent" />
@@ -93,7 +95,9 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvOngoing"
-                android:layout_margin="@dimen/space_16"
+                android:layout_marginStart="@dimen/space_16"
+                android:layout_marginEnd="@dimen/space_16"
+                android:layout_marginTop="@dimen/space_8"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 tools:listitem="@layout/item_history"

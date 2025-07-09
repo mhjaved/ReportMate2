@@ -131,6 +131,7 @@
             android:layout_margin="16dp"
             android:background="@drawable/bg_button_border"
             android:text="@string/cancel"
+            android:visibility="gone"
             android:textColor="@color/theme_color"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"

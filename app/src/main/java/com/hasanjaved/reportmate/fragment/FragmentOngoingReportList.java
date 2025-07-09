@@ -23,7 +23,6 @@ import java.util.List;
 
 public class FragmentOngoingReportList extends Fragment implements RecyclerViewClickListener {
 
-
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
     private HistoryFragmentClickListener fragmentClickListener;
@@ -120,6 +119,7 @@ public class FragmentOngoingReportList extends Fragment implements RecyclerViewC
 
         if (ongoingReportList.get(index)!=null)
             fragmentClickListener.addOngoingReportDetails(index);
+
     }
 
     @Override

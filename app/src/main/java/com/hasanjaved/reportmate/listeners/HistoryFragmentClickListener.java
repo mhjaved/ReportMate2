@@ -9,6 +9,12 @@ public interface HistoryFragmentClickListener {
 
     void addOngoingReportDetails(int index);
 
-    void addHistoryReportDetails(Report report);
+    void addHistoryReportDetails(int index);
+
+    void generateReport(Report report);
+
+
+    void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder);
+
 
 }

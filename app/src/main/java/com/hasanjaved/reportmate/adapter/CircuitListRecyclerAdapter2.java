@@ -83,7 +83,7 @@ public class CircuitListRecyclerAdapter2 extends RecyclerView.Adapter<CircuitLis
             holder.tvCrm.setVisibility(View.VISIBLE);
         else holder.tvCrm.setVisibility(View.GONE);
 
-        if (Utility.checkTripForCircuit(context,list.get(currentPosition)))
+        if (Utility.checkTripForCircuit(list.get(currentPosition).getEquipmentName(),list.get(currentPosition)))
             holder.tvTrip.setVisibility(View.VISIBLE);
         else holder.tvTrip.setVisibility(View.GONE);
 

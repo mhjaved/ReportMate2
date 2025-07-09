@@ -87,7 +87,7 @@ public class HomeFragment extends Fragment {
                 homeFragmentClickListener.onPreviousReportHistoryClicked();
         });
 
-        binding.tvViewAll.setOnClickListener(view1 -> {
+        binding.llOngoingReport.setOnClickListener(view1 -> {
 //            showYesNoPopup();
             if (homeFragmentClickListener != null)
                 homeFragmentClickListener.onOngoingReportClicked();

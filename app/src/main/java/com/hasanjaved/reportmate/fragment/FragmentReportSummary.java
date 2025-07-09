@@ -44,6 +44,8 @@ public class FragmentReportSummary extends Fragment {
 
     private FragmentReportSummaryBinding binding;
     List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
+    private String equipmentName="" ;
+
     private LinearLayoutManager linearLayoutManager;
     private RecyclerView rvCrmList;
     private CrmTestRecyclerAdapter crmTestRecyclerAdapter;
@@ -335,6 +337,7 @@ public class FragmentReportSummary extends Fragment {
     private void setCrmData(Report report) {
         try{
             circuitBreakerList.clear();
+            equipmentName= report.getEquipment().getEquipmentName();
             circuitBreakerList.addAll(report.getEquipment().getCircuitBreakerList());
             crmTestRecyclerAdapter.notifyDataSetChanged();
         }
@@ -345,6 +348,7 @@ public class FragmentReportSummary extends Fragment {
     private void setTripData(Report report) {
         try{
             circuitBreakerList.clear();
+            equipmentName= report.getEquipment().getEquipmentName();
             circuitBreakerList.addAll(report.getEquipment().getCircuitBreakerList());
             tripTestRecyclerAdapter.notifyDataSetChanged();
         }

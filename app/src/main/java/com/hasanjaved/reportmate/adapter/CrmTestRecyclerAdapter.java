@@ -31,11 +31,13 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
     private int selectedItem;
 
     private static int lastClickedPosition = -1;
+    private String equipmentName;
 
     public CrmTestRecyclerAdapter(Context context, List<CircuitBreaker> list, int selectedItem, RecyclerViewClickListener recyclerViewClickListener) {
         this.context = context;
         this.list = list;
         this.selectedItem = selectedItem;
+        this.equipmentName = equipmentName;
         this.recyclerViewClickListener = recyclerViewClickListener;
     }
 
@@ -75,7 +77,7 @@ public class CrmTestRecyclerAdapter extends RecyclerView.Adapter<CrmTestRecycler
 
         int currentPosition = position;
 
-        List<String> images = DirectoryManager.getCrmImage(context,list.get(position).getName());
+        List<String> images = DirectoryManager.getCrmImage(list.get(position).getEquipmentName(),list.get(position).getName());
 
         holder.tvCircuitName.setText(list.get(currentPosition).getName());
 

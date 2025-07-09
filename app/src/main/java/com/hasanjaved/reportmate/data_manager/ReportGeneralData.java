@@ -94,6 +94,30 @@ public class ReportGeneralData {
         }
 
     }
+
+
+    // save ongoing report
+    public static void saveCircuitList(Context context,List<CircuitBreaker> circuitBreakerList){
+        try {
+
+            Report report = Utility.getReport(context);
+            Equipment equipment = report.getEquipment();
+            equipment.setCircuitBreakerList(circuitBreakerList);
+            report.setEquipment(equipment);
+            Utility.saveReport(context,report);
+
+            DirectoryManager.createCircuitFolders(context,circuitBreakerList);
+
+            //-----------------------------------------------------------------
+            Utility.saveReportOngoing(context, Utility.getReport(context));
+
+        }catch (Exception e){
+            Utility.showLog("Exception "+e);
+        }
+
+    }
+    // save ongoing report
+
     public static void savePanelBoardData(Context context,String testVoltage,String modelNumber,
                                           String catalog,String amps, String voltage) {
 
@@ -115,9 +139,15 @@ public class ReportGeneralData {
 
             Utility.saveReport(context,report);
             Utility.showLog(report.toString());
+
+            //-----------------------------------------------------------------
+            Utility.saveReportOngoing(context, Utility.getReport(context));
+
         }
 
     }
+    // save ongoing report
+
     public static void saveManufacturerCurveDetailsData(Context context,
                                                         String mfgOne,String curveOne,String curveRangeOne,
                                                         String mfgTwo,String curveTwo,String curveRangeTwo,
@@ -149,30 +179,19 @@ public class ReportGeneralData {
 
             Utility.saveReport(context,report);
             Utility.showLog(report.toString());
+
+            //-----------------------------------------------------------------
+            Utility.saveReportOngoing(context, Utility.getReport(context));
         }
 
     }
+
+
 
 //    private static void createEquipmentFolder(Context context, String projectNo, String equipmentName) {
 //        MediaStoreUtils.createSubFolderInDocuments(context,Utility.BASE_FOLDER_NAME+"/"+projectNo,equipmentName);
 //    }
 
-    public static void saveCircuitList(Context context,List<CircuitBreaker> circuitBreakerList){
-        try {
-
-            Report report = Utility.getReport(context);
-            Equipment equipment = report.getEquipment();
-            equipment.setCircuitBreakerList(circuitBreakerList);
-            report.setEquipment(equipment);
-            Utility.saveReport(context,report);
-
-            DirectoryManager.createCircuitFolders(context,circuitBreakerList);
-
-        }catch (Exception e){
-            Utility.showLog("Exception "+e);
-        }
-
-    }
 
 
 

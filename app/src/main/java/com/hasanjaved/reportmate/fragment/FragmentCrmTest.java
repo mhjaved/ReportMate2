@@ -115,6 +115,7 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
             closeFragment();
             fragmentClickListener.checkTestStatus();
         });
+
         binding.sp1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
@@ -128,7 +129,6 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
             }
         });
-
 
         binding.sp2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -181,12 +181,12 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
         binding.imgCameraConnection.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.ivShowImageConnection,
-                        DirectoryManager.imgCrmConnection, DirectoryManager.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
+                        DirectoryManager.imgCrmConnection, DirectoryManager.getCrmFolderLink(circuitBreaker))
         );
 
         binding.imgCameraResult.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.ivShowImageResult,
-                        DirectoryManager.imgCrmResult, DirectoryManager.getCrmFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker))
+                        DirectoryManager.imgCrmResult, DirectoryManager.getCrmFolderLink(circuitBreaker))
         );
 
     }

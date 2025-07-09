@@ -440,6 +440,7 @@
             android:drawableEnd="@drawable/ic_demo_icon_2"
             android:paddingHorizontal="24dp"
             android:text="@string/cancel"
+            android:visibility="gone"
             android:textColor="@color/theme_color"
             app:iconGravity="textEnd"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -458,6 +459,7 @@
             app:iconGravity="textEnd"
             android:drawableTint="@color/text_white"
             android:textColor="@color/text_white"
+            app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

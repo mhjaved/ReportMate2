@@ -1,5 +1,7 @@
 package com.hasanjaved.reportmate.listeners;
 
+import android.widget.ImageView;
+
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.CrmTest;
 import com.hasanjaved.reportmate.model.TripTest;
@@ -11,5 +13,6 @@ public interface EditRecyclerViewClickListener {
     void onTripEditClicked(List<CircuitBreaker> list, int index );
     void onCrmEditClicked(List<CircuitBreaker> list, int index );
     void onDeleteClicked(int index);
+    void onImageClicked(ImageView imageView,String imageName, String imageLocation);
 
 }

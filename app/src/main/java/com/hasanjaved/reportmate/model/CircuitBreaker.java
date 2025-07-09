@@ -5,6 +5,7 @@ public class CircuitBreaker {
 
     private String circuitId;
     private String name;
+    private String equipmentName;
     private String size;
     private TripTest tripTest;
     private CrmTest crmTest;
@@ -49,11 +50,20 @@ public class CircuitBreaker {
         this.crmTest = crmTest;
     }
 
+    public String getEquipmentName() {
+        return equipmentName;
+    }
+
+    public void setEquipmentName(String equipmentName) {
+        this.equipmentName = equipmentName;
+    }
+
     @Override
     public String toString() {
         return "CircuitBreaker{" +
                 "circuitId='" + circuitId + '\'' +
                 ", name='" + name + '\'' +
+                ", equipmentName='" + equipmentName + '\'' +
                 ", size='" + size + '\'' +
                 ", tripTest=" + tripTest +
                 ", crmTest=" + crmTest +

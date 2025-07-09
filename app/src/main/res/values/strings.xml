@@ -185,7 +185,11 @@
     <string name="project_name">Project Name</string>
     <string name="confirm_action">Confirm Action</string>
     <string name="are_you_sure_you_want_to_save_circuits">Are you sure you want to save circuits?</string>
+    <string name="are_you_sure_you_want_to_generate_report">Are you sure you want generate report?</string>
     <string name="report_saved_to_ongoing_list">Report saved to ongoing list</string>
+    <string name="report_is_generating">Report is generating</string>
     <string name="customer_">Customer:</string>
+    <string name="add_to_history">Add To History</string>
+    <string name="img_of_the_panel_grounding">Img of the Panel Grounding</string>
 
 </resources>

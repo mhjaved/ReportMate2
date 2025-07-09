@@ -65,6 +65,45 @@ public class PopupManager {
         // Show dialog
         dialog.show();
     }
+    public static void showConfirmGenerateReport(Context context, ConfirmGenerateReport  confirmGenerateReport,Report report) {
+        // Inflate custom layout
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View customView = inflater.inflate(R.layout.popup_layout, null);
+
+        // Get references to views
+        TextView titleText = customView.findViewById(R.id.popup_title);
+        TextView messageText = customView.findViewById(R.id.popup_message);
+        Button yesButton = customView.findViewById(R.id.btn_yes);
+        Button noButton = customView.findViewById(R.id.btn_no);
+
+        // Create dialog
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(customView)
+                .setCancelable(true)
+                .create();
+
+        // Set content
+        titleText.setText(R.string.confirm_action);
+        messageText.setText(R.string.are_you_sure_you_want_to_generate_report);
+
+        // Set button actions
+        yesButton.setOnClickListener(v -> {
+            // YES action
+            Toast.makeText(context, R.string.report_is_generating, Toast.LENGTH_SHORT).show();
+            confirmGenerateReport.confirmed(report);
+            dialog.dismiss();
+        });
+
+        noButton.setOnClickListener(v -> {
+            // NO action
+//            Toast.makeText(context, "No clicked - Action cancelled", Toast.LENGTH_SHORT).show();
+            confirmGenerateReport.cancelled();
+            dialog.dismiss();
+        });
+
+        // Show dialog
+        dialog.show();
+    }
 
     public static void showEditCustomerPopup(Context context, Report report, EditPopupListener editPopupListener) {
         // Inflate custom layout
@@ -121,7 +160,6 @@ public class PopupManager {
         // Show dialog
         dialog.show();
     }
-
 
     public static void showEditSitePopup(Context context, Report report, EditPopupListener editPopupListener) {
         // Inflate custom layout
@@ -189,7 +227,6 @@ public class PopupManager {
         // Show dialog
         dialog.show();
     }
-
 
     public static void showEditIrPopupGround(Context context, Report report, EditPopupListener editPopupListener) {
         // Inflate custom layout
@@ -399,7 +436,6 @@ public class PopupManager {
         // Show dialog
         dialog.show();
     }
-
    public static void showEditCrmPopupLine(Context context, Report report, List<CircuitBreaker> circuitBreakerList,
                                            int index,EditPopupListener editPopupListener) {
         // Inflate custom layout
@@ -596,6 +632,14 @@ public class PopupManager {
         void cancelled();
 
         void saved();
+
+    }
+
+    public interface ConfirmGenerateReport {
+        void confirmed(Report report);
+
+        void cancelled();
+
 
     }
 

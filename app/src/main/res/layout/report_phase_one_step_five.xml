@@ -354,7 +354,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
-                android:text="Img of the Panel Grouging"
+                android:text="@string/img_of_the_panel_grounding"
                 android:textColor="@color/text_black"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="parent"
@@ -448,6 +448,7 @@
             android:text="@string/cancel"
             android:textColor="@color/theme_color"
             app:iconGravity="textEnd"
+            android:visibility="gone"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_margin="@dimen/space_16"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -466,7 +467,9 @@
             android:drawableTint="@color/white"
             android:textColor="@color/white"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" />
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

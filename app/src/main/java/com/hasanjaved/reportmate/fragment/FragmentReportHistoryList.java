@@ -14,6 +14,13 @@ import com.hasanjaved.reportmate.databinding.FragmentHistoryBinding;
 import com.hasanjaved.reportmate.listeners.HistoryFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
+import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.model.ReportHistory;
+import com.hasanjaved.reportmate.model.ReportOngoing;
+import com.hasanjaved.reportmate.utility.Utility;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class FragmentReportHistoryList extends Fragment implements RecyclerViewClickListener {
 
@@ -25,6 +32,7 @@ public class FragmentReportHistoryList extends Fragment implements RecyclerViewC
 
     private FragmentHistoryBinding binding;
     private Activity activity;
+    private List<Report> reporHistoryList;
 
 
     private String mParam1;
@@ -42,6 +50,10 @@ public class FragmentReportHistoryList extends Fragment implements RecyclerViewC
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
+    }
+
+    public void setFragmentClickListener(HistoryFragmentClickListener fragmentClickListener) {
+        this.fragmentClickListener = fragmentClickListener;
     }
 
     @Override
@@ -82,25 +94,38 @@ public class FragmentReportHistoryList extends Fragment implements RecyclerViewC
     }
 
     private void setReportHistory() {
-//        if (Re)
 
-        LinearLayoutManager  linearLayoutManager = new LinearLayoutManager(activity);
-        binding.rvHistory.setLayoutManager(linearLayoutManager);
-        historyRecyclerAdapter = new HistoryRecyclerAdapter(activity, null, -1, this);
-        binding.rvHistory.setAdapter(historyRecyclerAdapter);
+        ReportHistory reportHistory = Utility.getHistoryReportList(activity);
+        if (reportHistory!=null)
+            if (reportHistory.getReportHistoryList()!=null)
+                if (!reportHistory.getReportHistoryList().isEmpty()){
+                    reporHistoryList= new ArrayList<>();
+                    reporHistoryList.addAll(reportHistory.getReportHistoryList());
+
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(activity);
+                    binding.rvHistory.setLayoutManager(linearLayoutManager);
+                    historyRecyclerAdapter = new HistoryRecyclerAdapter(activity,reporHistoryList , -1, this);
+                    binding.rvHistory.setAdapter(historyRecyclerAdapter);
+                }
 
     }
 
     private void closeFragment(){
-        getParentFragmentManager().popBackStack();
+        try {
+            activity.finish();
+        }catch (Exception e){
+            Utility.showLog(e.toString());
+        }
+
     }
 
-    public void setFragmentClickListener(HistoryFragmentClickListener fragmentClickListener) {
-        this.fragmentClickListener = fragmentClickListener;
-    }
 
     @Override
     public void onItemClicked(int index) {
+
+        if (reporHistoryList.get(index)!=null)
+            fragmentClickListener.addHistoryReportDetails(index);
+
     }
 
     @Override

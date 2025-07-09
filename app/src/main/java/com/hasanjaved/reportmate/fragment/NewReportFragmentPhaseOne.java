@@ -142,6 +142,7 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
             if(checkCustomerDetailsData()){
                 savePageTwoData();
                 showPage(viewSiteDetails, viewGenerateNewReport, viewCustomerDetails, viewGeneralImage, viewGeneralImage2);
+                showOwnerData();
             }
                 }
         );
@@ -177,30 +178,28 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                 }
         );
 
-        String generalImageDirectory = DirectoryManager.getGeneralImageDirectory(Utility.getReport(activity).getEquipment().getEquipmentName());
 
         binding.viewGeneralImage.imgCamera.setOnClickListener(view ->{
-
                     fragmentClickListener.openCamera(this, binding.viewGeneralImage.ivShowImage,
-                            DirectoryManager.generalImageTemperature,generalImageDirectory );
+                            DirectoryManager.generalImageTemperature,getGeneralImageDirectory() );
                 }
         );
 
         binding.viewGeneralImage2.imgCamera1.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage1,
-                        DirectoryManager.dbBoxPanelFront, generalImageDirectory)
+                        DirectoryManager.dbBoxPanelFront, getGeneralImageDirectory())
         );
         binding.viewGeneralImage2.imgCamera2.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage2,
-                        DirectoryManager.dbBoxPanelInside,  generalImageDirectory)
+                        DirectoryManager.dbBoxPanelInside,  getGeneralImageDirectory())
         );
         binding.viewGeneralImage2.imgCamera3.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage3,
-                        DirectoryManager.dbBoxPanelNameplate,  generalImageDirectory)
+                        DirectoryManager.dbBoxPanelNameplate,  getGeneralImageDirectory())
         );
         binding.viewGeneralImage2.imgCamera4.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.viewGeneralImage2.ivShowImage4,
-                        DirectoryManager.dbBoxPanelGrounding,  generalImageDirectory)
+                        DirectoryManager.dbBoxPanelGrounding,  getGeneralImageDirectory())
         );
 
 
@@ -232,6 +231,19 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
         return binding.getRoot();
 
+    }
+
+    private void showOwnerData() {
+        try {
+            binding.viewSiteDetails.etOwnerId.setText(Utility.getReport(activity).getCustomerName());
+        }catch (Exception e){
+            Utility.showLog(getClass().getSimpleName()+" showOwnerData "+e);
+        }
+
+    }
+
+    private String getGeneralImageDirectory() {
+        return DirectoryManager.getGeneralImageDirectory(Utility.getReport(activity).getEquipment().getEquipmentName());
     }
 
     @Override
@@ -388,12 +400,12 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                     .load(Uri.parse("file:" + imageLocation))
                     .into(imageView);
 
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
+//            FileMover.moveImageToDocumentsSubfolder(
+//                    activity,
+//                    imageLocation,
+//                    imageName,
+//                    subFolder
+//            );
         }
 
     }

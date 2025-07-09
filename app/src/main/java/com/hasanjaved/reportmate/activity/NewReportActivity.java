@@ -6,8 +6,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hasanjaved.reportmate.R;
-import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.FragmentCamera2;
+import com.hasanjaved.reportmate.utility.ReportGenerator;
+import com.hasanjaved.reportmate.fragment.FragmentCamera;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTest;
 import com.hasanjaved.reportmate.fragment.FragmentTripTest;
 import com.hasanjaved.reportmate.fragment.NewReportFragmentPhaseOne;
@@ -27,6 +28,8 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
+
+        Utility.saveReport(this,null);
 
         addNewReportFragment();
 //        generateSampleDocument();
@@ -258,14 +261,6 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     @Override
     public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder) {
-//        FragmentCamera fragment = FragmentCamera.newInstance("","");
-//        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
-//        getSupportFragmentManager()
-//                .beginTransaction()
-//                .add(R.id.fragmentHolder,fragment,"")
-//                .addToBackStack("")
-//                .commit();
-
 
         FragmentCamera2 fragment = FragmentCamera2.newInstance("","");
         fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);

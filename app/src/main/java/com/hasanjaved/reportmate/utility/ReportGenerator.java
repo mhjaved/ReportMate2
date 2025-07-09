@@ -85,10 +85,10 @@ public class ReportGenerator {
 
             // Add images section
             String[] dbBoxImages = {
-                    "ReportMate/" + reportName + "/" + DirectoryManager.generalImageTemperature + ".jpg",
-                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelFront + ".jpg",
-                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelInside + ".jpg",
-                    "ReportMate/" + reportName + "/" + DirectoryManager.dbBoxPanelNameplate + ".jpg"
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.generalImageTemperature + ".jpg",
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelFront + ".jpg",
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelInside + ".jpg",
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelNameplate + ".jpg"
             };
 
 //                                        Utility.showLog(dbBoxImages[0]);
@@ -106,15 +106,17 @@ public class ReportGenerator {
 
 
 
-            String irLinkBase = "ReportMate/" + reportName + "/" + DirectoryManager.IrTest + "/";
-            String[] irTestImages = {
-                    irLinkBase + DirectoryManager.imgAgConnection + ".jpg", irLinkBase + DirectoryManager.imgAgResult + ".jpg",
-                    irLinkBase + DirectoryManager.imgBgConnection + ".jpg", irLinkBase + DirectoryManager.imgBgResult + ".jpg",
-                    irLinkBase + DirectoryManager.imgCgConnection + ".jpg", irLinkBase + DirectoryManager.imgCgResult + ".jpg",
+//            String irLinkBase = "ReportMate/" + reportName + "/" + DirectoryManager.IrTest + "/";
 
-                    irLinkBase + DirectoryManager.imgAbConnection + ".jpg", irLinkBase + DirectoryManager.imgAbResult + ".jpg",
-                    irLinkBase + DirectoryManager.imgBcConnection + ".jpg", irLinkBase + DirectoryManager.imgBcResult + ".jpg",
-                    irLinkBase + DirectoryManager.imgCaConnection + ".jpg", irLinkBase + DirectoryManager.imgCaResult + ".jpg"
+
+            String[] irTestImages = {
+                    DirectoryManager.getIrFolderLinkAG(report) + "/" + DirectoryManager.imgAgConnection + ".jpg", DirectoryManager.getIrFolderLinkAG(report) + "/" + DirectoryManager.imgAgResult + ".jpg",
+                    DirectoryManager.getIrFolderLinkBG(report) + "/" + DirectoryManager.imgBgConnection + ".jpg", DirectoryManager.getIrFolderLinkBG(report) + "/" + DirectoryManager.imgBgResult + ".jpg",
+                    DirectoryManager.getIrFolderLinkCG(report) + "/"+ DirectoryManager.imgCgConnection + ".jpg", DirectoryManager.getIrFolderLinkCG(report) + "/" + DirectoryManager.imgCgResult + ".jpg",
+
+                    DirectoryManager.getIrFolderLinkAB(report)  + "/"+ DirectoryManager.imgAbConnection + ".jpg", DirectoryManager.getIrFolderLinkAB(report) + "/" + DirectoryManager.imgAbResult + ".jpg",
+                    DirectoryManager.getIrFolderLinkBC(report)  + "/"+ DirectoryManager.imgBcConnection + ".jpg", DirectoryManager.getIrFolderLinkBC(report)  + "/"+ DirectoryManager.imgBcResult + ".jpg",
+                    DirectoryManager.getIrFolderLinkCA(report)  + "/"+ DirectoryManager.imgCaConnection + ".jpg", DirectoryManager.getIrFolderLinkCA(report)  + "/"+ DirectoryManager.imgCaResult + ".jpg"
             };
 
             addImageSection(document, "Panel general images", report, dbBoxImages, dbBoxTitles);
@@ -139,14 +141,14 @@ public class ReportGenerator {
                         for (CircuitBreaker circuitBreaker: circuitBreakerList){
 
                             String[] crmImages = new String[2];
-                            List<String> imagesCrm = DirectoryManager.getCrmImageForReport(context,circuitBreaker.getName());
+                            List<String> imagesCrm = DirectoryManager.getCrmImageForReport(circuitBreaker);
                             crmImages[0] = imagesCrm.get(0);
                             crmImages[1] = imagesCrm.get(1);
 
                             addImageSection(document, circuitBreaker.getName()+", CRM Test Connection and Result Pictures", report, crmImages, crmTestLabels);
 
                             String[] tripImages = new String[4];
-                            List<String> imagesTrip = DirectoryManager.getTripImageForReport(context,circuitBreaker.getName());
+                            List<String> imagesTrip = DirectoryManager.getTripImageForReport(circuitBreaker);
                             tripImages[0] = imagesTrip.get(0);
                             tripImages[1] = imagesTrip.get(1);
                             tripImages[2] = imagesTrip.get(2);
@@ -274,7 +276,7 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 4, 0, 6);   // colspan=7
         mergeCellsHorizontally(table, 4, 7, 11);  // colspan=5
         setCellText(row5.getCell(0), "OWNER/ USER: " + report.getOwnerIdentification(), false, ParagraphAlignment.LEFT);
-        setCellText(row5.getCell(7), "DATE LAST INSPECTION: NOT AVAILABLE", false, ParagraphAlignment.LEFT);
+        setCellText(row5.getCell(7), "DATE LAST INSPECTION: "+report.getDateOfLastInspection(), false, ParagraphAlignment.LEFT);
 
         // Row 6: ADDRESS, LAST INSPECTION REPORT NO (colspan=7, 5)
         XWPFTableRow row6 = table.createRow();
@@ -282,7 +284,7 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 5, 0, 6);   // colspan=7
         mergeCellsHorizontally(table, 5, 7, 11);  // colspan=5
         setCellText(row6.getCell(0), "ADDRESS: " + report.getCustomerAddress(), false, ParagraphAlignment.LEFT);
-        setCellText(row6.getCell(7), "LAST INSPECTION REPORT NO: NOT AVAILABLE", false, ParagraphAlignment.LEFT);
+        setCellText(row6.getCell(7), "LAST INSPECTION REPORT NO: "+report.getLastInspectionReportNo(), false, ParagraphAlignment.LEFT);
 
         // Row 7: EQUIPMENT LOCATION (colspan=12)
         XWPFTableRow row7 = table.createRow();
@@ -335,8 +337,15 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 11, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 11, 8, 11);  // colspan=4
         setCellText(row12.getCell(0), "PANELBOARD Rating", false, ParagraphAlignment.LEFT);
-        setCellText(row12.getCell(4), "AMPS:" + checkNull(panelBoard.getAmps()) + "A", false, ParagraphAlignment.LEFT);
-        setCellText(row12.getCell(8), "VOLTAGE: " + checkNull(panelBoard.getVoltage()) + "V", false, ParagraphAlignment.LEFT);
+
+        String amps = "";
+        String voltage = "";
+        if (panelBoard!=null){
+            amps = checkNull(panelBoard.getAmps()) + "A";
+            voltage = checkNull(panelBoard.getVoltage()) + "V";
+        }
+        setCellText(row12.getCell(4), "AMPS: " + amps, false, ParagraphAlignment.LEFT);
+        setCellText(row12.getCell(8), "VOLTAGE: " + voltage, false, ParagraphAlignment.LEFT);
 
         // Row 13: TEST VOLTAGE, MODEL NO, CATALOG (colspan=4,4,4)
         XWPFTableRow row13 = table.createRow();
@@ -344,12 +353,27 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 12, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 12, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 12, 8, 11);  // colspan=4
-        setCellText(row13.getCell(0), "TEST VOLTAGE:" + checkNull(panelBoard.getTestVoltage()) + "V", false, ParagraphAlignment.LEFT);
-        setCellText(row13.getCell(4), "MODEL NO.: " + checkNull(panelBoard.getModelNo()), false, ParagraphAlignment.LEFT);
-        setCellText(row13.getCell(8), "CATALOG:" + checkNull(panelBoard.getCatalog()), false, ParagraphAlignment.LEFT);
+
+        String testVoltage = "";
+        String modelNumber = "";
+        String catalog = "";
+        if (panelBoard!=null){
+            testVoltage =checkNull(panelBoard.getTestVoltage()) + "V" ;
+            modelNumber = checkNull(panelBoard.getModelNo());
+            catalog = checkNull(panelBoard.getCatalog());
+        }
+        setCellText(row13.getCell(0), "TEST VOLTAGE: " + testVoltage, false, ParagraphAlignment.LEFT);
+        setCellText(row13.getCell(4), "MODEL NO.: " + modelNumber, false, ParagraphAlignment.LEFT);
+        setCellText(row13.getCell(8), "CATALOG: " + catalog, false, ParagraphAlignment.LEFT);
 
 
         manufacturerCurveDetails = report.getManufacturerCurveDetails();
+
+        String mfg = "";
+        String curve = "";
+        String curveRange = "";
+
+
 
         // Row 14: MFG, CURVE NO Type-C, CURVE RANGE (colspan=4,4,4)
         XWPFTableRow row14 = table.createRow();
@@ -357,9 +381,15 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 13, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 13, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 13, 8, 11);  // colspan=4
-        setCellText(row14.getCell(0), "MFG.:" + checkNull(manufacturerCurveDetails.getMfgOne()), false, ParagraphAlignment.LEFT);
-        setCellText(row14.getCell(4), "CURVE NO.: " + checkNull(manufacturerCurveDetails.getCurveNumberOne()), false, ParagraphAlignment.LEFT);
-        setCellText(row14.getCell(8), "CURVE RANGE:" + checkNull(manufacturerCurveDetails.getCurveRangeOne()), false, ParagraphAlignment.LEFT);
+
+        if (manufacturerCurveDetails!=null){
+            mfg = checkNull(manufacturerCurveDetails.getMfgOne()) ;
+            curve = checkNull(manufacturerCurveDetails.getCurveNumberOne());
+            curveRange = checkNull(manufacturerCurveDetails.getCurveRangeOne());
+        }
+        setCellText(row14.getCell(0), "MFG.: " + mfg, false, ParagraphAlignment.LEFT);
+        setCellText(row14.getCell(4), "CURVE NO.: " + curve, false, ParagraphAlignment.LEFT);
+        setCellText(row14.getCell(8), "CURVE RANGE: " + curveRange, false, ParagraphAlignment.LEFT);
 
         // Row 15: MFG, CURVE NO Type-B, CURVE RANGE (colspan=4,4,4)
         XWPFTableRow row15 = table.createRow();
@@ -368,9 +398,14 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 14, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 14, 8, 11);  // colspan=4
 
-        setCellText(row15.getCell(0), "MFG.:" + checkNull(manufacturerCurveDetails.getMfgTwo()), false, ParagraphAlignment.LEFT);
-        setCellText(row15.getCell(4), "CURVE NO.:" + checkNull(manufacturerCurveDetails.getCurveNumberTwo()), false, ParagraphAlignment.LEFT);
-        setCellText(row15.getCell(8), "CURVE RANGE:" + checkNull(manufacturerCurveDetails.getCurveRangeTwo()), false, ParagraphAlignment.LEFT);
+        if (manufacturerCurveDetails!=null){
+            mfg = checkNull(manufacturerCurveDetails.getMfgTwo()) ;
+            curve = checkNull(manufacturerCurveDetails.getCurveNumberTwo());
+            curveRange = checkNull(manufacturerCurveDetails.getCurveRangeTwo());
+        }
+        setCellText(row15.getCell(0), "MFG.: " + mfg, false, ParagraphAlignment.LEFT);
+        setCellText(row15.getCell(4), "CURVE NO.: " +curve , false, ParagraphAlignment.LEFT);
+        setCellText(row15.getCell(8), "CURVE RANGE: " +curveRange , false, ParagraphAlignment.LEFT);
 
         // Row 16: Empty MFG rows (colspan=4,4,4)
         XWPFTableRow row16 = table.createRow();
@@ -378,9 +413,15 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 15, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 15, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 15, 8, 11);  // colspan=4
-        setCellText(row16.getCell(0), "MFG." + checkNull(manufacturerCurveDetails.getMfgThree()), false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(4), "CURVE NO." + checkNull(manufacturerCurveDetails.getCurveNumberThree()), false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(8), "CURVE RANGE" + checkNull(manufacturerCurveDetails.getCurveRangeThree()), false, ParagraphAlignment.LEFT);
+
+        if (manufacturerCurveDetails!=null){
+            mfg =  checkNull(manufacturerCurveDetails.getMfgThree());
+            curve = checkNull(manufacturerCurveDetails.getCurveNumberThree());
+            curveRange = checkNull(manufacturerCurveDetails.getCurveRangeThree());
+        }
+        setCellText(row16.getCell(0), "MFG." + mfg, false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(4), "CURVE NO." + curve, false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(8), "CURVE RANGE" + curveRange, false, ParagraphAlignment.LEFT);
 
         // Row 17: Empty MFG rows (colspan=4,4,4)
         XWPFTableRow row17 = table.createRow();

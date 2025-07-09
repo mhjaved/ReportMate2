@@ -20,6 +20,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.ArrayList;
@@ -109,7 +110,7 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
 
     private void setTripCamera() {
 
-        String tripDirectory = DirectoryManager.getTripFolderLink(Objects.requireNonNull(Utility.getReport(activity)), circuitBreaker);
+        String tripDirectory = DirectoryManager.getTripFolderLink(circuitBreaker);
 
         binding.imgInjectorCurrent.setOnClickListener(view ->
                 fragmentClickListener.openCamera(this, binding.imgInjectorCurrentShow,
@@ -178,5 +179,6 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
                     subFolder
             );
         }
+
     }
 }

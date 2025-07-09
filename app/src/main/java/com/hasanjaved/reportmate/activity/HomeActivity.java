@@ -3,24 +3,19 @@ package com.hasanjaved.reportmate.activity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.hasanjaved.reportmate.DesignFragment;
 import com.hasanjaved.reportmate.databinding.ActivityHomeBinding;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
-import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.HomeFragment;
-import com.hasanjaved.reportmate.OcrTestFragment;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.fragment.SettingsFragment;
 import com.hasanjaved.reportmate.listeners.HomeFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.OnSettingsItemClickedListener;
 import com.hasanjaved.reportmate.model.Employee;
-import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.Utility;
 
 public class HomeActivity extends AppCompatActivity implements OnSettingsItemClickedListener, HomeFragmentClickListener {
@@ -119,27 +114,7 @@ public class HomeActivity extends AppCompatActivity implements OnSettingsItemCli
 
     }
 
-    private void addTestFragment() {
 
-        OcrTestFragment ocrTestFragment = OcrTestFragment.newInstance("", "");
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentHolder, ocrTestFragment,
-                        "ocrTestFragment")
-                .commit();
-
-    }
-
-    private void addDesignFragment() {
-
-        DesignFragment fragment = DesignFragment.newInstance("", "");
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.fragmentHolder, fragment,
-                        "DesignFragment")
-                .commit();
-
-    }
     private void gotoNewReport() {
         startActivity(new Intent(HomeActivity.this, NewReportActivity.class));
     }

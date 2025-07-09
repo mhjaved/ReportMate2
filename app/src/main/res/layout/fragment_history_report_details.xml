@@ -110,7 +110,7 @@
             android:text="@string/add_to_history"
             android:textColor="@color/theme_color"
             app:iconGravity="textEnd"
-            android:visibility="visible"
+            android:visibility="gone"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"

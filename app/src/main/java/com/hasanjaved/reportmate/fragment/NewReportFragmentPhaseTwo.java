@@ -319,17 +319,19 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         );
     }
 
-    private void showCircuitNumberConfirmation(String numberOfCircuitString) {
-        viewAddCircuitList.setVisibility(View.VISIBLE);
-        binding.viewOne.viewAddCircuitList.tvCircuitBreakerSize.setText(numberOfCircuitString);
-        binding.viewOne.viewAddCircuitList.btnAddCircuitList.setOnClickListener(view -> {
-            viewAddCircuitList.setVisibility(View.GONE);
-            setCircuitList(numberOfCircuitString);
-        });
-    }
+//    private void showCircuitNumberConfirmation(String numberOfCircuitString) {
+//        viewAddCircuitList.setVisibility(View.VISIBLE);
+//        binding.viewOne.viewAddCircuitList.tvCircuitBreakerSize.setText(numberOfCircuitString);
+//        binding.viewOne.viewAddCircuitList.btnAddCircuitList.setOnClickListener(view -> {
+//            viewAddCircuitList.setVisibility(View.GONE);
+//            setCircuitList(numberOfCircuitString);
+//        });
+//    }
 
     private void setCircuitList(String numberOfCircuitString) {
         Integer numberOfCircuit = Integer.parseInt(numberOfCircuitString);
+
+        String equipmentName = Utility.getReport(activity).getEquipment().getEquipmentName();
 
         circuitBreakerList.clear();
 //        List<CircuitBreaker> list = new ArrayList<>();
@@ -338,6 +340,7 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
             circuitBreaker.setCircuitId(String.valueOf(i));
             circuitBreaker.setName("0" + i);
             circuitBreaker.setSize("0");
+            circuitBreaker.setEquipmentName(equipmentName);
             circuitBreakerList.add(circuitBreaker);
         }
 
@@ -388,7 +391,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 
     private void saveCircuitListAndShowPageTwo() {
         ReportGeneralData.saveCircuitList(activity, circuitBreakerList);
-        Utility.saveReportOngoing(activity, Utility.getReport(activity));
         showPage(viewTwo, viewOne,
                 viewThree, viewFour);
     }

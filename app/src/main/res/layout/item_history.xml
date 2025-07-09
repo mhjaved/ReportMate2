@@ -6,7 +6,9 @@
     android:layout_height="wrap_content"
     android:clickable="true"
     android:focusable="true"
-    android:layout_marginTop="@dimen/space_16"
+    android:layout_marginBottom="@dimen/space_16"
+    android:background="@drawable/bg_edit_text"
+    android:padding="@dimen/space_16"
     >
 
 
@@ -50,6 +52,7 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
+        android:visibility="gone"
         android:contentDescription="@string/demo_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"

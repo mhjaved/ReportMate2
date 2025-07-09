@@ -16,6 +16,7 @@ import com.bumptech.glide.Glide;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.adapter.OngoingReportCrmTestRecyclerAdapter;
 import com.hasanjaved.reportmate.adapter.OngoingReportTripTestRecyclerAdapter;
+import com.hasanjaved.reportmate.databinding.FragmentHistoryReportDetailsBinding;
 import com.hasanjaved.reportmate.databinding.FragmentOngoingReportDetailsBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.listeners.EditRecyclerViewClickListener;
@@ -35,11 +36,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class FragmentOngoingReportDetails extends Fragment implements PopupManager.EditPopupListener, EditRecyclerViewClickListener, CameraFragmentClickListener {
+public class FragmentHistoryReportDetails extends Fragment implements PopupManager.EditPopupListener, EditRecyclerViewClickListener, CameraFragmentClickListener {
 
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
-    private FragmentOngoingReportDetailsBinding binding;
+    private FragmentHistoryReportDetailsBinding binding;
     private List<CircuitBreaker> circuitBreakerList = new ArrayList<>();
     private String equipmentName = "";
     private LinearLayoutManager linearLayoutManager;
@@ -59,12 +60,12 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
         Utility.showLog("setFragmentClickListener " + reportIndex);
     }
 
-    public FragmentOngoingReportDetails() {
+    public FragmentHistoryReportDetails() {
         // Required empty public constructor
     }
 
-    public static FragmentOngoingReportDetails newInstance(String param1, String param2) {
-        FragmentOngoingReportDetails fragment = new FragmentOngoingReportDetails();
+    public static FragmentHistoryReportDetails newInstance(String param1, String param2) {
+        FragmentHistoryReportDetails fragment = new FragmentHistoryReportDetails();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
@@ -86,7 +87,7 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        binding = FragmentOngoingReportDetailsBinding.inflate(inflater, container, false);
+        binding = FragmentHistoryReportDetailsBinding.inflate(inflater, container, false);
         rootView = binding.getRoot();
 
         setViewListeners();
@@ -292,7 +293,7 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
     }
 
     private Report getReport(int reportIndex) {
-        return Utility.getOngoingReportList(activity).getOngoingReportList().get(reportIndex);
+        return Utility.getHistoryReportList(activity).getReportHistoryList().get(reportIndex);
     }
 
     private void setCrmListRv() {

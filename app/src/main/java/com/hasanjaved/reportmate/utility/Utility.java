@@ -14,6 +14,7 @@ import com.google.gson.Gson;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
+import com.hasanjaved.reportmate.model.ReportHistory;
 import com.hasanjaved.reportmate.model.ReportOngoing;
 
 import java.io.File;
@@ -157,6 +158,19 @@ public class Utility {
         }
     }
 
+    public static ReportHistory getHistoryReportList(Context context) {
+        try {
+            String connectionsJSONString = context.getSharedPreferences
+                    (Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE).getString(Utility.REPORT_HISTORY_LIST, null);
+            Gson gson = new Gson();
+             return gson.fromJson(connectionsJSONString, ReportHistory.class);
+
+        } catch (NullPointerException e) {
+            Log.d(Utility.TAG, "\n NullPointerException in getHistoryReportList");
+            return null;
+        }
+    }
+
     public static void saveReportOngoing(Context context, Report report) {
 
         SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
@@ -175,7 +189,7 @@ public class Utility {
             }
                     boolean updated = false;
                     for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getProjectNo().equals(report.getProjectNo())) {
+                        if (list.get(i).getEquipment().getEquipmentName().equals(report.getEquipment().getEquipmentName())) {
                             list.set(i, report);
                             updated = true;
                             break;
@@ -193,6 +207,46 @@ public class Utility {
         Gson gson = new Gson();
         String string = gson.toJson(ongoing);
         prefsEditor.putString(Utility.ONGOING_REPORT_LIST, string);
+
+        prefsEditor.apply();
+
+    }
+    public static void saveReportHistory(Context context, Report report) {
+
+        SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
+
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        ReportHistory reportHistory = getHistoryReportList(context);
+        if (reportHistory==null){
+            reportHistory = new ReportHistory();
+           List<Report> list = new ArrayList<>();
+           list.add(report);
+            reportHistory.setReportHistoryList(list);
+        }else {
+            List<Report> list = reportHistory.getReportHistoryList();
+            if (list==null){
+                list = new ArrayList<>();
+            }
+                    boolean updated = false;
+                    for (int i = 0; i < list.size(); i++) {
+                        if (list.get(i).getEquipment().getEquipmentName().equals(report.getEquipment().getEquipmentName())) {
+                            list.set(i, report);
+                            updated = true;
+                            break;
+                        }
+                    }
+                    if (!updated) {
+                        list.add(report); // Add new if not found
+                    }
+
+
+            reportHistory.setReportHistoryList(list);
+        }
+
+
+        Gson gson = new Gson();
+        String string = gson.toJson(reportHistory);
+        prefsEditor.putString(Utility.REPORT_HISTORY_LIST, string);
 
         prefsEditor.apply();
 
@@ -226,9 +280,9 @@ public class Utility {
         else {
             for (CircuitBreaker circuitBreaker : getReport(context).getEquipment().getCircuitBreakerList()) {
 
-                isAvailable = isFileAvailable(DirectoryManager.getCrmImage(context, circuitBreaker.getName()).get(0));
+                isAvailable = isFileAvailable(DirectoryManager.getCrmImage(getReport(context).getEquipment().getEquipmentName(),circuitBreaker.getName()).get(0));
                 if (!isAvailable) return false;
-                isAvailable = isFileAvailable(DirectoryManager.getCrmImage(context, circuitBreaker.getName()).get(1));
+                isAvailable = isFileAvailable(DirectoryManager.getCrmImage(getReport(context).getEquipment().getEquipmentName(), circuitBreaker.getName()).get(1));
                 if (!isAvailable) return false;
 
             }
@@ -242,19 +296,19 @@ public class Utility {
     public static Boolean checkCrmForCircuit(Context context,CircuitBreaker circuitBreaker){
         Boolean isAvailable = true;
 
-        isAvailable = isFileAvailable(DirectoryManager.getCrmImage(context, circuitBreaker.getName()).get(0));
+        isAvailable = isFileAvailable(DirectoryManager.getCrmImage(Utility.getReport(context).getEquipment().getEquipmentName() ,circuitBreaker.getName()).get(0));
         if (!isAvailable) return false;
-        isAvailable = isFileAvailable(DirectoryManager.getCrmImage(context, circuitBreaker.getName()).get(1));
+        isAvailable = isFileAvailable(DirectoryManager.getCrmImage(Utility.getReport(context).getEquipment().getEquipmentName(), circuitBreaker.getName()).get(1));
         if (!isAvailable) return false;
 
         return true;
 
     }
 
-    public static Boolean checkTripForCircuit(Context context,CircuitBreaker circuitBreaker){
+    public static Boolean checkTripForCircuit(String equipmentName,CircuitBreaker circuitBreaker){
         Boolean isAvailable = true;
 
-        List<String> images = DirectoryManager.getTripImage(context, circuitBreaker.getName());
+        List<String> images = DirectoryManager.getTripImage(equipmentName, circuitBreaker.getName());
 
         isAvailable = isFileAvailable(images.get(0));
         if (!isAvailable) return false;
@@ -264,8 +318,8 @@ public class Utility {
         if (!isAvailable) return false;
         isAvailable = isFileAvailable(images.get(3));
         if (!isAvailable) return false;
-        isAvailable = isFileAvailable(images.get(4));
-        if (!isAvailable) return false;
+//        isAvailable = isFileAvailable(images.get(4));
+//        if (!isAvailable) return false;
 
         return true;
 
@@ -287,7 +341,7 @@ public class Utility {
         else {
             for (CircuitBreaker circuitBreaker : getReport(context).getEquipment().getCircuitBreakerList()) {
 
-                List<String> images = DirectoryManager.getTripImage(context, circuitBreaker.getName());
+                List<String> images = DirectoryManager.getTripImage(getReport(context).getEquipment().getEquipmentName(), circuitBreaker.getName());
 
                 isAvailable = isFileAvailable(images.get(0));
                 if (!isAvailable) return false;
@@ -297,8 +351,8 @@ public class Utility {
                 if (!isAvailable) return false;
                 isAvailable = isFileAvailable(images.get(3));
                 if (!isAvailable) return false;
-                isAvailable = isFileAvailable(images.get(4));
-                if (!isAvailable) return false;
+//                isAvailable = isFileAvailable(images.get(4));
+//                if (!isAvailable) return false;
 
             }
         }

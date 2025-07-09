@@ -105,8 +105,8 @@ public class ImageLoader {
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.ic_camera_short)
-                .error(android.R.drawable.ic_menu_close_clear_cancel)
+                .placeholder(R.drawable.ic__image_24)
+                .error(R.drawable.ic__image_24)
                 .signature(new ObjectKey(signature));
 
         Glide.with(context)
@@ -138,7 +138,7 @@ public class ImageLoader {
      */
     private static void loadPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(R.drawable.ic_camera_short)
+                .load(R.drawable.ic__image_24)
                 .into(imageView);
     }
 
@@ -149,7 +149,7 @@ public class ImageLoader {
      */
     private static void loadErrorPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(R.drawable.ic_camera_short)
+                .load(R.drawable.ic__image_24)
                 .into(imageView);
     }
 
@@ -212,8 +212,8 @@ public class ImageLoader {
                     .override(width, height)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic_camera_short)
-                    .error(R.drawable.ic_camera_short);
+                    .placeholder(R.drawable.ic__image_24)
+                    .error(R.drawable.ic__image_24);
 
             if (imageFile.exists()) {
                 Glide.with(context)
@@ -243,8 +243,8 @@ public class ImageLoader {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic_camera_short)
-                    .error(R.drawable.ic_camera_short);
+                    .placeholder(R.drawable.ic__image_24)
+                    .error(R.drawable.ic__image_24);
 
             Glide.with(context)
                     .load(imageUri)

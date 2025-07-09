@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/space_8"
                     app:el_duration="600"
-                    app:el_expanded="false"
+                    app:el_expanded="true"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/agLabel">

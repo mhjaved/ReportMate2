@@ -12,7 +12,6 @@ import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Rect;
-import android.graphics.RectF;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
@@ -46,7 +45,6 @@ import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
 import com.bumptech.glide.request.target.Target;
 import com.google.common.util.concurrent.ListenableFuture;
-import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.FragmentCameraBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.utility.Utility;
@@ -187,6 +185,7 @@ public class FragmentCamera2 extends Fragment {
         }, ContextCompat.getMainExecutor(requireContext()));
     }
 
+
     // Match FragmentCamera showImage method exactly
     private void showImage(String imageLink) {
         binding.ivShowImage.setVisibility(View.VISIBLE);
@@ -222,8 +221,20 @@ public class FragmentCamera2 extends Fragment {
 
     private void takePicture(ImageCapture imageCapture) {
         // Save to Pictures directory like FragmentCamera (no subfolder)
-        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
-                System.currentTimeMillis() + ".jpg");
+//        File file = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES),
+//                System.currentTimeMillis() + ".jpg");
+
+        File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
+        File targetDir = new File(documentsDir, subFolder);
+        if (!targetDir.exists()) {
+            targetDir.mkdirs(); // create if not exists
+        }
+
+        File file = new File(targetDir, imageName + ".jpg");
+        if (file.exists()) {
+            file.delete(); // replace existing image
+        }
+
 
         ImageCapture.OutputFileOptions outputOptions =
                 new ImageCapture.OutputFileOptions.Builder(file).build();
@@ -238,8 +249,8 @@ public class FragmentCamera2 extends Fragment {
 
                     @Override
                     public void onError(@NonNull ImageCaptureException exception) {
-                        requireActivity().runOnUiThread(() ->
-                                Toast.makeText(requireContext(), "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show());
+//                        requireActivity().runOnUiThread(() ->
+//                                Toast.makeText(requireContext(), "Error: " + exception.getMessage(), Toast.LENGTH_SHORT).show());
                         startCamera(cameraFacing);
                     }
                 });
@@ -284,7 +295,7 @@ public class FragmentCamera2 extends Fragment {
     // Match FragmentCamera UI update behavior exactly
     private void updateUIWithImage(String filePath) {
         requireActivity().runOnUiThread(() -> {
-            Toast.makeText(requireContext(), "Saved to: " + filePath, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(requireContext(), "Saved to: ", Toast.LENGTH_SHORT).show();
             SharedPreferences prefs = requireContext().getSharedPreferences("pref", Context.MODE_PRIVATE);
             prefs.edit().putString(Utility.ImageToken, filePath).apply();
             imageLink = filePath;
@@ -393,15 +404,15 @@ public class FragmentCamera2 extends Fragment {
         float textHeight = textBounds.height();
         float totalHeight = textHeight * 2 + padding; // Two lines of text
 
-        RectF backgroundRect = new RectF(
-                bitmap.getWidth() - textWidth - (padding * 2),
-                bitmap.getHeight() - totalHeight - padding,
-                bitmap.getWidth() - padding,
-                bitmap.getHeight() - padding
-        );
+//        RectF backgroundRect = new RectF(
+//                bitmap.getWidth() - textWidth - (padding * 2),
+//                bitmap.getHeight() - totalHeight - padding,
+//                bitmap.getWidth() - padding,
+//                bitmap.getHeight() - padding
+//        );
 
         // Draw background rectangle with rounded corners
-        canvas.drawRoundRect(backgroundRect, cornerRadius, cornerRadius, backgroundPaint);
+//        canvas.drawRoundRect(backgroundRect, cornerRadius, cornerRadius, backgroundPaint);
 
         // Draw date/time text
         canvas.drawText(currentDateTime,

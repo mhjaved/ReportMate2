@@ -41,6 +41,8 @@ public class DirectoryManager {
 
 
     // ------------------------------------------IR IMAGE NAME
+
+
     // ------------------------------------------AG
     public static final String imgAgConnection = "IR Test Connection (A-G)";
     public static final String imgAgResult = "IR Test Result (A-G)";
@@ -66,17 +68,16 @@ public class DirectoryManager {
     public static final String imgCaResult = "IR Test Result (C-A)";
 
 
-    //-------------------------
-    public static final String imgInjectorCurrent = "imgInjectorCurrent";
-    public static final String imgInjectedCurrent = "imgInjectedCurrent";
+    //---------------------------------------- TRIP IMAGE NAME
+    public static final String imgTripTime = "Trip Time";
+    public static final String imgInjectorCurrent = "Current Injector Connection";
+    public static final String imgInjectedCurrent = "Injected Current";
+    public static final String imgAfterTripTime = "After Trip";
 
-    //----------------------------
-    public static final String imgTripTime = "imgTripTime";
-    public static final String imgAfterTripTime = "imgAfterTripTime";
 
-    //-----------------------------------------------
-    public static final String imgCrmConnection = "imgCrmConnection";
-    public static final String imgCrmResult = "imgCrmResult";
+    //----------------------------------------------- CRM IMAGE NAME
+    public static final String imgCrmConnection = "CRM Test Connection";
+    public static final String imgCrmResult = "CRM Test Result";
 
 
     public static void createBaseFolder(Context context, String baseFolderName) {
@@ -158,6 +159,8 @@ public class DirectoryManager {
     }
 
 
+
+    // IR folder links
     public static String getIrFolderLinkAG(Report report) {
         return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest1_AG + "/" + "Pictures";
     }
@@ -172,25 +175,34 @@ public class DirectoryManager {
     }
 
     public static String getIrFolderLinkAB(Report report) {
-        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest3_CG + "/" + "Pictures";
+        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest4_AB + "/" + "Pictures";
     }
 
     public static String getIrFolderLinkBC(Report report) {
-        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest3_CG + "/" + "Pictures";
+        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest5_BC + "/" + "Pictures";
     }
 
     public static String getIrFolderLinkCA(Report report) {
-        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest3_CG + "/" + "Pictures";
+        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + IrTest + "/" + IrTest6_CA + "/" + "Pictures";
     }
 
 
-    public static String getCrmFolderLink(Report report, CircuitBreaker circuitBreaker) {
-        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + circuitBreaker.getName() + "/" + CRM_TEST;
+    // -----------------------------------------------get CRM folder link
+    public static String getCrmFolderLink( CircuitBreaker circuitBreaker) {
+
+//        return BASE_FOLDER_NAME + "/" + report.getEquipment().getEquipmentName() + "/" + circuitBreaker.getName() + "/" + CRM_TEST;
+
+   return Utility.BASE_FOLDER_NAME + "/" + circuitBreaker.getEquipmentName() + "/" + circuitBreaker.getName()+"/"+ circuitBreaker.getName() + " " + CRM_TEST + "/" + Pictures;
+
     }
 
 
-    public static String getTripFolderLink(Report report, CircuitBreaker circuitBreaker) {
-        return BASE_FOLDER_NAME + "/" + report.getProjectNo() + "/" + report.getEquipment().getEquipmentName() + "/" + circuitBreaker.getName() + "/" + TRIP_TEST;
+    // -------------------------------------------------get trip folder link
+    public static String getTripFolderLink( CircuitBreaker circuitBreaker) {
+
+        return Utility.BASE_FOLDER_NAME + "/" + circuitBreaker.getEquipmentName() + "/" + circuitBreaker.getName()+"/"+ circuitBreaker.getName() + " " + TRIP_TEST + "/" + Pictures;
+
+//        return BASE_FOLDER_NAME + "/" + report.getProjectNo() + "/" + report.getEquipment().getEquipmentName() + "/" + circuitBreaker.getName() + "/" + TRIP_TEST;
     }
 
 
@@ -210,7 +222,7 @@ public class DirectoryManager {
 
     //================================================================== GET IR IMAGES
 
-    //----------------------------------------------------------------------------------LINE TO  GROUND
+    //----------------------------------------------------------------------------------LINE TO  LINE
     public static String getIrAbConnectionImages(String equipmentName) {
         File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + equipmentName + "/" + IrTest + "/" + IrTest4_AB + "/" + Pictures);
@@ -247,7 +259,7 @@ public class DirectoryManager {
     }
     //-------------------------------------------------------------------------------------------------
 
-    //---------------------------------------------------------------------------------- LINE TO LINE
+    //---------------------------------------------------------------------------------- LINE TO GROUND
     public static String getIrAgConnectionImages(String equipmentName) {
         File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
         File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + equipmentName + "/" + IrTest + "/" + IrTest1_AG + "/" + Pictures);
@@ -340,12 +352,12 @@ public class DirectoryManager {
 //        return imageList;
 //    }
 
-    public static List<String> getCrmImage(Context context, String circuitName) {
+    public static List<String> getCrmImage(String equipmentName ,String circuitName) {
         List<String> imageList = new ArrayList<>();
 
         File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
-                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + CRM_TEST);
+        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + equipmentName + "/" + circuitName + "/" +
+                circuitName + " " + CRM_TEST+   "/"+Pictures);
 
         imageList.add(new File(reportMateDir, imgCrmConnection + ".jpg").getAbsolutePath());
         imageList.add(new File(reportMateDir, imgCrmResult + ".jpg").getAbsolutePath());
@@ -353,11 +365,14 @@ public class DirectoryManager {
         return imageList;
     }
 
-    public static List<String> getCrmImageForReport(Context context, String circuitName) {
+    public static List<String> getCrmImageForReport(CircuitBreaker circuitBreaker) {
         List<String> imageList = new ArrayList<>();
 
-        File reportMateDir = new File(REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
-                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + CRM_TEST);
+//        File reportMateDir = new File(REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
+//                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + CRM_TEST);
+
+        File reportMateDir = new File( REPORTMATE_DIRECTORY + "/" + circuitBreaker.getEquipmentName() + "/" + circuitBreaker.getName() + "/" +
+                circuitBreaker.getName() + " " + CRM_TEST+   "/"+Pictures);
 
         imageList.add(new File(reportMateDir, imgCrmConnection + ".jpg").getAbsolutePath());
         imageList.add(new File(reportMateDir, imgCrmResult + ".jpg").getAbsolutePath());
@@ -365,12 +380,15 @@ public class DirectoryManager {
         return imageList;
     }
 
-    public static List<String> getTripImage(Context context, String circuitName) {
+    public static List<String> getTripImage(String equipmentName ,String circuitName) {
         List<String> imageList = new ArrayList<>();
 
         File documentsDir = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS);
-        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
-                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + TRIP_TEST);
+
+//        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
+//                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + TRIP_TEST);
+        File reportMateDir = new File(documentsDir, REPORTMATE_DIRECTORY + "/" + equipmentName + "/" + circuitName + "/" +
+                circuitName + " " + TRIP_TEST+   "/"+Pictures);
 
         imageList.add(new File(reportMateDir, imgInjectorCurrent + ".jpg").getAbsolutePath());
         imageList.add(new File(reportMateDir, imgInjectedCurrent + ".jpg").getAbsolutePath());
@@ -381,11 +399,14 @@ public class DirectoryManager {
         return imageList;
     }
 
-    public static List<String> getTripImageForReport(Context context, String circuitName) {
+    public static List<String> getTripImageForReport(CircuitBreaker circuitBreaker) {
         List<String> imageList = new ArrayList<>();
 
-        File reportMateDir = new File(REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
-                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + TRIP_TEST);
+//        File reportMateDir = new File(REPORTMATE_DIRECTORY + "/" + Utility.getReport(context).getProjectNo() + "/"
+//                + Utility.getReport(context).getEquipment().getEquipmentName() + "/" + circuitName + "/" + TRIP_TEST);
+
+        File reportMateDir = new File( REPORTMATE_DIRECTORY + "/" + circuitBreaker.getEquipmentName() + "/" + circuitBreaker.getName() + "/" +
+                circuitBreaker.getName() + " " + TRIP_TEST+   "/"+Pictures);
 
         imageList.add(new File(reportMateDir, imgInjectorCurrent + ".jpg").getAbsolutePath());
         imageList.add(new File(reportMateDir, imgInjectedCurrent + ".jpg").getAbsolutePath());
