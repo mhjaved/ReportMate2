@@ -4,6 +4,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -26,6 +27,9 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
+import com.bumptech.glide.signature.ObjectKey;
 import com.hasanjaved.reportmate.data_manager.ReportGeneralData;
 import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseOneBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
@@ -35,6 +39,7 @@ import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
@@ -396,8 +401,24 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
         if (!imageLocation.equals("")) {
             imageView.setVisibility(View.VISIBLE);
+//            Context context, ImageView imageView, Uri imageUri
+//            ImageLoader.loadImageFromUri();
+//            Glide.with(activity)
+//                    .load(Uri.parse("file:" + imageLocation))
+//                    .into(imageView);
+
+
+            RequestOptions options = new RequestOptions()
+                    .centerCrop()
+                    .placeholder(R.drawable.ic__image_24)
+                    .error(R.drawable.ic__image_24)
+                    ;
+
             Glide.with(activity)
                     .load(Uri.parse("file:" + imageLocation))
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .apply(options)
                     .into(imageView);
 
 //            FileMover.moveImageToDocumentsSubfolder(

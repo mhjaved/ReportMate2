@@ -41,10 +41,13 @@ import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.DataSource;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.load.engine.GlideException;
 import com.bumptech.glide.request.RequestListener;
+import com.bumptech.glide.request.RequestOptions;
 import com.bumptech.glide.request.target.Target;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.FragmentCameraBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
 import com.hasanjaved.reportmate.utility.Utility;
@@ -195,8 +198,24 @@ public class FragmentCamera2 extends Fragment {
         binding.btnRetake.setEnabled(true);
         binding.btnPerformOCR.setEnabled(true);
 
+//        RequestOptions options = new RequestOptions()
+//                .centerCrop()
+//                .placeholder(R.drawable.ic__image_24)
+//                .error(R.drawable.ic__image_24)
+//                ;
+//
+//        Glide.with(activity)
+//                .load(Uri.parse("file:" + fileLocation))
+//                .skipMemoryCache(true)
+//                .diskCacheStrategy(DiskCacheStrategy.NONE)
+//                .apply(options)
+//                .into(binding.ivShowImage);
+
+
         Glide.with(activity)
                 .load(Uri.parse(fileLocation))
+                .skipMemoryCache(true)
+                .diskCacheStrategy(DiskCacheStrategy.NONE)
                 .listener(new RequestListener<Drawable>() {
                     @Override
                     public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
@@ -206,6 +225,10 @@ public class FragmentCamera2 extends Fragment {
                         // Fallback: try loading with File directly
                         Glide.with(activity)
                                 .load(new File(imageLink))
+                                .skipMemoryCache(true)
+                                .diskCacheStrategy(DiskCacheStrategy.NONE)
+                                .placeholder(R.drawable.ic__image_24)
+                                .error(R.drawable.ic__image_24)
                                 .into(binding.ivShowImage);
                         return true;
                     }
