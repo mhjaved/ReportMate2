@@ -76,7 +76,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
 //
         holder.tvClientName.setText(list.get(currentPosition).getCustomerName());
-        holder.tvProjectCode.setText(list.get(currentPosition).getProjectNo());
+        holder.tvProjectCode.setText(list.get(currentPosition).getEquipment().getEquipmentName());
 //
 //        if (Utility.checkCrmForCircuit(context,list.get(currentPosition)))
 //            holder.tvCrm.setVisibility(View.VISIBLE);

@@ -180,9 +180,7 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
                         circuitListRecyclerAdapter.notifyDataSetChanged();
                     }
 
-
             }
-
         }
 
     }

@@ -29,7 +29,7 @@
             android:layout_marginStart="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_12"
             android:contentDescription="@string/demo_description"
-            android:src="@drawable/ic_demo_icon_2"
+            android:src="@drawable/ic_home"
             app:tint="@color/theme_color" />
 
         <TextView
@@ -61,7 +61,7 @@
             android:layout_marginStart="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_12"
             android:contentDescription="@string/demo_description"
-            android:src="@drawable/ic_demo_icon_2"
+            android:src="@drawable/ic_user"
             app:tint="@color/theme_color" />
 
         <TextView
@@ -93,7 +93,7 @@
             android:layout_marginStart="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_12"
             android:contentDescription="@string/demo_description"
-            android:src="@drawable/ic_demo_icon_2"
+            android:src="@drawable/ic_map"
             app:tint="@color/theme_color" />
 
         <TextView
@@ -124,7 +124,7 @@
             android:layout_marginStart="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_12"
             android:contentDescription="@string/demo_description"
-            android:src="@drawable/ic_demo_icon_2"
+            android:src="@drawable/ic_help"
             app:tint="@color/theme_color" />
 
         <TextView
@@ -165,15 +165,15 @@
             android:layout_marginStart="@dimen/space_16"
             android:layout_marginEnd="@dimen/space_12"
             android:contentDescription="@string/demo_description"
-            android:src="@drawable/ic_demo_icon_2"
-            app:tint="@color/theme_color" />
+            android:src="@drawable/ic_log_out"
+            app:tint="@color/red" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="@font/barlow_medium"
             android:text="@string/logout"
-            android:textColor="@color/theme_color"
+            android:textColor="@color/red"
             android:textSize="18sp" />
 
 

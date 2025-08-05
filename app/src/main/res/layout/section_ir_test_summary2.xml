@@ -87,7 +87,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:layout_marginTop="@dimen/space_8"
-                    android:src="@drawable/ic__image_24" />
+                    android:src="@drawable/ic_image_24" />
 
                 <TextView
                     android:id="@+id/tvImageTwoTitle"
@@ -105,7 +105,7 @@
                     android:adjustViewBounds="true"
                     android:scaleType="centerCrop"
                     android:layout_marginTop="@dimen/space_8"
-                    android:src="@drawable/ic__image_24" />
+                    android:src="@drawable/ic_image_24" />
 
             </LinearLayout>
 

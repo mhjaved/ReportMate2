@@ -151,7 +151,8 @@ public class ReportGeneralData {
     public static void saveManufacturerCurveDetailsData(Context context,
                                                         String mfgOne,String curveOne,String curveRangeOne,
                                                         String mfgTwo,String curveTwo,String curveRangeTwo,
-                                                        String mfgThree,String curveThree,String curveRangeThree
+                                                        String mfgThree,String curveThree,String curveRangeThree,
+                                                        String mfgFour,String curveFour,String curveRangeFour
                                           ) {
 
         Report report = Utility.getReport(context);
@@ -173,6 +174,11 @@ public class ReportGeneralData {
             manufacturerCurveDetails.setMfgThree(mfgThree);
             manufacturerCurveDetails.setCurveNumberThree(curveThree);
             manufacturerCurveDetails.setCurveRangeThree(curveRangeThree);
+
+
+            manufacturerCurveDetails.setMfgFour(mfgFour);
+            manufacturerCurveDetails.setCurveNumberFour(curveFour);
+            manufacturerCurveDetails.setCurveRangeFour(curveRangeFour);
 
 
             report.setManufacturerCurveDetails(manufacturerCurveDetails);

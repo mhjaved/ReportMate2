@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
-import android.content.Context;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -29,7 +28,6 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
-import com.bumptech.glide.signature.ObjectKey;
 import com.hasanjaved.reportmate.data_manager.ReportGeneralData;
 import com.hasanjaved.reportmate.databinding.FragmentNewReportPhaseOneBinding;
 import com.hasanjaved.reportmate.listeners.CameraFragmentClickListener;
@@ -39,7 +37,7 @@ import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
-import com.hasanjaved.reportmate.utility.ImageLoader;
+import com.hasanjaved.reportmate.utility.InputValidator;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Calendar;
@@ -257,36 +255,22 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         binding = null;
     }
 
-    public boolean validateEditText(EditText editText) {
-        boolean allFilled = true;
 
-//        for (EditText editText : editTexts) {
-            String text = editText.getText().toString().trim();
-            if (text.isEmpty()) {
-                editText.setError("This field cannot be empty");
-                allFilled = false;
-            } else {
-                editText.setError(null); // Clear previous error
-            }
-//        }
-
-        return allFilled;
-    }
 
 
     private boolean checkCustomerDetailsData() {
         boolean allFilled = true;
 
-        if (!validateEditText(binding.viewCustomerDetails.etCustomerName)) {
+        if (!InputValidator.validateEditText(binding.viewCustomerDetails.etCustomerName)) {
             return false;
 //            Utility.showToast(activity, "Provide Customer Name");
-        }else if (!validateEditText(binding.viewCustomerDetails.etCustomerAddress)){
+        }else if (!InputValidator.validateEditText(binding.viewCustomerDetails.etCustomerAddress)){
            return false;
 //            Utility.showToast(activity, "Provide Customer Address");
-        }else if (!validateEditText(binding.viewCustomerDetails.etUserName)){
+        }else if (!InputValidator.validateEditText(binding.viewCustomerDetails.etUserName)){
             return false;
 //            Utility.showToast(activity, "Provide User Name");
-        }else if (!validateEditText(binding.viewCustomerDetails.etUserAddress)){
+        }else if (!InputValidator.validateEditText(binding.viewCustomerDetails.etUserAddress)){
             return false;
 //            Utility.showToast(activity, "Provide User Address");
         }
@@ -410,8 +394,8 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
 
             RequestOptions options = new RequestOptions()
                     .centerCrop()
-                    .placeholder(R.drawable.ic__image_24)
-                    .error(R.drawable.ic__image_24)
+                    .placeholder(R.drawable.ic_image_24)
+                    .error(R.drawable.ic_image_24)
                     ;
 
             Glide.with(activity)
@@ -421,12 +405,12 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
                     .apply(options)
                     .into(imageView);
 
-//            FileMover.moveImageToDocumentsSubfolder(
-//                    activity,
-//                    imageLocation,
-//                    imageName,
-//                    subFolder
-//            );
+            FileMover.moveImageToDocumentsSubfolder(
+                    activity,
+                    imageLocation,
+                    imageName,
+                    subFolder
+            );
         }
 
     }

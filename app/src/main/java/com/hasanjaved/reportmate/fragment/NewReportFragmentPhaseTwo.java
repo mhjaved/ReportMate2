@@ -314,7 +314,11 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
 
                 binding.viewThree.etMfgThree.getText().toString().trim(),
                 binding.viewThree.etCurveNumberThree.getText().toString().trim(),
-                binding.viewThree.etCurveRangeThree.getText().toString().trim()
+                binding.viewThree.etCurveRangeThree.getText().toString().trim(),
+
+                binding.viewThree.etMfgFour.getText().toString().trim(),
+                binding.viewThree.etCurveNumberFour.getText().toString().trim(),
+                binding.viewThree.etCurveRangeFour.getText().toString().trim()
 
         );
     }

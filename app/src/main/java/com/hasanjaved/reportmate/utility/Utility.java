@@ -6,6 +6,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Environment;
+import android.provider.Settings;
 import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -387,5 +388,58 @@ public class Utility {
         }
 
         return allFilled;
+    }
+
+    public static String getDeviceId(Context context) {
+        return Settings.Secure.getString(context.getContentResolver(), Settings.Secure.ANDROID_ID);
+    }
+
+    public static String getFormatTime(String timeValue) {
+        if (timeValue == null || timeValue.trim().isEmpty()) {
+            return "0sec";
+        }
+
+        try {
+            String cleanInput = timeValue.trim();
+
+            // Handle different formats like "2,4" (comma as decimal separator)
+            cleanInput = cleanInput.replace(",", ".");
+
+            double time = Double.parseDouble(cleanInput);
+
+            if (time < 0) {
+                return "0sec";
+            }
+
+            // Get the integer part (minutes)
+            int minutes = (int) time;
+
+            // Get the decimal part and convert to seconds
+            double decimalPart = time - minutes;
+            int seconds = (int) Math.round(decimalPart * 100);
+
+            // Handle overflow
+            if (seconds >= 60) {
+                minutes += seconds / 60;
+                seconds = seconds % 60;
+            }
+
+            // Format output
+            StringBuilder result = new StringBuilder();
+
+            if (minutes > 0) {
+                result.append(minutes).append("min");
+                if (seconds > 0) {
+                    result.append("\n").append(seconds).append("sec");
+                }
+            } else {
+                result.append(seconds).append("sec");
+            }
+
+            return result.toString();
+
+        } catch (NumberFormatException e) {
+            return "0sec";
+        }
     }
 }

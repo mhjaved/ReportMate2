@@ -47,7 +47,7 @@ public class Equipment {
     }
 
     public void setAirTemperature(String airTemperature) {
-        this.airTemperature = airTemperature+".c";
+        this.airTemperature = airTemperature;
     }
 
     public String getAirHumidity() {

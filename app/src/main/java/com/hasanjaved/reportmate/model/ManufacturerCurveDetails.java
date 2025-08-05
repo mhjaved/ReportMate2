@@ -13,6 +13,9 @@ public class ManufacturerCurveDetails {
     String mfgThree;
     String curveNumberThree;
     String curveRangeThree;
+    String mfgFour;
+    String curveNumberFour;
+    String curveRangeFour;
 
 
     public String getMfgOne() {
@@ -85,5 +88,29 @@ public class ManufacturerCurveDetails {
 
     public void setCurveRangeThree(String curveRangeThree) {
         this.curveRangeThree = curveRangeThree;
+    }
+
+    public String getMfgFour() {
+        return mfgFour;
+    }
+
+    public void setMfgFour(String mfgFour) {
+        this.mfgFour = mfgFour;
+    }
+
+    public String getCurveNumberFour() {
+        return curveNumberFour;
+    }
+
+    public void setCurveNumberFour(String curveNumberFour) {
+        this.curveNumberFour = curveNumberFour;
+    }
+
+    public String getCurveRangeFour() {
+        return curveRangeFour;
+    }
+
+    public void setCurveRangeFour(String curveRangeFour) {
+        this.curveRangeFour = curveRangeFour;
     }
 }

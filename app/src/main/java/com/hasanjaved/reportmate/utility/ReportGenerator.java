@@ -1,10 +1,8 @@
 package com.hasanjaved.reportmate.utility;
 
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
@@ -12,7 +10,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.provider.MediaStore;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.IrTest;
@@ -25,12 +22,11 @@ import org.apache.poi.xwpf.usermodel.*;
 import org.openxmlformats.schemas.wordprocessingml.x2006.main.*;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -56,7 +52,7 @@ public class ReportGenerator {
         void onError(String errorMessage);
     }
 
-    private static final String TAG = "ReportGenerator";
+    private static final String TAG = Utility.TAG;
     private static final String REPORTS_DIRECTORY = "ReportMateReports";
 
     /**
@@ -78,9 +74,10 @@ public class ReportGenerator {
 
             String[] dbBoxTitles = {
                     "Temperature & Humidity",
-                    "Panel",
+                    "Panel Front Side",
                     "Panel inside",
-                    "Additional View"
+                    "Panel Nameplate",
+                    "Panel Grounding"
             };
 
             // Add images section
@@ -88,7 +85,8 @@ public class ReportGenerator {
                     DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.generalImageTemperature + ".jpg",
                     DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelFront + ".jpg",
                     DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelInside + ".jpg",
-                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelNameplate + ".jpg"
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelNameplate + ".jpg",
+                    DirectoryManager.getGeneralImageDirectory(report.getEquipment().getEquipmentName()) + "/" + DirectoryManager.dbBoxPanelGrounding + ".jpg"
             };
 
 //                                        Utility.showLog(dbBoxImages[0]);
@@ -127,7 +125,7 @@ public class ReportGenerator {
                     "CRM Test Result"
             };
 
-            String[] tripTestLabels = {
+            String[] tripTestLabels = {  
                     "Current Injector Connection",
                     "Injected Current",
                     "Trip Time",
@@ -175,13 +173,15 @@ public class ReportGenerator {
 //            return success;
 
         } catch (Exception e) {
-            Log.e(TAG, "Error generating report", e);
+            Utility.showLog("Error saving document"+ e);
+
+//            Log.e(TAG, "Error generating report", e);
 //            Toast.makeText(context, "Error generating report: " + e.getMessage(), Toast.LENGTH_LONG).show();
 //            return false;
 
             new Handler(Looper.getMainLooper()).post(() -> {
                 if (callback != null) {
-                    callback.onError("Error generating report: " + e.getMessage());
+                    callback.onError("" + e.getMessage());
                 }
             });
         }
@@ -267,7 +267,7 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 3, 7, 9);   // colspan=3
         mergeCellsHorizontally(table, 3, 10, 11); // colspan=2
         setCellText(row4.getCell(0), "ADDRESS: " + report.getCustomerAddress(), false, ParagraphAlignment.LEFT);
-        setCellText(row4.getCell(7), "AIR TEMP: " + report.getEquipment().getAirTemperature(), false, ParagraphAlignment.LEFT);
+        setCellText(row4.getCell(7), "AIR TEMP: " + report.getEquipment().getAirTemperature()+"°C", false, ParagraphAlignment.LEFT);
         setCellText(row4.getCell(10), "REL HUMIDITY: " + report.getEquipment().getAirHumidity(), false, ParagraphAlignment.LEFT);
 
         // Row 5: OWNER/USER, DATE LAST INSPECTION (colspan=7, 5)
@@ -341,8 +341,8 @@ public class ReportGenerator {
         String amps = "";
         String voltage = "";
         if (panelBoard!=null){
-            amps = checkNull(panelBoard.getAmps()) + "A";
-            voltage = checkNull(panelBoard.getVoltage()) + "V";
+            amps = checkNull(panelBoard.getAmps()) + " A";
+            voltage = checkNull(panelBoard.getVoltage()) + " V";
         }
         setCellText(row12.getCell(4), "AMPS: " + amps, false, ParagraphAlignment.LEFT);
         setCellText(row12.getCell(8), "VOLTAGE: " + voltage, false, ParagraphAlignment.LEFT);
@@ -358,7 +358,7 @@ public class ReportGenerator {
         String modelNumber = "";
         String catalog = "";
         if (panelBoard!=null){
-            testVoltage =checkNull(panelBoard.getTestVoltage()) + "V" ;
+            testVoltage =checkNull(panelBoard.getTestVoltage()) + " V" ;
             modelNumber = checkNull(panelBoard.getModelNo());
             catalog = checkNull(panelBoard.getCatalog());
         }
@@ -419,9 +419,9 @@ public class ReportGenerator {
             curve = checkNull(manufacturerCurveDetails.getCurveNumberThree());
             curveRange = checkNull(manufacturerCurveDetails.getCurveRangeThree());
         }
-        setCellText(row16.getCell(0), "MFG." + mfg, false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(4), "CURVE NO." + curve, false, ParagraphAlignment.LEFT);
-        setCellText(row16.getCell(8), "CURVE RANGE" + curveRange, false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(0), "MFG.: " + mfg, false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(4), "CURVE NO.: " + curve, false, ParagraphAlignment.LEFT);
+        setCellText(row16.getCell(8), "CURVE RANGE: " + curveRange, false, ParagraphAlignment.LEFT);
 
         // Row 17: Empty MFG rows (colspan=4,4,4)
         XWPFTableRow row17 = table.createRow();
@@ -429,9 +429,16 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 16, 0, 3);   // colspan=4
         mergeCellsHorizontally(table, 16, 4, 7);   // colspan=4
         mergeCellsHorizontally(table, 16, 8, 11);  // colspan=4
-        setCellText(row17.getCell(0), "MFG.", false, ParagraphAlignment.LEFT);
-        setCellText(row17.getCell(4), "CURVE NO.", false, ParagraphAlignment.LEFT);
-        setCellText(row17.getCell(8), "CURVE RANGE", false, ParagraphAlignment.LEFT);
+
+        if (manufacturerCurveDetails!=null){
+            mfg =  checkNull(manufacturerCurveDetails.getMfgFour());
+            curve = checkNull(manufacturerCurveDetails.getCurveNumberFour());
+            curveRange = checkNull(manufacturerCurveDetails.getCurveRangeFour());
+        }
+
+        setCellText(row17.getCell(0), "MFG.: " + mfg, false, ParagraphAlignment.LEFT);
+        setCellText(row17.getCell(4), "CURVE NO.: " + curve, false, ParagraphAlignment.LEFT);
+        setCellText(row17.getCell(8), "CURVE RANGE: " + curveRange, false, ParagraphAlignment.LEFT);
 
         // Row 18: Circuit test header (all individual columns)
         XWPFTableRow row18 = table.createRow();
@@ -456,7 +463,7 @@ public class ReportGenerator {
                 if (!report.getEquipment().getCircuitBreakerList().isEmpty()) {
                     circuitBreakerList = report.getEquipment().getCircuitBreakerList();
 
-                    Utility.showLog(circuitBreakerList.toString());
+//                    Utility.showLog(circuitBreakerList.toString());
 
                     for (int i = 0; i < circuitBreakerList.size(); i += 2) {
 
@@ -472,14 +479,14 @@ public class ReportGenerator {
 
                                 circuitBreakerLeft = circuitBreakerList.get(i);
                                 leftCircuit = circuitBreakerLeft.getName();
-                                leftSize = circuitBreakerLeft.getSize() + "A";
-                                leftTestAmps = circuitBreakerLeft.getTripTest().getTestAmplitude() + "A";
-                                leftTripTime = circuitBreakerLeft.getTripTest().getTripTime();
+                                leftSize = circuitBreakerLeft.getSize() + " A";
+                                leftTestAmps = circuitBreakerLeft.getTripTest().getTestAmplitude() + " A";
+                                leftTripTime = Utility.getFormatTime(circuitBreakerLeft.getTripTest().getTripTime());
                                 leftInstTrip = circuitBreakerLeft.getTripTest().getInstantTrip();
 
-                                leftResistanceValues[0] = circuitBreakerLeft.getCrmTest().getrResValue() + circuitBreakerLeft.getCrmTest().getrResUnit();
-                                leftResistanceValues[1] = circuitBreakerLeft.getCrmTest().getyResValue() + circuitBreakerLeft.getCrmTest().getyResUnit();
-                                leftResistanceValues[2] = circuitBreakerLeft.getCrmTest().getbResValue() + circuitBreakerLeft.getCrmTest().getbResUnit();
+                                leftResistanceValues[0] = circuitBreakerLeft.getCrmTest().getrResValue() + " " + circuitBreakerLeft.getCrmTest().getrResUnit();
+                                leftResistanceValues[1] = circuitBreakerLeft.getCrmTest().getyResValue() + " " +  circuitBreakerLeft.getCrmTest().getyResUnit();
+                                leftResistanceValues[2] = circuitBreakerLeft.getCrmTest().getbResValue() + " " +  circuitBreakerLeft.getCrmTest().getbResUnit();
 
                             }
 
@@ -490,14 +497,14 @@ public class ReportGenerator {
                                 circuitBreakerRight = circuitBreakerList.get(i + 1);
 
                                 rightCircuit = circuitBreakerRight.getName();
-                                rightSize = circuitBreakerRight.getSize() + "A";
-                                rightTestAmps = circuitBreakerRight.getTripTest().getTestAmplitude() + "A";
-                                rightTripTime = circuitBreakerRight.getTripTest().getTripTime() + "sec";
+                                rightSize = circuitBreakerRight.getSize() + " A";
+                                rightTestAmps = circuitBreakerRight.getTripTest().getTestAmplitude() + " A";
+                                rightTripTime = Utility.getFormatTime(circuitBreakerRight.getTripTest().getTripTime());
                                 rightInstTrip = circuitBreakerRight.getTripTest().getInstantTrip();
 
-                                rightResistanceValues[0] = circuitBreakerRight.getCrmTest().getrResValue() + circuitBreakerRight.getCrmTest().getrResUnit();
-                                rightResistanceValues[1] = circuitBreakerRight.getCrmTest().getyResValue() + circuitBreakerRight.getCrmTest().getyResUnit();
-                                rightResistanceValues[2] = circuitBreakerRight.getCrmTest().getbResValue() + circuitBreakerRight.getCrmTest().getbResUnit();
+                                rightResistanceValues[0] = circuitBreakerRight.getCrmTest().getrResValue() + " " +  circuitBreakerRight.getCrmTest().getrResUnit();
+                                rightResistanceValues[1] = circuitBreakerRight.getCrmTest().getyResValue() + " " +  circuitBreakerRight.getCrmTest().getyResUnit();
+                                rightResistanceValues[2] = circuitBreakerRight.getCrmTest().getbResValue() + " " +  circuitBreakerRight.getCrmTest().getbResUnit();
                             }
                         } catch (Exception e) {
                             Utility.showLog(e.toString());
@@ -889,8 +896,9 @@ public class ReportGenerator {
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "Error saving document", e);
-            Toast.makeText(context, "Error saving: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Utility.showLog("Error saving document"+ e);
+//            Log.e(TAG, );
+//            Toast.makeText(context, "Error saving: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -913,13 +921,17 @@ public class ReportGenerator {
                 outputStream.close();
                 document.close();
 
-                Toast.makeText(context, "Report saved to Documents/" + REPORTS_DIRECTORY + "/" + fileName,
-                        Toast.LENGTH_LONG).show();
-                Log.d(TAG, "Document saved via MediaStore: " + uri);
+//                Toast.makeText(context, "Report saved to Documents/" + REPORTS_DIRECTORY + "/" + fileName,
+//                        Toast.LENGTH_LONG).show();
+                Utility.showLog("Document saved via MediaStore: " + uri);
+
+//                Log.d(TAG, );
                 return true;
             }
         } catch (Exception e) {
-            Log.e(TAG, "MediaStore save failed", e);
+            Utility.showLog("MediaStore save failed"+ e);
+
+//            Log.e(TAG, );
             return saveLegacy(context, document, fileName);
         }
         return false;
@@ -948,30 +960,50 @@ public class ReportGenerator {
                     new String[]{"application/vnd.openxmlformats-officedocument.wordprocessingml.document"},
                     null);
 
-            Toast.makeText(context, " Report saved: " + docFile.getAbsolutePath(),
-                    Toast.LENGTH_LONG).show();
-            Log.d(TAG, "Document saved: " + docFile.getAbsolutePath());
+//            Toast.makeText(context, " Report saved: " + docFile.getAbsolutePath(),
+//                    Toast.LENGTH_LONG).show();
+            Utility.showLog("Document saved: " + docFile.getAbsolutePath());
+
+//            Log.d(TAG, );
             return true;
 
         } catch (Exception e) {
-            Log.e(TAG, "Legacy save failed", e);
-            Toast.makeText(context, "Save failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+            Utility.showLog("Legacy save failed"+ e);
+
+//            Log.e(TAG, );
+//            Toast.makeText(context, "Save failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
-
     /**
      * Add images section to the document with proper table structure
+     * Only creates section if at least one image exists
      */
     private static void addImageSection(XWPFDocument document, String title, Report report, String[] imagePaths, String[] imageNames) {
         try {
+            // First, check if any images exist
+            boolean hasAnyImages = false;
+            for (String imagePath : imagePaths) {
+                File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), imagePath);
+                if (imageFile.exists()) {
+                    hasAnyImages = true;
+                    break;
+                }
+            }
+
+            // Only create the section if at least one image exists
+            if (!hasAnyImages) {
+                Utility.showLog("No images found for section: " + title + ". Skipping section.");
+                return;
+            }
+
             // Add section heading
             XWPFParagraph imageSectionPara = document.createParagraph();
             imageSectionPara.setAlignment(ParagraphAlignment.LEFT);
             imageSectionPara.setSpacingAfter(200);
             imageSectionPara.setSpacingBefore(200);
             XWPFRun imageSectionRun = imageSectionPara.createRun();
-            imageSectionRun.setText( title);
+            imageSectionRun.setText(title);
             imageSectionRun.setBold(true);
             imageSectionRun.setFontFamily("Arial");
             imageSectionRun.setFontSize(12);
@@ -981,25 +1013,53 @@ public class ReportGenerator {
             createImageTable(document, imagePaths, imageNames);
 
         } catch (Exception e) {
-            Log.e(TAG, "Error adding image section", e);
+            Utility.showLog("Error adding image section" + e);
         }
     }
 
     /**
      * Create table with images and captions
+     * Only adds rows for images that actually exist
      */
     private static void createImageTable(XWPFDocument document, String[] imagePaths, String[] imageNames) {
         try {
+            // First, filter out non-existent images
+            List<String> existingImagePaths = new ArrayList<>();
+            List<String> existingImageNames = new ArrayList<>();
+
+            for (int i = 0; i < imagePaths.length; i++) {
+                File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), imagePaths[i]);
+                if (imageFile.exists()) {
+                    existingImagePaths.add(imagePaths[i]);
+                    existingImageNames.add(imageNames[i]);
+                } else {
+                    Utility.showLog("Image not found, skipping: " + imagePaths[i]);
+                }
+            }
+
+            // If no images exist after filtering, don't create the table
+            if (existingImagePaths.isEmpty()) {
+                Utility.showLog("No existing images found. Skipping table creation.");
+                return;
+            }
+
+            // Convert back to arrays for easier processing
+            String[] filteredImagePaths = existingImagePaths.toArray(new String[0]);
+            String[] filteredImageNames = existingImageNames.toArray(new String[0]);
+
             XWPFTable imageTable = document.createTable();
             setTableBorders(imageTable);
             setTableWidth(imageTable, 100);
 
+            boolean isFirstRow = true;
+
             // Process images in pairs (2 images per row)
-            for (int i = 0; i < imagePaths.length; i += 2) {
+            for (int i = 0; i < filteredImagePaths.length; i += 2) {
                 // Create image row
                 XWPFTableRow imageRow;
-                if (i == 0) {
+                if (isFirstRow) {
                     imageRow = imageTable.getRow(0); // Use existing first row
+                    isFirstRow = false;
                 } else {
                     imageRow = imageTable.createRow();
                 }
@@ -1010,11 +1070,11 @@ public class ReportGenerator {
                 }
 
                 // Add first image with smaller size
-                addImageToCell2(imageRow.getCell(0), imagePaths[i], 250, 180);
+                addImageToCell(imageRow.getCell(0), filteredImagePaths[i], 250, 180);
 
                 // Add second image (if exists) with smaller size
-                if (i + 1 < imagePaths.length) {
-                    addImageToCell2(imageRow.getCell(1), imagePaths[i + 1], 250, 180);
+                if (i + 1 < filteredImagePaths.length) {
+                    addImageToCell(imageRow.getCell(1), filteredImagePaths[i + 1], 250, 180);
                 } else {
                     // Empty cell if odd number of images
                     setCellText(imageRow.getCell(1), "", false, ParagraphAlignment.CENTER);
@@ -1027,156 +1087,26 @@ public class ReportGenerator {
                 }
 
                 // Add first caption
-                setCellText(captionRow.getCell(0), imageNames[i], true, ParagraphAlignment.CENTER);
+                setCellText(captionRow.getCell(0), filteredImageNames[i], true, ParagraphAlignment.CENTER);
 
                 // Add second caption (if exists)
-                if (i + 1 < imageNames.length) {
-                    setCellText(captionRow.getCell(1), imageNames[i + 1], true, ParagraphAlignment.CENTER);
+                if (i + 1 < filteredImageNames.length) {
+                    setCellText(captionRow.getCell(1), filteredImageNames[i + 1], true, ParagraphAlignment.CENTER);
                 } else {
                     setCellText(captionRow.getCell(1), "", false, ParagraphAlignment.CENTER);
                 }
             }
 
         } catch (Exception e) {
-            Log.e(TAG, "Error creating image table", e);
+            Utility.showLog("Error creating image table" + e);
         }
     }
 
     /**
-     * Add image to a table cell
+     * Modified addImageToCell method with additional file existence check
      */
-    private static void addImageToCell(XWPFTableCell cell, String imagePath, int width, int height) {
-        try {
-            // Clear existing content
-            cell.removeParagraph(0);
-
-            XWPFParagraph para = cell.addParagraph();
-            para.setAlignment(ParagraphAlignment.CENTER);
-            XWPFRun run = para.createRun();
-
-            // Read image from public documents
-            File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), imagePath);
-
-            if (imageFile.exists()) {
-                FileInputStream imageStream = new FileInputStream(imageFile);
-
-                // Determine image format
-                String fileName = imageFile.getName().toLowerCase();
-                int pictureType;
-                if (fileName.endsWith(".png")) {
-                    pictureType = XWPFDocument.PICTURE_TYPE_PNG;
-                } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
-                    pictureType = XWPFDocument.PICTURE_TYPE_JPEG;
-                } else {
-                    pictureType = XWPFDocument.PICTURE_TYPE_JPEG; // Default
-                }
-
-                // Add picture to the run
-                run.addPicture(imageStream, pictureType, imageFile.getName(),
-                        Units.toEMU(width), Units.toEMU(height));
-
-                imageStream.close();
-            } else {
-                // If image doesn't exist, add placeholder text
-                run.setText("Image not found: " + imagePath);
-                run.setFontFamily("Arial");
-                run.setFontSize(10);
-            }
-
-            // Set cell properties
-            cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
-
-            // Set cell properties for better image display
-            CTTcPr tcPr = cell.getCTTc().getTcPr();
-            if (tcPr == null) {
-                tcPr = cell.getCTTc().addNewTcPr();
-            }
-
-            // Set cell margins for better spacing
-            CTTcMar tcMar = tcPr.getTcMar();
-            if (tcMar == null) {
-                tcMar = tcPr.addNewTcMar();
-            }
-
-            // Set margins around the image
-            if (tcMar.getTop() == null) tcMar.addNewTop().setW(BigInteger.valueOf(100));
-            if (tcMar.getBottom() == null) tcMar.addNewBottom().setW(BigInteger.valueOf(100));
-            if (tcMar.getLeft() == null) tcMar.addNewLeft().setW(BigInteger.valueOf(100));
-            if (tcMar.getRight() == null) tcMar.addNewRight().setW(BigInteger.valueOf(100));
-
-        } catch (Exception e) {
-            Log.e(TAG, "Error adding image to cell: " + imagePath, e);
-            // Add error text instead
-            try {
-                cell.removeParagraph(0);
-                XWPFParagraph para = cell.addParagraph();
-                para.setAlignment(ParagraphAlignment.CENTER);
-                XWPFRun run = para.createRun();
-                run.setText("Error loading image: " + imagePath);
-                run.setFontFamily("Arial");
-                run.setFontSize(10);
-            } catch (Exception ex) {
-                Log.e(TAG, "Error adding error text", ex);
-            }
-        }
-    }
-
-    /**
-     * Alternative method using MediaStore for Android 10+
-     */
-    private static void addImageToCellFromMediaStore(Context context, XWPFTableCell cell, String imageName, int width, int height) {
-        try {
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                // Use MediaStore to find the image
-                ContentResolver resolver = context.getContentResolver();
-                String[] projection = {MediaStore.Images.Media._ID, MediaStore.Images.Media.DISPLAY_NAME};
-                String selection = MediaStore.Images.Media.DISPLAY_NAME + "=?";
-                String[] selectionArgs = {imageName};
-
-                Cursor cursor = resolver.query(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
-                        projection,
-                        selection,
-                        selectionArgs,
-                        null
-                );
-
-                if (cursor != null && cursor.moveToFirst()) {
-                    long id = cursor.getLong(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
-                    Uri imageUri = ContentUris.withAppendedId(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, id);
-
-                    InputStream imageStream = resolver.openInputStream(imageUri);
-
-                    if (imageStream != null) {
-                        cell.removeParagraph(0);
-                        XWPFParagraph para = cell.addParagraph();
-                        para.setAlignment(ParagraphAlignment.CENTER);
-                        XWPFRun run = para.createRun();
-
-                        int pictureType = imageName.toLowerCase().endsWith(".png") ?
-                                XWPFDocument.PICTURE_TYPE_PNG : XWPFDocument.PICTURE_TYPE_JPEG;
-
-                        run.addPicture(imageStream, pictureType, imageName,
-                                Units.toEMU(width), Units.toEMU(height));
-
-                        imageStream.close();
-                        cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
-                    }
-                }
-
-                if (cursor != null) {
-                    cursor.close();
-                }
-            }
-        } catch (Exception e) {
-            Log.e(TAG, "Error adding image from MediaStore: " + imageName, e);
-        }
-    }
-
-
-    private static void addImageToCell2(XWPFTableCell cell, String imagePath, int maxWidth, int maxHeight) {
-
-        Utility.showLog("imagePath "+imagePath);
+    private static void addImageToCell(XWPFTableCell cell, String imagePath, int maxWidth, int maxHeight) {
+        Utility.showLog("imagePath " + imagePath);
         try {
             // Clear existing content
             if (cell.getParagraphs().size() > 0) {
@@ -1230,10 +1160,12 @@ public class ReportGenerator {
 
                     imageStream.close();
                 } else {
-                    addErrorText(run, "Failed to process image: " + imagePath);
+                    // This case should not occur since we pre-filter images, but keeping as fallback
+//                    addErrorText(run, "Failed to process image: " + imagePath);
                 }
             } else {
-                addErrorText(run, "Image not found: " + imagePath);
+                // This case should not occur since we pre-filter images, but keeping as fallback
+//                addErrorText(run, "Image not found: " + imagePath);
             }
 
             // Set cell properties for better image display
@@ -1241,9 +1173,167 @@ public class ReportGenerator {
 
         } catch (Exception e) {
             Log.e(TAG, "Error adding image to cell: " + imagePath, e);
-            addErrorTextToCell(cell, "Error loading image: " + imagePath);
+//            addErrorTextToCell(cell, "Error loading image: " + imagePath);
         }
     }
+//    /**
+//     * Add images section to the document with proper table structure
+//     */
+//    private static void addImageSection(XWPFDocument document, String title, Report report, String[] imagePaths, String[] imageNames) {
+//        try {
+//            // Add section heading
+//            XWPFParagraph imageSectionPara = document.createParagraph();
+//            imageSectionPara.setAlignment(ParagraphAlignment.LEFT);
+//            imageSectionPara.setSpacingAfter(200);
+//            imageSectionPara.setSpacingBefore(200);
+//            XWPFRun imageSectionRun = imageSectionPara.createRun();
+//            imageSectionRun.setText( title);
+//            imageSectionRun.setBold(true);
+//            imageSectionRun.setFontFamily("Arial");
+//            imageSectionRun.setFontSize(12);
+//            imageSectionRun.setColor("00B050"); // Green color
+//
+//            // Create table for images
+//            createImageTable(document, imagePaths, imageNames);
+//
+//        } catch (Exception e) {
+//            Utility.showLog("Error adding image section"+ e);
+//
+////            Log.e(TAG, );
+//        }
+//    }
+//
+//    /**
+//     * Create table with images and captions
+//     */
+//    private static void createImageTable(XWPFDocument document, String[] imagePaths, String[] imageNames) {
+//        try {
+//            XWPFTable imageTable = document.createTable();
+//            setTableBorders(imageTable);
+//            setTableWidth(imageTable, 100);
+//
+//            // Process images in pairs (2 images per row)
+//            for (int i = 0; i < imagePaths.length; i += 2) {
+//                // Create image row
+//                XWPFTableRow imageRow;
+//                if (i == 0) {
+//                    imageRow = imageTable.getRow(0); // Use existing first row
+//                } else {
+//                    imageRow = imageTable.createRow();
+//                }
+//
+//                // Ensure we have 2 columns
+//                while (imageRow.getTableCells().size() < 2) {
+//                    imageRow.addNewTableCell();
+//                }
+//
+//                // Add first image with smaller size
+//                addImageToCell(imageRow.getCell(0), imagePaths[i], 250, 180);
+//
+//                // Add second image (if exists) with smaller size
+//                if (i + 1 < imagePaths.length) {
+//                    addImageToCell(imageRow.getCell(1), imagePaths[i + 1], 250, 180);
+//                } else {
+//                    // Empty cell if odd number of images
+//                    setCellText(imageRow.getCell(1), "", false, ParagraphAlignment.CENTER);
+//                }
+//
+//                // Create caption row
+//                XWPFTableRow captionRow = imageTable.createRow();
+//                while (captionRow.getTableCells().size() < 2) {
+//                    captionRow.addNewTableCell();
+//                }
+//
+//                // Add first caption
+//                setCellText(captionRow.getCell(0), imageNames[i], true, ParagraphAlignment.CENTER);
+//
+//                // Add second caption (if exists)
+//                if (i + 1 < imageNames.length) {
+//                    setCellText(captionRow.getCell(1), imageNames[i + 1], true, ParagraphAlignment.CENTER);
+//                } else {
+//                    setCellText(captionRow.getCell(1), "", false, ParagraphAlignment.CENTER);
+//                }
+//            }
+//
+//        } catch (Exception e) {
+//            Utility.showLog("Error creating image table"+ e);
+//
+////            Log.e(TAG, );
+//        }
+//    }
+//
+//
+//
+//    private static void addImageToCell(XWPFTableCell cell, String imagePath, int maxWidth, int maxHeight) {
+//
+//        Utility.showLog("imagePath "+imagePath);
+//        try {
+//            // Clear existing content
+//            if (cell.getParagraphs().size() > 0) {
+//                cell.removeParagraph(0);
+//            }
+//
+//            XWPFParagraph para = cell.addParagraph();
+//            para.setAlignment(ParagraphAlignment.CENTER);
+//            XWPFRun run = para.createRun();
+//
+//            // Read image from public documents
+//            File imageFile = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOCUMENTS), imagePath);
+//
+//            if (imageFile.exists()) {
+//                // Process the image to fix orientation and resize
+//                byte[] processedImageBytes = processImage(imageFile, maxWidth, maxHeight);
+//
+//                if (processedImageBytes != null) {
+//                    ByteArrayInputStream imageStream = new ByteArrayInputStream(processedImageBytes);
+//
+//                    // Determine image format
+//                    String fileName = imageFile.getName().toLowerCase();
+//                    int pictureType;
+//                    if (fileName.endsWith(".png")) {
+//                        pictureType = XWPFDocument.PICTURE_TYPE_PNG;
+//                    } else if (fileName.endsWith(".jpg") || fileName.endsWith(".jpeg")) {
+//                        pictureType = XWPFDocument.PICTURE_TYPE_JPEG;
+//                    } else {
+//                        pictureType = XWPFDocument.PICTURE_TYPE_JPEG; // Default
+//                    }
+//
+//                    // Get the actual dimensions after processing
+//                    BitmapFactory.Options options = new BitmapFactory.Options();
+//                    options.inJustDecodeBounds = true;
+//                    BitmapFactory.decodeByteArray(processedImageBytes, 0, processedImageBytes.length, options);
+//
+//                    int finalWidth = options.outWidth;
+//                    int finalHeight = options.outHeight;
+//
+//                    // Use the processed image dimensions for Word document
+//                    // Scale for display in document (keep higher resolution)
+//                    if (finalWidth > maxWidth || finalHeight > maxHeight) {
+//                        float scale = Math.min((float) maxWidth / finalWidth, (float) maxHeight / finalHeight);
+//                        finalWidth = Math.round(finalWidth * scale);
+//                        finalHeight = Math.round(finalHeight * scale);
+//                    }
+//
+//                    // Add picture to the run with correct dimensions
+//                    run.addPicture(imageStream, pictureType, imageFile.getName(),
+//                            Units.toEMU(finalWidth), Units.toEMU(finalHeight));
+//
+//                    imageStream.close();
+//                } else {
+//                    addErrorText(run, "Failed to process image: " + imagePath);
+//                }
+//            } else {
+//                addErrorText(run, "Image not found: " + imagePath);
+//            }
+//
+//            // Set cell properties for better image display
+//            setCellProperties(cell);
+//
+//        } catch (Exception e) {
+//            Log.e(TAG, "Error adding image to cell: " + imagePath, e);
+//            addErrorTextToCell(cell, "Error loading image: " + imagePath);
+//        }
+//    }
 
     /**
      * Process image to fix rotation and resize appropriately while maintaining high quality
@@ -1452,44 +1542,5 @@ public class ReportGenerator {
             Log.e(TAG, "Error adding error text to cell", ex);
         }
     }
-
-// Usage example in your main report generation method:
-/*
-public static boolean generateReportWithImages(Context context, String reportName, Report report) {
-    try {
-        XWPFDocument document = new XWPFDocument();
-
-        // Create document titles
-        createDocumentTitles(document, report);
-
-        // Create the main table
-        createExactReportTable(document, report);
-
-        // Add images section
-        String[] imagePaths = {
-            "ReportMateReports/temperature_humidity.jpg",
-            "ReportMateReports/panel_exterior.jpg",
-            "ReportMateReports/panel_interior.jpg",
-            "ReportMateReports/additional_view.jpg"
-        };
-
-        String[] imageNames = {
-            "Temperature & Humidity",
-            "Panel",
-            "Panel inside",
-            "Additional View"
-        };
-
-        addImageSection(document, report, imagePaths, imageNames);
-
-        // Save document
-        return saveDocument(context, document, reportName);
-
-    } catch (Exception e) {
-        Log.e(TAG, "Error generating report with images", e);
-        return false;
-    }
-}
-*/
 
 }

@@ -1,6 +1,8 @@
 package com.hasanjaved.reportmate.utility;
 
 import android.app.AlertDialog;
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -428,6 +430,47 @@ public class PopupManager {
 
 
         });
+
+        ivCancel.setOnClickListener(v -> {
+            dialog.dismiss();
+        });
+
+        // Show dialog
+        dialog.show();
+    }
+public static void showAndroidId(Context context, ClipboardManager clipboard) {
+        // Inflate custom layout
+        LayoutInflater inflater = LayoutInflater.from(context);
+        View customView = inflater.inflate(R.layout.layout_android_id, null);
+
+        // Get references to views
+
+        EditText etAndroidId = customView.findViewById(R.id.etAndroidId);
+
+        etAndroidId.setText( Utility.getDeviceId(context));
+        ImageView ivCancel = customView.findViewById(R.id.ivCancel);
+        Button btnCopy = customView.findViewById(R.id.btnCopy);
+
+        // Create dialog
+        AlertDialog dialog = new AlertDialog.Builder(context)
+                .setView(customView)
+                .setCancelable(true)
+                .create();
+
+
+    btnCopy.setOnClickListener(v -> {
+
+        String textToCopy = etAndroidId.getText().toString().trim();
+
+//        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("", textToCopy);
+        clipboard.setPrimaryClip(clip);
+
+        Utility.showToast(context,"Android ID is copied to clipboard");
+
+        dialog.dismiss();
+
+    });
 
         ivCancel.setOnClickListener(v -> {
             dialog.dismiss();

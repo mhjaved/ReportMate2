@@ -27,6 +27,8 @@ import com.hasanjaved.reportmate.utility.PopupManager;
 import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.utility.Utility;
 
+import java.util.concurrent.CompletableFuture;
+
 public class HistoryActivity extends AppCompatActivity implements HistoryFragmentClickListener , PopupManager.ConfirmGenerateReport {
 
     private ActivityHistoryBinding binding;
@@ -43,6 +45,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+        mainHandler = new Handler(Looper.getMainLooper());
 
 
         if (getIntent().hasExtra(Utility.HISTORY_FRAGMENT_TOKEN)) {
@@ -56,10 +59,14 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
         }
 
     }
+    private ProgressDialog progressDialog;
+    private Handler mainHandler;
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        hideProgressDialog();
+
         binding = null;
     }
 
@@ -89,7 +96,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
 
     public void generateReportFile(Report report) {
 
-        String reportName = report.getProjectNo();
+        String reportName = report.getEquipment().getEquipmentName();
 
         // Show loading dialog
         ProgressDialog progressDialog = new ProgressDialog(this);
@@ -183,36 +190,105 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
 
     }
 
-    private void generateReportWithThread(Report report) {
-        Handler mainHandler = new Handler(Looper.getMainLooper());
+    private void generateReportAsync(String reportName, Report report) {
+//        if (isGenerating) {
+//            Toast.makeText(this, "Report generation already in progress", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
 
-        Thread thread = new Thread(() -> {
-            boolean success = false;
+//        isGenerating = true;
+//        generateButton.setEnabled(false);
+        showProgressDialog();
+
+        CompletableFuture.runAsync(() -> {
             try {
-                generateReportFile(report);
-                success = true;
+                ReportGenerator.generateReport(this, reportName, report,
+                        new ReportGenerator.ReportGenerationCallback() {
+                            @Override
+                            public void onStarted() {
+                                mainHandler.post(() -> {
+                                    updateProgress(0, "Starting report generation...");
+                                });
+                            }
+
+                            @Override
+                            public void onProgress(int progress, String message) {
+                                mainHandler.post(() -> {
+                                    updateProgress(progress, message);
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(String filePath) {
+                                mainHandler.post(() -> {
+                                    hideProgressDialog();
+//                                    generateButton.setEnabled(true);
+//                                    isGenerating = false;
+                                    Toast.makeText(HistoryActivity.this,
+                                            "Report generated successfully!", Toast.LENGTH_LONG).show();
+                                });
+                            }
+
+                            @Override
+                            public void onError(String errorMessage) {
+                                mainHandler.post(() -> {
+                                    hideProgressDialog();
+//                                    generateButton.setEnabled(true);
+//                                    isGenerating = false;
+                                    Toast.makeText(HistoryActivity.this,
+                                            "Error generating report: " + errorMessage, Toast.LENGTH_LONG).show();
+                                });
+                            }
+                        });
             } catch (Exception e) {
-                e.printStackTrace();
+                mainHandler.post(() -> {
+                    hideProgressDialog();
+//                    generateButton.setEnabled(true);
+//                    isGenerating = false;
+                    Toast.makeText(HistoryActivity.this,
+                            "Exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
             }
-
-            // Post result to main thread
-            boolean finalSuccess = success;
+        }).exceptionally(throwable -> {
             mainHandler.post(() -> {
-                if (finalSuccess) {
-//                    Toast.makeText(this, "Report generated successfully", Toast.LENGTH_SHORT).show();
-                } else {
-//                    Toast.makeText(this, "Failed to generate report", Toast.LENGTH_SHORT).show();
-                }
+                hideProgressDialog();
+//                generateButton.setEnabled(true);
+//                isGenerating = false;
+                Toast.makeText(HistoryActivity.this,
+                        "Unexpected error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
             });
+            return null;
         });
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Generating Report");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
 
-        thread.start();
+    private void updateProgress(int progress, String message) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.setProgress(progress);
+            progressDialog.setMessage(message);
+        }
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
     }
 
 
     @Override
     public void confirmed(Report report) {
-        generateReportFile(report);
+//        generateReportFile(report);
+        String reportName = report.getEquipment().getEquipmentName();
+        generateReportAsync(reportName,report);
     }
 
     @Override

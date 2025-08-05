@@ -2,7 +2,6 @@ package com.hasanjaved.reportmate.utility;
 
 import android.content.Context;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Environment;
 import android.util.Log;
 import android.widget.ImageView;
@@ -105,8 +104,8 @@ public class ImageLoader {
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
-                .placeholder(R.drawable.ic__image_24)
-                .error(R.drawable.ic__image_24)
+                .placeholder(R.drawable.ic_image_24)
+                .error(R.drawable.ic_image_24)
                 .signature(new ObjectKey(signature));
 
         Glide.with(context)
@@ -138,7 +137,7 @@ public class ImageLoader {
      */
     private static void loadPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(R.drawable.ic__image_24)
+                .load(R.drawable.ic_image_24)
                 .into(imageView);
     }
 
@@ -149,7 +148,7 @@ public class ImageLoader {
      */
     private static void loadErrorPlaceholder(Context context, ImageView imageView) {
         Glide.with(context)
-                .load(R.drawable.ic__image_24)
+                .load(R.drawable.ic_image_24)
                 .into(imageView);
     }
 
@@ -212,8 +211,8 @@ public class ImageLoader {
                     .override(width, height)
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic__image_24)
-                    .error(R.drawable.ic__image_24);
+                    .placeholder(R.drawable.ic_image_24)
+                    .error(R.drawable.ic_image_24);
 
             if (imageFile.exists()) {
                 Glide.with(context)
@@ -243,8 +242,8 @@ public class ImageLoader {
             RequestOptions options = new RequestOptions()
                     .centerCrop()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
-                    .placeholder(R.drawable.ic__image_24)
-                    .error(R.drawable.ic__image_24);
+                    .placeholder(R.drawable.ic_image_24)
+                    .error(R.drawable.ic_image_24);
 
             Glide.with(context)
                     .load(imageUri)
