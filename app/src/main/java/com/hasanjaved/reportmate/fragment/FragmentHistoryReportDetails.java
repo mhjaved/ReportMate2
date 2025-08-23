@@ -277,17 +277,17 @@ public class FragmentHistoryReportDetails extends Fragment implements PopupManag
 
         //---------------------------------show pop ups ---------------------------------------------
         binding.viewSummary.ivEditCustomer.setOnClickListener(view ->
-                PopupManager.showEditCustomerPopup(activity, getReport(reportIndex), this)
+                PopupManager.showEditCustomerPopupHistory(activity, getReport(reportIndex), this)
         );
         binding.viewSummary.ivEditSite.setOnClickListener(view ->
-                PopupManager.showEditSitePopup(activity, getReport(reportIndex), this)
+                PopupManager.showEditSitePopupHistory(activity, getReport(reportIndex), this)
         );
 
         binding.viewIrSummary.ivEditLineToGround.setOnClickListener(view ->
-                PopupManager.showEditIrPopupGround(activity, getReport(reportIndex), this)
+                PopupManager.showEditIrPopupGroundHistory(activity, getReport(reportIndex), this)
         );
         binding.viewIrSummary.ivEditLineToLine.setOnClickListener(view ->
-                PopupManager.showEditIrPopupLine(activity, getReport(reportIndex), this)
+                PopupManager.showEditIrPopupLineHistory(activity, getReport(reportIndex), this)
         );
 
     }
@@ -355,8 +355,10 @@ public class FragmentHistoryReportDetails extends Fragment implements PopupManag
             binding.viewSummary.sectionSiteDetails.tvOwner.setText(report.getOwnerIdentification());
             binding.viewSummary.sectionSiteDetails.tvDateOfLastInspection.setText(report.getDateOfLastInspection());
             binding.viewSummary.sectionSiteDetails.tvLastInspectionNo.setText(report.getLastInspectionReportNo());
-            binding.viewSummary.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature());
-            binding.viewSummary.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity());
+//            binding.viewSummary.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature());
+//            binding.viewSummary.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity());
+            binding.viewSummary.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature()+"°C");
+            binding.viewSummary.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity()+"%");
 
             binding.viewSummary.sectionEquipmentDetails.tvEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
             binding.viewSummary.sectionEquipmentDetails.tvEquipmentName.setText(report.getEquipment().getEquipmentName());
@@ -479,12 +481,12 @@ public class FragmentHistoryReportDetails extends Fragment implements PopupManag
 
     @Override
     public void onTripEditClicked(List<CircuitBreaker> list, int index) {
-        PopupManager.showEditTripPopupLine(activity, getReport(reportIndex), list, index, this);
+        PopupManager.showEditTripPopupLineHistory(activity, getReport(reportIndex), list, index, this);
     }
 
     @Override
     public void onCrmEditClicked(List<CircuitBreaker> list, int index) {
-        PopupManager.showEditCrmPopupLine(activity, getReport(reportIndex), list, index, this);
+        PopupManager.showEditCrmPopupLineHistory(activity, getReport(reportIndex), list, index, this);
     }
 
 
@@ -536,28 +538,6 @@ public class FragmentHistoryReportDetails extends Fragment implements PopupManag
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-
-//            if (imageView!=null){
-            imageView.setVisibility(View.VISIBLE);
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
-//            }
-
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-
-//            if (imageView==null){
-//                setCrmData(getReport(reportIndex));
-//                setTripData(getReport(reportIndex));
-//            }
-
-        }
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
     }
 }

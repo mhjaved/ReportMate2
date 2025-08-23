@@ -189,8 +189,8 @@
 
                 <ImageView
                     android:id="@+id/ivShowImage1"
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_camera_short"
                     android:layout_marginTop="@dimen/space_8"
@@ -257,8 +257,8 @@
 
                 <ImageView
                     android:id="@+id/ivShowImage2"
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_camera_short"
                     android:layout_marginTop="@dimen/space_8"
@@ -323,8 +323,8 @@
 
                 <ImageView
                     android:id="@+id/ivShowImage3"
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
                     android:layout_marginTop="@dimen/space_8"
                     android:background="@color/white"
                     android:contentDescription="@string/demo_description"
@@ -388,8 +388,8 @@
 
                 <ImageView
                     android:id="@+id/ivShowImage4"
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_camera_short"
                     android:layout_marginTop="@dimen/space_8"

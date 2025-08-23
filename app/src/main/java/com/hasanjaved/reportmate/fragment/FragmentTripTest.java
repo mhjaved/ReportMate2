@@ -165,20 +165,6 @@ public class FragmentTripTest extends Fragment implements  CameraFragmentClickLi
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-            imageView.setVisibility(View.VISIBLE);
-
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-        }
-
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
     }
 }

@@ -37,6 +37,7 @@ import com.hasanjaved.reportmate.model.Employee;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.InputValidator;
 import com.hasanjaved.reportmate.utility.Utility;
 
@@ -255,9 +256,6 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
         binding = null;
     }
 
-
-
-
     private boolean checkCustomerDetailsData() {
         boolean allFilled = true;
 
@@ -383,35 +381,15 @@ public class NewReportFragmentPhaseOne extends Fragment implements CameraFragmen
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
 
-        if (!imageLocation.equals("")) {
-            imageView.setVisibility(View.VISIBLE);
-//            Context context, ImageView imageView, Uri imageUri
-//            ImageLoader.loadImageFromUri();
-//            Glide.with(activity)
-//                    .load(Uri.parse("file:" + imageLocation))
-//                    .into(imageView);
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
 
+//            FileMover.moveImageToDocumentsSubfolder(
+//                    activity,
+//                    imageLocation,
+//                    imageName,
+//                    subFolder
+//            );
 
-            RequestOptions options = new RequestOptions()
-                    .centerCrop()
-                    .placeholder(R.drawable.ic_image_24)
-                    .error(R.drawable.ic_image_24)
-                    ;
-
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .skipMemoryCache(true)
-                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-                    .apply(options)
-                    .into(imageView);
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-        }
 
     }
 

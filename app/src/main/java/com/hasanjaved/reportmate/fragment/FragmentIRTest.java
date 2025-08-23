@@ -22,6 +22,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 import net.cachapa.expandablelayout.ExpandableLayout;
 
@@ -305,18 +306,6 @@ public class FragmentIRTest extends Fragment implements RecyclerViewClickListene
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-            imageView.setVisibility(View.VISIBLE);
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-        }
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
     }
 }

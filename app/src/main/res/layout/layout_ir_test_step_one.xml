@@ -142,8 +142,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageAgConnection"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"
@@ -204,8 +204,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageAgResult"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"
@@ -354,8 +354,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageBgConnection"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"
@@ -416,8 +416,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageBgResult"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"
@@ -566,8 +566,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageCgConnection"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"
@@ -627,8 +627,8 @@
 
                         <ImageView
                             android:id="@+id/ivShowImageCgResult"
-                            android:layout_width="400dp"
-                            android:layout_height="300dp"
+                            android:layout_width="350dp"
+                            android:layout_height="350dp"
                             android:scaleType="centerInside"
                             android:src="@drawable/img_demo_temp"
                             android:layout_marginTop="@dimen/space_8"

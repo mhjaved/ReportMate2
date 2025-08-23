@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.RequestOptions;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.data_manager.TestData;
 import com.hasanjaved.reportmate.databinding.FragmentCrmTestBinding;
@@ -21,6 +23,7 @@ import com.hasanjaved.reportmate.listeners.FragmentClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.utility.DirectoryManager;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import java.util.Objects;
@@ -199,19 +202,9 @@ public class FragmentCrmTest extends Fragment implements CameraFragmentClickList
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-            imageView.setVisibility(View.VISIBLE);
 
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
 
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-        }
+
     }
 }

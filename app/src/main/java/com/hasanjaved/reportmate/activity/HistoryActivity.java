@@ -16,6 +16,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.databinding.ActivityHistoryBinding;
 import com.hasanjaved.reportmate.fragment.FragmentCamera;
+import com.hasanjaved.reportmate.fragment.FragmentCamera2;
 import com.hasanjaved.reportmate.fragment.FragmentHistoryReportDetails;
 import com.hasanjaved.reportmate.fragment.FragmentOngoingReportDetails;
 import com.hasanjaved.reportmate.fragment.FragmentReportHistoryList;
@@ -180,7 +181,7 @@ public class HistoryActivity extends AppCompatActivity implements HistoryFragmen
     @Override
     public void openCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView, String imageName, String subFolder) {
 
-        FragmentCamera fragment = FragmentCamera.newInstance("","");
+        FragmentCamera2 fragment = FragmentCamera2.newInstance("","");
         fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
         getSupportFragmentManager()
                 .beginTransaction()

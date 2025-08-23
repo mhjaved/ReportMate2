@@ -55,7 +55,7 @@ public class Equipment {
     }
 
     public void setAirHumidity(String airHumidity) {
-        this.airHumidity = airHumidity+"%";
+        this.airHumidity = airHumidity;
     }
 
     public String getImageDbBoxFront() {

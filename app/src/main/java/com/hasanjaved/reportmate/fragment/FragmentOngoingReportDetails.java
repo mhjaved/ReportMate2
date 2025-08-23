@@ -354,8 +354,8 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
             binding.viewSummary.sectionSiteDetails.tvOwner.setText(report.getOwnerIdentification());
             binding.viewSummary.sectionSiteDetails.tvDateOfLastInspection.setText(report.getDateOfLastInspection());
             binding.viewSummary.sectionSiteDetails.tvLastInspectionNo.setText(report.getLastInspectionReportNo());
-            binding.viewSummary.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature());
-            binding.viewSummary.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity());
+            binding.viewSummary.sectionSiteDetails.tvAirTemperature.setText(report.getEquipment().getAirTemperature()+"°C");
+            binding.viewSummary.sectionSiteDetails.tvRelativeHumidity.setText(report.getEquipment().getAirHumidity()+"%");
 
             binding.viewSummary.sectionEquipmentDetails.tvEquipmentLocation.setText(report.getEquipment().getEquipmentLocation());
             binding.viewSummary.sectionEquipmentDetails.tvEquipmentName.setText(report.getEquipment().getEquipmentName());
@@ -507,7 +507,6 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
     @Override
     public void savedSiteDetails() {
         setEquipmentSummary(getReport(reportIndex));
-
     }
 
     @Override
@@ -535,28 +534,6 @@ public class FragmentOngoingReportDetails extends Fragment implements PopupManag
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-
-//            if (imageView!=null){
-            imageView.setVisibility(View.VISIBLE);
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
-//            }
-
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-
-//            if (imageView==null){
-//                setCrmData(getReport(reportIndex));
-//                setTripData(getReport(reportIndex));
-//            }
-
-        }
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
     }
 }

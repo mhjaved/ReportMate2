@@ -268,7 +268,7 @@ public class ReportGenerator {
         mergeCellsHorizontally(table, 3, 10, 11); // colspan=2
         setCellText(row4.getCell(0), "ADDRESS: " + report.getCustomerAddress(), false, ParagraphAlignment.LEFT);
         setCellText(row4.getCell(7), "AIR TEMP: " + report.getEquipment().getAirTemperature()+"°C", false, ParagraphAlignment.LEFT);
-        setCellText(row4.getCell(10), "REL HUMIDITY: " + report.getEquipment().getAirHumidity(), false, ParagraphAlignment.LEFT);
+        setCellText(row4.getCell(10), "REL HUMIDITY: " + report.getEquipment().getAirHumidity()+"%", false, ParagraphAlignment.LEFT);
 
         // Row 5: OWNER/USER, DATE LAST INSPECTION (colspan=7, 5)
         XWPFTableRow row5 = table.createRow();

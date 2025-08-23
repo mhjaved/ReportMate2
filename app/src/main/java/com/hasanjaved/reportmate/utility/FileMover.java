@@ -21,7 +21,17 @@ public class FileMover {
                     return;
                 }
 
+
+
                 String relativePath = Environment.DIRECTORY_DOCUMENTS + "/" + targetSubfolder;
+
+//                File file = new File(relativePath, newFileName + ".jpg");
+//                Utility.showLog(" j   "+file.getPath());
+
+//                if (file.exists()) {
+//                    file.delete(); // replace existing image
+//                }
+
                 Uri collection = MediaStore.Files.getContentUri("external");
 
                 // Delete existing file with same name and path if it exists

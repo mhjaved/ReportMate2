@@ -4,6 +4,7 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Environment;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -20,40 +21,35 @@ public class ImageLoader {
     private static final String TAG = "ImageLoader";
     private static final String REPORTMATE_DIRECTORY = "ReportMate";
 
-    /**
-     * Load image from public Documents/ReportMate folder using Glide
-     * @param context Application context
-     * @param imageView ImageView to display the image
-     * @param imageName Name of the image file (e.g., "img.jpg")
-     */
-    public static void loadImageFromReportMate(Context context, ImageView imageView, String imageName) {
-        try {
-            // Get the image file path
-            String imagePath = getImagePath(imageName);
-            File imageFile = new File(imagePath);
+    public static void showImageFromCamera(Context context, ImageView imageView, String imageLocation) {
 
-            Log.d(TAG, "Looking for image at: " + imagePath);
+        if (!imageLocation.isEmpty()) {
+            imageView.setVisibility(View.VISIBLE);
 
-            if (imageFile.exists()) {
-                // Image exists - load with Glide
-                loadImageWithGlide(context, imageView, imageFile);
-                Log.d(TAG, "Image found and loaded: " + imageName);
-            } else {
-                // Image not found - show placeholder
-                loadPlaceholder(context, imageView);
-                Log.w(TAG, "Image not found: " + imagePath);
-                Toast.makeText(context, "Image not found: " + imageName, Toast.LENGTH_SHORT).show();
-            }
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
 
-        } catch (Exception e) {
-            Log.e(TAG, "Error loading image: " + imageName, e);
-            loadErrorPlaceholder(context, imageView);
-            Toast.makeText(context, "Error loading image: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+//            .centerCrop()
+            RequestOptions options = new RequestOptions()
+                    .placeholder(R.drawable.ic_image_24)
+                    .error(R.drawable.ic_image_24)
+                    .override(Utility.ImageWidth, Utility.ImageHeight);
+
+            Glide.with(context)
+                    .load(Uri.parse("file:" + imageLocation))
+                    .skipMemoryCache(true)
+                    .diskCacheStrategy(DiskCacheStrategy.NONE)
+                    .apply(options)
+                    .into(imageView)
+            ;
+
+
         }
     }
-    public static void showImageFromStorage(Context context, ImageView imageView, String localImagePath) {
-        try {
 
+
+    public static void showImageFromStorage(Context context, ImageView imageView, String localImagePath) {
+
+        try {
             Glide.with(context).clear(imageView);
             imageView.setImageDrawable(null);
             // Get the image file path
@@ -70,7 +66,7 @@ public class ImageLoader {
                 // Image not found - show placeholder
                 loadPlaceholder(context, imageView);
                 Utility.showLog(  "Image not found: " + localImagePath);
-                Toast.makeText(context, "Image not found: " + localImagePath, Toast.LENGTH_SHORT).show();
+//                Toast.makeText(context, "Image not found: " + localImagePath, Toast.LENGTH_SHORT).show();
             }
 
         } catch (Exception e) {
@@ -100,13 +96,13 @@ public class ImageLoader {
      */
     private static void loadImageWithGlide(Context context, ImageView imageView, File imageFile) {
 
-        String signature = imageFile.lastModified() + "_" + imageFile.length();
+//        String signature = imageFile.lastModified() + "_" + imageFile.length();
 
         RequestOptions options = new RequestOptions()
                 .centerCrop()
                 .placeholder(R.drawable.ic_image_24)
                 .error(R.drawable.ic_image_24)
-                .signature(new ObjectKey(signature));
+                .override(Utility.ImageWidth, Utility.ImageHeight);
 
         Glide.with(context)
                 .load(imageFile)
@@ -115,19 +111,16 @@ public class ImageLoader {
                 .apply(options)
                 .into(imageView);
 
-        //        RequestOptions options = new RequestOptions()
-//                .centerCrop() // or .fitCenter() depending on your needs
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .placeholder(android.R.drawable.ic_menu_gallery) // Placeholder while loading
-//                .error(android.R.drawable.ic_menu_close_clear_cancel); // Error placeholder
-//
-//
+        // this was previous version
+//        Remove .skipMemoryCache(true) and .diskCacheStrategy(DiskCacheStrategy.NONE) unless you really need fresh images every time.
+//        Glide’s caching actually reduces memory pressure.
 //        Glide.with(context)
 //                .load(imageFile)
-//                .skipMemoryCache(true)       // skip memory cache
+//                .skipMemoryCache(true)
 //                .diskCacheStrategy(DiskCacheStrategy.NONE)
 //                .apply(options)
 //                .into(imageView);
+
     }
 
     /**

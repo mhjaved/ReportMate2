@@ -2,6 +2,8 @@ package com.hasanjaved.reportmate.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.ImageView;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
@@ -22,16 +24,23 @@ import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.Utility;
 
+import java.util.concurrent.CompletableFuture;
+
 public class NewReportActivity extends AppCompatActivity implements FragmentClickListener {
 
+    private ProgressDialog progressDialog;
+    private Handler mainHandler;
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_new_report);
 
         Utility.saveReport(this,null);
-
         addNewReportFragment();
+
+        mainHandler = new Handler(Looper.getMainLooper());
+        
 //        generateSampleDocument();
 //        addNewReportFragmentPhaseThreeIR();
 //        addNewReportFragmentPhaseTwo();
@@ -88,7 +97,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 //    }
 
     public void generateReportFile(Report report) {
-        String reportName = report.getProjectNo();
+        String reportName = report.getEquipment().getEquipmentName();
 
         // Show loading dialog
         ProgressDialog progressDialog = new ProgressDialog(this);
@@ -173,6 +182,99 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     }
 
+    private void generateReportAsync(String reportName, Report report) {
+//        if (isGenerating) {
+//            Toast.makeText(this, "Report generation already in progress", Toast.LENGTH_SHORT).show();
+//            return;
+//        }
+
+//        isGenerating = true;
+//        generateButton.setEnabled(false);
+        showProgressDialog();
+
+        CompletableFuture.runAsync(() -> {
+            try {
+                ReportGenerator.generateReport(this, reportName, report,
+                        new ReportGenerator.ReportGenerationCallback() {
+                            @Override
+                            public void onStarted() {
+                                mainHandler.post(() -> {
+                                    updateProgress(0, "Starting report generation...");
+                                });
+                            }
+
+                            @Override
+                            public void onProgress(int progress, String message) {
+                                mainHandler.post(() -> {
+                                    updateProgress(progress, message);
+                                });
+                            }
+
+                            @Override
+                            public void onSuccess(String filePath) {
+                                mainHandler.post(() -> {
+                                    hideProgressDialog();
+//                                    generateButton.setEnabled(true);
+//                                    isGenerating = false;
+                                    Toast.makeText(NewReportActivity.this,
+                                            "Report generated successfully!", Toast.LENGTH_LONG).show();
+                                });
+                            }
+
+                            @Override
+                            public void onError(String errorMessage) {
+                                mainHandler.post(() -> {
+                                    hideProgressDialog();
+//                                    generateButton.setEnabled(true);
+//                                    isGenerating = false;
+                                    Toast.makeText(NewReportActivity.this,
+                                            "Error generating report: " + errorMessage, Toast.LENGTH_LONG).show();
+                                });
+                            }
+                        });
+            } catch (Exception e) {
+                mainHandler.post(() -> {
+                    hideProgressDialog();
+//                    generateButton.setEnabled(true);
+//                    isGenerating = false;
+                    Toast.makeText(NewReportActivity.this,
+                            "Exception: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                });
+            }
+        }).exceptionally(throwable -> {
+            mainHandler.post(() -> {
+                hideProgressDialog();
+//                generateButton.setEnabled(true);
+//                isGenerating = false;
+                Toast.makeText(NewReportActivity.this,
+                        "Unexpected error: " + throwable.getMessage(), Toast.LENGTH_LONG).show();
+            });
+            return null;
+        });
+    }
+    private void showProgressDialog() {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setTitle("Generating Report");
+        progressDialog.setMessage("Please wait...");
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+        progressDialog.setMax(100);
+        progressDialog.setCancelable(false);
+        progressDialog.show();
+    }
+
+    private void updateProgress(int progress, String message) {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.setProgress(progress);
+            progressDialog.setMessage(message);
+        }
+    }
+
+    private void hideProgressDialog() {
+        if (progressDialog != null && progressDialog.isShowing()) {
+            progressDialog.dismiss();
+        }
+    }
+
 
     @Override
     public void addNewReportPhaseTwoFragment() {
@@ -231,7 +333,10 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
 
     @Override
     public void generateReport(Report report) {
-        generateReportFile(report);
+//        generateReportFile(report);
+        String reportName = report.getEquipment().getEquipmentName();
+        generateReportAsync(reportName,report);
+
     }
 
     @Override
@@ -257,6 +362,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .add(R.id.fragmentHolder,fragment,"")
                 .addToBackStack("")
                 .commit();
+
     }
 
     @Override

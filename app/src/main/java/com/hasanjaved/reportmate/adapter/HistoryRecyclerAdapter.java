@@ -4,6 +4,7 @@ import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -88,6 +89,7 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 //
 //
         holder.itemView.setOnClickListener(view -> recyclerViewClickListener.onItemClicked(currentPosition));
+        holder.ivDelete.setOnClickListener(view -> recyclerViewClickListener.onDeleteClicked(currentPosition));
 
     }
 
@@ -101,13 +103,14 @@ public class HistoryRecyclerAdapter extends RecyclerView.Adapter<HistoryRecycler
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public TextView tvClientName, tvProjectCode,tvCrm,tvTrip;
+        public ImageView ivDelete;
 
         public MyViewHolder(View view) {
             super(view);
 
             tvClientName = view.findViewById(R.id.tvClientName);
             tvProjectCode = view.findViewById(R.id.tvProjectCode);
-//            tvCrm = view.findViewById(R.id.tvCrm);
+            ivDelete = view.findViewById(R.id.ivDelete);
 //            tvTrip = view.findViewById(R.id.tvTrip);
 
         }

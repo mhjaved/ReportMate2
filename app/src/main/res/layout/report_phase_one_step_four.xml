@@ -88,8 +88,8 @@
 
                 <ImageView
                     android:id="@+id/ivShowImage"
-                    android:layout_width="400dp"
-                    android:layout_height="300dp"
+                    android:layout_width="@dimen/image_width"
+                    android:layout_height="@dimen/image_height"
                     android:scaleType="centerInside"
                     android:src="@drawable/ic_camera_short"
                     android:layout_marginTop="@dimen/space_8"

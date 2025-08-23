@@ -351,18 +351,6 @@ public class NewReportFragmentPhaseTwo extends Fragment implements RecyclerViewC
         circuitListRecyclerAdapter.notifyDataSetChanged();
     }
 
-    private void showImage() {
-//        SharedPreferences preferences =activity.getSharedPreferences("pref", Context.MODE_PRIVATE);
-//
-//        Utility.showLog(" "+preferences.getString(Utility.ImageToken,"hasan"));
-//        String fileLocation = "file:"+preferences.getString(Utility.ImageToken,"hasan");
-//        Utility.showLog(fileLocation);
-//
-//        Glide.with(activity)
-//                .load(Uri.parse(fileLocation))
-//                .into(binding.viewOne.sectionSiteDetails.ivSiteDetails);
-
-    }
 
     private void setViewFourNextButtonStatus() {
 

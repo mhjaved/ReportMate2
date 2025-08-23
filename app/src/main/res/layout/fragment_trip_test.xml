@@ -188,8 +188,8 @@
 
                     <ImageView
                         android:id="@+id/imgInjectorCurrentShow"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"
@@ -250,8 +250,8 @@
 
                     <ImageView
                         android:id="@+id/imgInjectedCurrentShow"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"
@@ -438,8 +438,8 @@
 
                     <ImageView
                         android:id="@+id/imgTripTimeShow"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"
@@ -565,8 +565,8 @@
 
                     <ImageView
                         android:id="@+id/imgAfterTripTimeShow"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"

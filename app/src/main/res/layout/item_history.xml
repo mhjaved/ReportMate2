@@ -52,11 +52,11 @@
         android:background="?attr/selectableItemBackgroundBorderless"
         android:clickable="true"
         android:focusable="true"
-        android:visibility="gone"
+        android:visibility="visible"
         android:contentDescription="@string/demo_description"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:tint="@color/text_black" />
+        app:tint="@color/line_gray" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

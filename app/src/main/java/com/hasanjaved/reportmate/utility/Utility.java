@@ -2,10 +2,8 @@ package com.hasanjaved.reportmate.utility;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.os.Environment;
 import android.provider.Settings;
 import android.util.Log;
 import android.widget.EditText;
@@ -21,7 +19,6 @@ import com.hasanjaved.reportmate.model.ReportOngoing;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 public class Utility {
 
@@ -46,33 +43,9 @@ public class Utility {
     private static final String REPORTMATE_DIRECTORY = "ReportMate";
 
 
-
-
-//    public static final String imgAgConnection = "imgAgConnection";
-//    public static final String imgBgConnection = "imgBgConnection";
-//    public static final String imgCgConnection = "imgCgConnection";
-
-//    public static final String imgAgResult = "imgAgResult";
-//    public static final String imgBgResult = "imgBgResult";
-//    public static final String imgCgResult = "imgCgResult";
-
-
-//    public static final String imgAbConnection = "imgAbConnection";
-//    public static final String imgBcConnection = "imgBcConnection";
-//    public static final String imgCaConnection = "imgCaConnection";
-//    public static final String imgCrmConnection = "imgCrmConnection";
-//    public static final String imgCrmResult = "imgCrmResult";
-
-//    public static final String imgAbResult = "imgAbResult";
-//    public static final String imgBcResult = "imgBcResult";
-//    public static final String imgCaResult = "imgCaResult";
-
-//    public static final String imgCrmConnection = "imgCrmConnection";
-//    public static final String imgCrmResult = "imgCrmResult";
-
-
-
     public static final String ImageToken = "ImageToken";
+    public static int ImageWidth = 380;
+    public static int ImageHeight = 225;
 
     // trip images
 
@@ -85,8 +58,6 @@ public class Utility {
     public static void showToast(Context context, String text) {
         Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
-
-
 
     public static void getCompletedReportList() {
 
@@ -102,7 +73,7 @@ public class Utility {
             Gson gson = new Gson();
             return gson.fromJson(connectionsJSONString, Employee.class);
         } catch (NullPointerException e) {
-            Log.d(Utility.TAG, "\n NullPointerException in getEmployee");
+            Utility.showLog( "\n NullPointerException in getEmployee");
             return null;
         }
     }
@@ -120,7 +91,6 @@ public class Utility {
 
     }
 
-
     public static Report getReport(Context context) {
         try {
             String connectionsJSONString = context.getSharedPreferences
@@ -128,11 +98,10 @@ public class Utility {
             Gson gson = new Gson();
             return gson.fromJson(connectionsJSONString, Report.class);
         } catch (NullPointerException e) {
-            Log.d(Utility.TAG, "\n NullPointerException in getReport");
+            Utility.showLog( "\n NullPointerException in getReport");
             return null;
         }
     }
-
 
     public static void saveReport(Context context, Report report) {
 
@@ -146,19 +115,6 @@ public class Utility {
         prefsEditor.apply();
     }
 
-    public static ReportOngoing getOngoingReportList(Context context) {
-        try {
-            String connectionsJSONString = context.getSharedPreferences
-                    (Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE).getString(Utility.ONGOING_REPORT_LIST, null);
-            Gson gson = new Gson();
-             return gson.fromJson(connectionsJSONString, ReportOngoing.class);
-
-        } catch (NullPointerException e) {
-            Log.d(Utility.TAG, "\n NullPointerException in getOngoingReportList");
-            return null;
-        }
-    }
-
     public static ReportHistory getHistoryReportList(Context context) {
         try {
             String connectionsJSONString = context.getSharedPreferences
@@ -167,7 +123,108 @@ public class Utility {
              return gson.fromJson(connectionsJSONString, ReportHistory.class);
 
         } catch (NullPointerException e) {
-            Log.d(Utility.TAG, "\n NullPointerException in getHistoryReportList");
+            Utility.showLog( "\n NullPointerException in getHistoryReportList");
+            return null;
+        }
+    }
+    public static void saveReportHistory(Context context, Report report) {
+
+        SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
+
+        SharedPreferences.Editor prefsEditor = mPrefs.edit();
+        ReportHistory reportHistory = getHistoryReportList(context);
+        if (reportHistory==null){
+            reportHistory = new ReportHistory();
+            List<Report> list = new ArrayList<>();
+            list.add(report);
+            reportHistory.setReportHistoryList(list);
+        }else {
+            List<Report> list = reportHistory.getReportHistoryList();
+            if (list==null){
+                list = new ArrayList<>();
+            }
+            boolean updated = false;
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getEquipment().getEquipmentName().equals(report.getEquipment().getEquipmentName())) {
+                    list.set(i, report);
+                    updated = true;
+                    break;
+                }
+            }
+            if (!updated) {
+                list.add(report); // Add new if not found
+            }
+
+
+            reportHistory.setReportHistoryList(list);
+        }
+
+
+        Gson gson = new Gson();
+        String string = gson.toJson(reportHistory);
+        prefsEditor.putString(Utility.REPORT_HISTORY_LIST, string);
+
+        prefsEditor.apply();
+
+    }
+    public static void deleteHistoryReport(Context context, int index) {
+        try {
+            // Get current history report list
+            ReportHistory reportHistory = getHistoryReportList(context);
+
+            // Check if history reports exist
+            if (reportHistory == null || reportHistory.getReportHistoryList() == null) {
+                Utility.showLog("No history reports found to delete");
+                return;
+            }
+
+            List<Report> list = reportHistory.getReportHistoryList();
+
+            // Validate index
+            if (index < 0 || index >= list.size()) {
+                Utility.showLog("Invalid index: " + index + ". List size: " + list.size());
+                return;
+            }
+
+            // Remove the report at the specified index
+            Report removedReport = list.remove(index);
+            Utility.showLog("Deleted history report: " +
+                    (removedReport.getEquipment() != null ? removedReport.getEquipment().getEquipmentName() : "Unknown"));
+
+            // Update the history report list
+            reportHistory.setReportHistoryList(list);
+
+            // Save updated list to SharedPreferences
+            SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+            if (list.isEmpty()) {
+                // If list is empty, remove the entire key
+                prefsEditor.remove(Utility.REPORT_HISTORY_LIST);
+                Utility.showLog("All history reports deleted. Cleared from SharedPreferences.");
+            } else {
+                // Save updated list
+                Gson gson = new Gson();
+                String string = gson.toJson(reportHistory);
+                prefsEditor.putString(Utility.REPORT_HISTORY_LIST, string);
+                Utility.showLog("Updated history reports list. Remaining count: " + list.size());
+            }
+
+            prefsEditor.apply();
+
+        } catch (Exception e) {
+            Utility.showLog("Error deleting history report at index " + index + ": " + e.getMessage());
+        }
+    }
+    public static ReportOngoing getOngoingReportList(Context context) {
+        try {
+            String connectionsJSONString = context.getSharedPreferences
+                    (Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE).getString(Utility.ONGOING_REPORT_LIST, null);
+            Gson gson = new Gson();
+            return gson.fromJson(connectionsJSONString, ReportOngoing.class);
+
+        } catch (NullPointerException e) {
+            Utility.showLog( "\n NullPointerException in getOngoingReportList");
             return null;
         }
     }
@@ -212,57 +269,64 @@ public class Utility {
         prefsEditor.apply();
 
     }
-    public static void saveReportHistory(Context context, Report report) {
 
-        SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
 
-        SharedPreferences.Editor prefsEditor = mPrefs.edit();
-        ReportHistory reportHistory = getHistoryReportList(context);
-        if (reportHistory==null){
-            reportHistory = new ReportHistory();
-           List<Report> list = new ArrayList<>();
-           list.add(report);
-            reportHistory.setReportHistoryList(list);
-        }else {
-            List<Report> list = reportHistory.getReportHistoryList();
-            if (list==null){
-                list = new ArrayList<>();
+
+    public static void deleteOngoingReport(Context context, int index) {
+        try {
+            // Get current ongoing report list
+            ReportOngoing ongoing = getOngoingReportList(context);
+
+            // Check if ongoing reports exist
+            if (ongoing == null || ongoing.getOngoingReportList() == null) {
+                Utility.showLog( "No ongoing reports found to delete");
+                return;
             }
-                    boolean updated = false;
-                    for (int i = 0; i < list.size(); i++) {
-                        if (list.get(i).getEquipment().getEquipmentName().equals(report.getEquipment().getEquipmentName())) {
-                            list.set(i, report);
-                            updated = true;
-                            break;
-                        }
-                    }
-                    if (!updated) {
-                        list.add(report); // Add new if not found
-                    }
 
+            List<Report> list = ongoing.getOngoingReportList();
 
-            reportHistory.setReportHistoryList(list);
+            // Validate index
+            if (index < 0 || index >= list.size()) {
+                Utility.showLog( "Invalid index: " + index + ". List size: " + list.size());
+                return;
+            }
+
+            // Remove the report at the specified index
+            Report removedReport = list.remove(index);
+            Utility.showLog( "Deleted ongoing report: " +
+                    (removedReport.getEquipment() != null ? removedReport.getEquipment().getEquipmentName() : "Unknown"));
+
+            // Update the ongoing report list
+            ongoing.setOngoingReportList(list);
+
+            // Save updated list to SharedPreferences
+            SharedPreferences mPrefs = context.getSharedPreferences(Utility.SHARED_PREFERENCE_USER, MODE_PRIVATE);
+            SharedPreferences.Editor prefsEditor = mPrefs.edit();
+
+            if (list.isEmpty()) {
+                // If list is empty, remove the entire key or save empty list
+                prefsEditor.remove(Utility.ONGOING_REPORT_LIST);
+                Utility.showLog( "All ongoing reports deleted. Cleared from SharedPreferences.");
+            } else {
+                // Save updated list
+                Gson gson = new Gson();
+                String string = gson.toJson(ongoing);
+                prefsEditor.putString(Utility.ONGOING_REPORT_LIST, string);
+                Utility.showLog( "Updated ongoing reports list. Remaining count: " + list.size());
+            }
+
+            prefsEditor.apply();
+
+        } catch (Exception e) {
+            Log.e(Utility.TAG, "Error deleting ongoing report at index " + index, e);
         }
-
-
-        Gson gson = new Gson();
-        String string = gson.toJson(reportHistory);
-        prefsEditor.putString(Utility.REPORT_HISTORY_LIST, string);
-
-        prefsEditor.apply();
-
     }
-
-
 
     public static boolean isEmpty(EditText et) {
         if (et.getText().toString().isEmpty())
             return true;
         else return false;
     }
-
-
-
 
     public static Boolean isCrmTestDone(Context context) {
         Boolean isAvailable = true;
@@ -442,4 +506,103 @@ public class Utility {
             return "0sec";
         }
     }
+
+    public static boolean match(String text, String equipmentName) {
+        // Handle null or empty inputs
+        if (text == null || equipmentName == null) {
+            return false;
+        }
+
+        // Trim whitespace and convert to lowercase for case-insensitive comparison
+        String searchText = text.trim().toLowerCase();
+        String equipment = equipmentName.trim().toLowerCase();
+
+        // Check if search text is empty
+        if (searchText.isEmpty()) {
+            return false;
+        }
+
+        // Strategy 1: Check if text matches the full equipment name
+        if (equipment.equals(searchText)) {
+            return true;
+        }
+
+            // If equipment name has less than 5 characters, match against the entire name
+            return equipment.equals(searchText);
+
+    }
+
+    /**
+     * Search and filter reports based on text matching various Report fields
+     *
+     * @param reports List of reports to search through
+     * @param searchText Text to search for in report fields
+     * @return List of reports that match the search criteria
+     */
+    public static List<Report> searchReports(List<Report> reports, String searchText) {
+
+        Utility.showLog(searchText+"    \n"+reports.toString());
+        try {
+            List<Report> filteredReports = new ArrayList<>();
+
+            // Handle null or empty inputs
+            if (reports == null || searchText == null) {
+                return filteredReports; // Return empty list
+            }
+
+            // Trim and convert search text to lowercase for case-insensitive comparison
+            String text = searchText.trim().toLowerCase();
+
+            // If search text is empty, return empty list
+            if (text.isEmpty()) {
+                return filteredReports;
+            }
+
+            // Iterate through all reports
+            for (Report report : reports) {
+                if (report != null && matchesReportFields(report, text)) {
+                    filteredReports.add(report);
+                }
+            }
+
+            return filteredReports;
+        }catch (Exception e){
+            return null;
+        }
+
+    }
+
+    private static boolean matchesReportFields(Report report, String searchText) {
+
+        // Check user name (owner identification)
+        if (containsIgnoreCase(report.getOwnerIdentification(), searchText)) {
+            return true;
+        }
+
+        // Check customer address
+        if (containsIgnoreCase(report.getCustomerAddress(), searchText)) {
+            return true;
+        }
+
+        // Check date fields
+        if (containsIgnoreCase(report.getTestDate(), searchText)) {
+            return true;
+        }
+
+
+        // Check EquipmentName
+        if (report.getEquipment() != null) {
+            return containsIgnoreCase(report.getEquipment().getEquipmentName(), searchText);
+        }
+
+        return false;
+    }
+
+    private static boolean containsIgnoreCase(String source, String searchText) {
+        if (source == null || searchText == null) {
+            return false;
+        }
+        return source.toLowerCase().contains(searchText);
+    }
+
 }

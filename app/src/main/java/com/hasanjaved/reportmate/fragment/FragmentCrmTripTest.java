@@ -24,6 +24,7 @@ import com.hasanjaved.reportmate.listeners.RecyclerViewClickListener;
 import com.hasanjaved.reportmate.model.CircuitBreaker;
 import com.hasanjaved.reportmate.model.Report;
 import com.hasanjaved.reportmate.utility.FileMover;
+import com.hasanjaved.reportmate.utility.ImageLoader;
 import com.hasanjaved.reportmate.utility.Utility;
 
 import net.cachapa.expandablelayout.ExpandableLayout;
@@ -198,10 +199,32 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
 
         binding.viewOne.btnNext.setOnClickListener(view -> {
 
+//                    if (binding.viewOne.tvTrip.getContentDescription().equals(getString(R.string.selected))) {
+//                        fragmentClickListener.addFragmentTripTest(circuitListRecyclerAdapter.getSelectedCircuit());
+//                    } else if (binding.viewOne.tvCrm.getContentDescription().equals(getString(R.string.selected))) {
+//                        fragmentClickListener.addFragmentCrmTest(circuitListRecyclerAdapter.getSelectedCircuit());
+//                    }
+                    CircuitBreaker selectedCircuit = circuitListRecyclerAdapter.getSelectedCircuit();
+
+                    Utility.showLog("=== DEBUG NEXT BUTTON ===");
+                    Utility.showLog("Selected circuit: " + (selectedCircuit != null ? selectedCircuit.getName() : "NULL"));
+//                    Utility.showLog("Selected position: " + circuitListRecyclerAdapter.getSelectedPosition());
+                    Utility.showLog("List size: " + list.size());
+                    Utility.showLog("CRM selected: " + binding.viewOne.tvCrm.getContentDescription());
+                    Utility.showLog("Trip selected: " + binding.viewOne.tvTrip.getContentDescription());
+
+                    if (selectedCircuit == null) {
+                        Utility.showToast(activity, "Please select a circuit first!");
+                        return; // Don't proceed
+                    }
+
+                    // Disable button to prevent multiple clicks
+                    binding.viewOne.btnNext.setEnabled(false);
+
                     if (binding.viewOne.tvTrip.getContentDescription().equals(getString(R.string.selected))) {
-                        fragmentClickListener.addFragmentTripTest(circuitListRecyclerAdapter.getSelectedCircuit());
+                        fragmentClickListener.addFragmentTripTest(selectedCircuit);
                     } else if (binding.viewOne.tvCrm.getContentDescription().equals(getString(R.string.selected))) {
-                        fragmentClickListener.addFragmentCrmTest(circuitListRecyclerAdapter.getSelectedCircuit());
+                        fragmentClickListener.addFragmentCrmTest(selectedCircuit);
                     }
                 }
         );
@@ -359,19 +382,6 @@ public class FragmentCrmTripTest extends Fragment implements RecyclerViewClickLi
 
     @Override
     public void onSaveButtonPressed(ImageView imageView, String imageLocation, String imageName, String subFolder) {
-        if (!imageLocation.equals("")) {
-            imageView.setVisibility(View.VISIBLE);
-
-            Glide.with(activity)
-                    .load(Uri.parse("file:" + imageLocation))
-                    .into(imageView);
-
-            FileMover.moveImageToDocumentsSubfolder(
-                    activity,
-                    imageLocation,
-                    imageName,
-                    subFolder
-            );
-        }
+        ImageLoader.showImageFromCamera(activity,imageView,imageLocation);
     }
 }

@@ -188,8 +188,8 @@
 
                     <ImageView
                         android:id="@+id/ivShowImageConnection"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"
@@ -250,8 +250,8 @@
 
                     <ImageView
                         android:id="@+id/ivShowImageResult"
-                        android:layout_width="400dp"
-                        android:layout_height="300dp"
+                        android:layout_width="350dp"
+                        android:layout_height="350dp"
                         android:scaleType="centerInside"
                         android:src="@drawable/img_demo_temp"
                         android:layout_marginTop="@dimen/space_8"

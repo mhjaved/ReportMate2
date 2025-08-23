@@ -2,7 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <uses-feature
         android:name="android.hardware.camera"
         android:required="false" /> <!-- <uses-permission android:name="android.permission.MANAGE_EXTERNAL_STORAGE"/> -->
@@ -34,11 +35,17 @@
         android:theme="@style/Theme.ReportMate"
         tools:targetApi="31">
         <activity
+            android:name=".activity.OcrActivity"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
             android:name=".activity.HistoryActivity"
             android:exported="false" />
-
-
-
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -54,13 +61,12 @@
             android:name=".activity.SplashAndLoginActivity"
             android:exported="true"
             android:windowSoftInputMode="adjustPan">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+<!--            <intent-filter>-->
+<!--                <action android:name="android.intent.action.MAIN" />-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+<!--                <category android:name="android.intent.category.LAUNCHER" />-->
+<!--            </intent-filter>-->
         </activity>
-
         <activity
             android:name=".activity.HomeActivity"
             android:exported="true"
