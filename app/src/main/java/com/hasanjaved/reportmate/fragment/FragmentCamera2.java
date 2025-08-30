@@ -257,6 +257,39 @@ public class FragmentCamera2 extends Fragment {
                     cameraProvider.unbindAll();
                     Camera camera = cameraProvider.bindToLifecycle(getViewLifecycleOwner(), cameraSelector, preview, imageCapture);
 
+//                    try {
+//                        binding.btnFlash.setOnClickListener(view -> {
+//                            camera.getCameraControl().enableTorch(true);
+//                        });
+//                    }catch (Exception e){
+//                        Utility.showLog("excepiton "+e.toString());
+//                    }
+
+                    try {
+                        // Track flash state
+                        final boolean[] isFlashOn = {false};
+
+                        binding.btnFlash.setOnClickListener(view -> {
+                            try {
+                                if (isFlashOn[0]) {
+                                    // Turn flash off
+                                    camera.getCameraControl().enableTorch(false);
+                                    binding.btnFlash.setImageResource(R.drawable.ic_flash_on);
+                                    isFlashOn[0] = false;
+                                } else {
+                                    // Turn flash on
+                                    camera.getCameraControl().enableTorch(true);
+                                    binding.btnFlash.setImageResource(R.drawable.ic_flash_off);
+                                    isFlashOn[0] = true;
+                                }
+                            } catch (Exception e) {
+                                Utility.showLog("Flash toggle error: " + e.toString());
+                            }
+                        });
+                    } catch (Exception e) {
+                        Utility.showLog("Flash setup exception: " + e.toString());
+                    }
+
                     binding.btnCapture.setOnClickListener(v -> {
                         try {
                             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q ||
@@ -391,51 +424,6 @@ public class FragmentCamera2 extends Fragment {
             showToastAndClose("Failed to display image. Please try again.");
         }
     }
-//    private void showImage(String imagePath) {
-//        // Added try-catch for image display
-//        try {
-//            binding.ivShowImage.setVisibility(View.VISIBLE);
-//            Utility.showLog("Showing image: " + imagePath);
-//            binding.btnRetake.setEnabled(true);
-//            binding.btnPerformOCR.setEnabled(true);
-//
-//            // Simple and safe approach
-//            File imageFile = new File(imagePath);
-//            if (!imageFile.exists()) {
-//                Utility.showLog("Image file does not exist: " + imagePath);
-//                binding.ivShowImage.setImageResource(R.drawable.ic_image_24);
-//                return;
-//            }
-//
-//            Glide.with(activity)
-//                    .load(imageFile)  // Use File directly
-//                    .skipMemoryCache(true)
-//                    .diskCacheStrategy(DiskCacheStrategy.NONE)
-//                    .placeholder(R.drawable.ic_image_24)
-//                    .error(R.drawable.ic_image_24)
-//                    .listener(new RequestListener<Drawable>() {
-//                        @Override
-//                        public boolean onLoadFailed(@Nullable GlideException e, Object model, Target<Drawable> target, boolean isFirstResource) {
-//                            // Handle Glide loading failure
-//                            String errorMsg = e != null ? e.getMessage() : "Unknown error";
-//                            Utility.showLog("Glide failed to load image: " + errorMsg);
-//                            showToastAndClose("Failed to display image. Please try again.");
-//                            return false;
-//                        }
-//
-//                        @Override
-//                        public boolean onResourceReady(Drawable resource, Object model, Target<Drawable> target, DataSource dataSource, boolean isFirstResource) {
-//                            Utility.showLog("Image loaded successfully with Glide");
-//                            return false;
-//                        }
-//                    })
-//                    .into(binding.ivShowImage);
-//        } catch (Exception e) {
-//            // Handle crash in showImage method
-//            Utility.showLog("Error showing image: " + e.getMessage());
-//            showToastAndClose("Failed to display image. Please try again.");
-//        }
-//    }
 
     private void processImageAndUpdateUI(String originalImagePath) {
         // Added try-catch for image processing thread
@@ -541,15 +529,9 @@ public class FragmentCamera2 extends Fragment {
     private Bitmap cropToPreviewAspectRatio(Bitmap bitmap) {
         // Added try-catch for image cropping
         try {
-            // Get PreviewView dimensions
-            int previewWidth = binding.imagePreview.getWidth();
-            int previewHeight = binding.imagePreview.getHeight();
-
-            if (previewWidth == 0 || previewHeight == 0) {
-                // Fallback to common aspect ratio if PreviewView not measured yet
-                previewWidth = 16;
-                previewHeight = 9;
-            }
+            // Force 4:3 aspect ratio to match electrical panel image shape
+            int previewWidth = 4;
+            int previewHeight = 3;
 
             float previewAspectRatio = (float) previewWidth / previewHeight;
             float bitmapAspectRatio = (float) bitmap.getWidth() / bitmap.getHeight();
@@ -645,16 +627,13 @@ public class FragmentCamera2 extends Fragment {
     }
 
     private int aspectRatio(int width, int height) {
-        // Added try-catch for aspect ratio calculation
+        // Force 4:3 aspect ratio to match electrical panel image shape
         try {
-            double ratio = (double) Math.max(width, height) / Math.min(width, height);
-            return (Math.abs(ratio - 4.0 / 3.0) <= Math.abs(ratio - 16.0 / 9.0))
-                    ? AspectRatio.RATIO_4_3
-                    : AspectRatio.RATIO_16_9;
+            return AspectRatio.RATIO_4_3;
         } catch (Exception e) {
-            // Handle calculation errors and return default aspect ratio
+            // Handle calculation errors and return 4:3 aspect ratio
             Utility.showLog("Error calculating aspect ratio: " + e.getMessage());
-            return AspectRatio.RATIO_16_9; // Default fallback
+            return AspectRatio.RATIO_4_3; // Default to 4:3 to match electrical panel
         }
     }
 }

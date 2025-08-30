@@ -1070,11 +1070,12 @@ public class ReportGenerator {
                 }
 
                 // Add first image with smaller size
-                addImageToCell(imageRow.getCell(0), filteredImagePaths[i], 250, 180);
+//                addImageToCell(imageRow.getCell(0), filteredImagePaths[i], 250, 180);
+                addImageToCell(imageRow.getCell(0), filteredImagePaths[i], 208, 158);
 
                 // Add second image (if exists) with smaller size
                 if (i + 1 < filteredImagePaths.length) {
-                    addImageToCell(imageRow.getCell(1), filteredImagePaths[i + 1], 250, 180);
+                    addImageToCell(imageRow.getCell(1), filteredImagePaths[i + 1], 208, 158);
                 } else {
                     // Empty cell if odd number of images
                     setCellText(imageRow.getCell(1), "", false, ParagraphAlignment.CENTER);
@@ -1105,6 +1106,9 @@ public class ReportGenerator {
     /**
      * Modified addImageToCell method with additional file existence check
      */
+    /**
+     * Modified addImageToCell method with no bottom spacing
+     */
     private static void addImageToCell(XWPFTableCell cell, String imagePath, int maxWidth, int maxHeight) {
         Utility.showLog("imagePath " + imagePath);
         try {
@@ -1115,6 +1119,12 @@ public class ReportGenerator {
 
             XWPFParagraph para = cell.addParagraph();
             para.setAlignment(ParagraphAlignment.CENTER);
+
+            // Remove all paragraph spacing
+            para.setSpacingAfter(0); // No space after paragraph
+            para.setSpacingBefore(0); // No space before paragraph
+            para.setSpacingBetween(1.0); // Single line spacing
+
             XWPFRun run = para.createRun();
 
             // Read image from public documents
@@ -1159,21 +1169,49 @@ public class ReportGenerator {
                             Units.toEMU(finalWidth), Units.toEMU(finalHeight));
 
                     imageStream.close();
-                } else {
-                    // This case should not occur since we pre-filter images, but keeping as fallback
-//                    addErrorText(run, "Failed to process image: " + imagePath);
                 }
-            } else {
-                // This case should not occur since we pre-filter images, but keeping as fallback
-//                addErrorText(run, "Image not found: " + imagePath);
             }
 
-            // Set cell properties for better image display
-            setCellProperties(cell);
+            // Set cell properties for better image display with no bottom spacing
+            setCellPropertiesNoSpacing(cell);
 
         } catch (Exception e) {
             Log.e(TAG, "Error adding image to cell: " + imagePath, e);
-//            addErrorTextToCell(cell, "Error loading image: " + imagePath);
+        }
+    }
+
+    /**
+     * Set cell properties for better image display with no bottom spacing
+     */
+    private static void setCellPropertiesNoSpacing(XWPFTableCell cell) {
+        try {
+            cell.setVerticalAlignment(XWPFTableCell.XWPFVertAlign.CENTER);
+
+            CTTcPr tcPr = cell.getCTTc().getTcPr();
+            if (tcPr == null) {
+                tcPr = cell.getCTTc().addNewTcPr();
+            }
+
+            CTTcMar tcMar = tcPr.getTcMar();
+            if (tcMar == null) {
+                tcMar = tcPr.addNewTcMar();
+            }
+
+            // Even tighter margins
+            if (tcMar.getTop() == null) tcMar.addNewTop().setW(BigInteger.valueOf(15));    // Reduced from 8
+            if (tcMar.getBottom() == null) tcMar.addNewBottom().setW(BigInteger.valueOf(15)); // Reduced from 10
+            if (tcMar.getLeft() == null) tcMar.addNewLeft().setW(BigInteger.valueOf(5));   // Reduced from 0
+            if (tcMar.getRight() == null) tcMar.addNewRight().setW(BigInteger.valueOf(5)); // Reduced from 0
+
+            if (cell.getParagraphs().size() > 0) {
+                XWPFParagraph para = cell.getParagraphs().get(0);
+                para.setSpacingAfter(0);
+                para.setSpacingBefore(0);
+                para.setSpacingBetween(1.0);
+            }
+
+        } catch (Exception e) {
+            Log.e(TAG, "Error setting cell properties", e);
         }
     }
 //    /**

@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.hasanjaved.reportmate.R;
 import com.hasanjaved.reportmate.fragment.FragmentCamera2;
+//import com.hasanjaved.reportmate.fragment.FragmentCameraOcr;
 import com.hasanjaved.reportmate.utility.ReportGenerator;
 import com.hasanjaved.reportmate.fragment.FragmentCamera;
 import com.hasanjaved.reportmate.fragment.FragmentCrmTest;
@@ -39,6 +40,7 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
         Utility.saveReport(this,null);
         addNewReportFragment();
 
+//        openOcrCamera(null,null,"test","reportMateOcrTest");
         mainHandler = new Handler(Looper.getMainLooper());
         
 //        generateSampleDocument();
@@ -375,6 +377,17 @@ public class NewReportActivity extends AppCompatActivity implements FragmentClic
                 .add(R.id.fragmentHolder,fragment,"")
                 .addToBackStack("")
                 .commit();
+    }
+
+    public void openOcrCamera(CameraFragmentClickListener cameraFragmentClickListener, ImageView imageView,String imageName,String subFolder) {
+//
+//        FragmentCameraOcr fragment = FragmentCameraOcr.newInstance("","");
+//        fragment.setFragmentClickListener(cameraFragmentClickListener,imageView, imageName, subFolder);
+//        getSupportFragmentManager()
+//                .beginTransaction()
+//                .add(R.id.fragmentHolder,fragment,"")
+//                .addToBackStack("")
+//                .commit();
     }
 
     @Override
